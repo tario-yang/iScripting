@@ -1,0 +1,29 @@
+{
+    "configuration":
+    {   "GMail":
+        {   "smtp_server"    : "smtp.gmail.com",
+            "smtp_port"      : "587",
+            "smtp_domain"    : "gmail.com",
+            "smtp_username"  : "tario.yang@gmail.com",
+            "smtp_password"  : "147xxxYang",
+            "smtp_mail_from" : "tario.yang@gmail.com"
+        },
+        "Hotmail":
+        {   "smtp_server"    : "smtp.hotmal.com",
+            "smtp_port"      : "587",
+            "smtp_domain"    : "hotmail.com",
+            "smtp_username"  : "feelins_yang@hotmail.com",
+            "smtp_password"  : "147xxx",
+            "smtp_from"      : "Yang Jun <feelins_yang@gmail.com>"
+        }
+    },
+    "mail_to_list":
+    [
+        "tario.yang@gmail.com"
+    ],
+    "mail_content":
+    {
+        "mail_subject_prefix" : "PREFIX",
+        "mail_signature"      : "SIGN"
+    }
+}
