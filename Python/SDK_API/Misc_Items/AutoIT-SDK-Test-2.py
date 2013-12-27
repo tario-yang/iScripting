@@ -1,10 +1,6 @@
-from win32con import *   
+from win32con import *
 import win32gui   
 import win32com.client
-import ctypes
-import win32api
-import os
-
 
 def WndProc(hwnd, msg, wParam, lParam):   
     if msg == WM_PAINT:   
@@ -15,24 +11,22 @@ def WndProc(hwnd, msg, wParam, lParam):
         win32gui.PostQuitMessage(0)   
     return win32gui.DefWindowProc(hwnd, msg, wParam, lParam)   
 
-
 wc = win32gui.WNDCLASS()
-wc.hbrBackground = COLOR_BTNFACE
+wc.hbrBackground = COLOR_BTNTEXT
 wc.hCursor = win32gui.LoadCursor(0, IDC_ARROW)   
 wc.hIcon = win32gui.LoadIcon(0, IDI_APPLICATION)   
-wc.lpszClassName = "UVCSDKWINDOW"   
+wc.lpszClassName = "UVC ACQ - SDK Testing"
 wc.lpfnWndProc = WndProc
-
 
 reg = win32gui.RegisterClass(wc)   
 hwnd = win32gui.CreateWindow(
             reg,
             'UVC ACQ - SDK Testing',
             WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT,
-            CW_USEDEFAULT,   
-            CW_USEDEFAULT,
-            CW_USEDEFAULT,   
+            0,
+            0,   
+            640,
+            480,   
             0,
             0,
             0,
@@ -41,17 +35,13 @@ hwnd = win32gui.CreateWindow(
 
 win32gui.ShowWindow(hwnd, SW_SHOWNORMAL)
 
-
 objCSDevice = win32com.client.Dispatch("ACQSDK.CSDevice.1")
-
 
 a = objCSDevice.ACQSDK_Init(hwnd)
 print a
 
-
 b = objCSDevice.ACQSDK_StartPlay()
 print b
-
 
 win32gui.UpdateWindow(hwnd)   
 win32gui.PumpMessages()

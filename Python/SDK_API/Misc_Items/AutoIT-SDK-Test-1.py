@@ -2,7 +2,6 @@ import Tkinter
 import win32com.client
 import win32gui
 
-
 def ACQSDK_Init():
 	hWnd = win32gui.FindWindow("TkTopLevel","SDK Testing: Live Video")
 	ret = objCSDevice.ACQSDK_Init(hWnd)
@@ -43,10 +42,8 @@ def ACQSDK_CaptureEx():
 	ret = objCSDevice.ACQSDK_CaptureEx(num,position)
 	print ret
 
-
 window_control_panel = Tkinter.Tk()
 window_live_video    = Tkinter.Tk()
-
 
 button_init       = Tkinter.Button(window_control_panel, text ="ACQSDK_Init",      command = ACQSDK_Init).grid(row=1,column=1)
 button_uninit     = Tkinter.Button(window_control_panel, text ="ACQSDK_Uninit",    command = ACQSDK_Uninit).grid(row=1,column=2)
@@ -56,14 +53,11 @@ button_stopplay   = Tkinter.Button(window_control_panel, text ="ACQSDK_StopPlay"
 button_capture    = Tkinter.Button(window_control_panel, text ="ACQSDK_Capture",   command = ACQSDK_Capture).grid(row=1,column=6)
 button_captureex  = Tkinter.Button(window_control_panel, text ="ACQSDK_CaptureEx", command = ACQSDK_CaptureEx).grid(row=1,column=7)
 
-
 window_control_panel.geometry("1024x23+0+0")
 window_control_panel.title("SDK Testing: Control Panel")
 window_live_video.geometry("640x480+300+300")
 window_live_video.title("SDK Testing: Live Video")
 
-
 objCSDevice = win32com.client.Dispatch("ACQSDK.CSDevice.1")
-
 
 window_live_video.mainloop()
