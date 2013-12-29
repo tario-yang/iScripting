@@ -1,0 +1,26 @@
+C:\>WMIC Path Win32_PnPEntity WHERE "DeviceID like '%041E%'" Get Description, DeviceID, Name, ClassGuid
+
+ClassGuid                               Description                    DeviceID                                       Name
+{36fc9e60-c465-11cf-8056-444553540000}  USB Composite Device           USB\VID_041E&PID_4059\0.0.1                    USB Composite Device
+{6bdd1fc6-810f-11d0-bec7-08002be2092f}  USB Video Device               USB\VID_041E&PID_4059&MI_00\6&287BB4A&0&0000   Media gadget (UVC/UAC)
+{745a17a0-74d3-11d0-b6fe-00a0c90f57da}  USB Input Device               USB\VID_041E&PID_4059&MI_02\6&287BB4A&0&0002   USB Input Device
+{745a17a0-74d3-11d0-b6fe-00a0c90f57da}  HID-compliant game controller  HID\VID_041E&PID_4059&MI_02\7&13C29A5C&0&0000  HID-compliant game controller
+
+
+
+Example,
+
+strComputer = "."
+Set objWMIService = GetObject(_
+    "winmgmts:" & strComputer & "\root\cimv2")
+Set colItems = objWMIService.ExecQuery _
+    ("Select * from Win32_PnPEntity ")
+For Each objItem in colItems
+    Wscript.Echo "Class GUID: " & objItem.ClassGuid
+    Wscript.Echo "Description: " & objItem.Description
+    Wscript.Echo "Device ID: " & objItem.DeviceID
+    Wscript.Echo "Manufacturer: " & objItem.Manufacturer
+    Wscript.Echo "Name: " & objItem.Name
+    Wscript.Echo "PNP Device ID: " & objItem.PNPDeviceID
+    Wscript.Echo "Service: " & objItem.Service
+Next

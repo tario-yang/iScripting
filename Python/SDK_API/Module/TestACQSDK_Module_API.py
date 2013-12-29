@@ -1,9 +1,7 @@
 # Import required modules
 try:
     import sys
-    import time
     import TestACQSDK_Module_Global_Definition as gDef
-    import TestACQSDK_Module_Init_Environment as Init_Env
 except ImportError:
     print "Required modules are NOT imported!"
     sys.exit(1)
@@ -37,15 +35,15 @@ ErrorCode = {
     "0XF0017": "RECORD_STARTING_WHILE_DEVICE_REMOVE"
 }
 
-# Output Result: OK
+# Output Result
 def TestACQSDK_API_Output(module_name, ret):
-    print gDef.Output_Header() + "\t" + "Location:" + str(module_name)
-    print gDef.Output_Header() + "\t" + "Output:" + str(ret)
+    print gDef.Output_Header() + "\t" + "Location: " + str(module_name)
+    print gDef.Output_Header() + "\t" + "Output:   " + str(ret)
 
-# Output Error Info: OK
+# Output Error Info
 def TestACQSDK_API_ErrorInfo(ret):
     if ret == 0:
-        print gDef.Output_Header() + "\t" + "Pass"
+        print gDef.Output_Header() + "\t" + "PASS"
     else:
         print gDef.Output_Header() + "\t" + "Failure: " + str(hex(ret))
         # Fetch the error information via error code
@@ -55,184 +53,183 @@ def TestACQSDK_API_ErrorInfo(ret):
             except:
                 print gDef.Output_Header() + "\t" + "ErrorCode is NOT defined."
     print
-    time.sleep(1)
 
-# API: ACQSDK_Init: OK
+# API: ACQSDK_Init
 def TestACQSDK_API_ACQSDK_Init(objACQSDK_CSDevice_1, para_hWnd):
     Module_Name = sys._getframe().f_code.co_name
-    if isinstance(para_hWnd, tuple):
-        print gDef.Output_Header() + "\t" + "Multiple test data received: " + str(para_hWnd)
-        for i in range(len(para_hWnd)):
-            print gDef.Output_Header() + "\t" + "Parameter [" + str(i+1) + "] "
-            try:
-                ret = objACQSDK_CSDevice_1.ACQSDK_Init(para_hWnd[i])
-            except:
-                print gDef.Output_Header() + "\t" + "Error happens."
-            finally:
-                TestACQSDK_API_Output(Module_Name, ret)
-                TestACQSDK_API_ErrorInfo(ret)
-                TestACQSDK_API_ACQSDK_Uninit(objACQSDK_CSDevice_1, 1)
-    else:
-        try:
-            ret = objACQSDK_CSDevice_1.ACQSDK_Init(para_hWnd)
-        except:
-        	print gDef.Output_Header() + "\t" + "Error happens."
-        finally:
-            TestACQSDK_API_Output(Module_Name, ret)
-            TestACQSDK_API_ErrorInfo(ret)
-            TestACQSDK_API_ACQSDK_Uninit(objACQSDK_CSDevice_1, 1)
-
-# API: ACQSDK_Uninit: OK
-def TestACQSDK_API_ACQSDK_Uninit(objACQSDK_CSDevice_1, para_times):
-    Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Execute " + str(para_times) + "times."
-    while para_times > 0:
-        try:
-            ret = objACQSDK_CSDevice_1.ACQSDK_Uninit()
-        except:
-            print gDef.Output_Header() + "\t" + "Error happens."
-        finally:
-            TestACQSDK_API_Output(Module_Name, ret)
-            TestACQSDK_API_ErrorInfo(ret)
-        para_times-=1
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_hWnd) + str(type(para_hWnd))
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_Init(para_hWnd)
         time.sleep(1)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
+
+# API: ACQSDK_Uninit
+def TestACQSDK_API_ACQSDK_Uninit(objACQSDK_CSDevice_1):
+    Module_Name = sys._getframe().f_code.co_name
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_Uninit()
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_QueryDeviceInfo
-# def TestACQSDK_API_ACQSDK_QueryDeviceInfo():
+def TestACQSDK_API_ACQSDK_QueryDeviceInfo(objACQSDK_CSDevice_1, para_pDeviceInfo):
+    Module_Name = sys._getframe().f_code.co_name
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_pDeviceInfo) + type(para_pDeviceInfo)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_QueryDeviceInfo(para_pDeviceInfo)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_SetHPWorkMode
-# def TestACQSDK_API_ACQSDK_SetHPWorkMode():
-
-# API: ACQSDK_StartPlay: OK
-def TestACQSDK_API_ACQSDK_StartPlay(objACQSDK_CSDevice_1, para_times, para_hWnd):
+def TestACQSDK_API_ACQSDK_SetHPWorkMode(objACQSDK_CSDevice_1, para_lWorkMode):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Execute " + str(para_times) + "times."
-    while para_times > 0:
-        try:
-            ret = objACQSDK_CSDevice_1.ACQSDK_StartPlay()
-        except:
-            print gDef.Output_Header() + "\t" + "Error happens."
-            Init_Env.WaitWindowMessage(para_hWnd)
-        finally:
-            TestACQSDK_API_Output(Module_Name, ret)
-            TestACQSDK_API_ErrorInfo(ret)
-        para_times-=1
-        time.sleep(1)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_lWorkMode) + type(para_lWorkMode)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_SetHPWorkMode(para_lWorkMode)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
-# API: ACQSDK_StopPlay: OK
-def TestACQSDK_API_ACQSDK_StopPlay(objACQSDK_CSDevice_1, para_times, para_hWnd):
+# API: ACQSDK_StartPlay
+def TestACQSDK_API_ACQSDK_StartPlay(objACQSDK_CSDevice_1):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Execute " + str(para_times) + "times."
-    while para_times > 0:
-        try:
-            ret = objACQSDK_CSDevice_1.ACQSDK_StopPlay()
-        except:
-            print gDef.Output_Header() + "\t" + "Error happens."
-            Init_Env.WaitWindowMessage(para_hWnd)
-        finally:
-            TestACQSDK_API_Output(Module_Name, ret)
-            TestACQSDK_API_ErrorInfo(ret)
-        para_times-=1
-        time.sleep(1)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_StartPlay()
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
-# API: ACQSDK_StartRecordEx: OK
+# API: ACQSDK_StopPlay
+def TestACQSDK_API_ACQSDK_StopPlay(objACQSDK_CSDevice_1):
+    Module_Name = sys._getframe().f_code.co_name
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_StopPlay()
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
+
+# API: ACQSDK_StartRecordEx
 def TestACQSDK_API_ACQSDK_StartRecordEx(objACQSDK_CSDevice_1, para_file_path):
     Module_Name = sys._getframe().f_code.co_name
-    if isinstance(para_file_path, tuple):
-        print gDef.Output_Header() + "\t" + "Multiple test data received: " + str(para_file_path)
-        for i in range(len(para_file_path)):
-            print gDef.Output_Header() + "\t" + "Parameter [" + str(i+1) + "] "
-            try:
-                ret = objACQSDK_CSDevice_1.ACQSDK_StartRecord(para_file_path[i])
-            except:
-                print gDef.Output_Header() + "\t" + "Error happens."
-            finally:
-                TestACQSDK_API_Output(Module_Name, ret)
-                TestACQSDK_API_ErrorInfo(ret)
-    else:
-        try:
-            ret = objACQSDK_CSDevice_1.ACQSDK_StartRecord(para_file_path)
-        except:
-            print gDef.Output_Header() + "\t" + "Error happens."
-        finally:
-            TestACQSDK_API_Output(Module_Name, ret)
-            TestACQSDK_API_ErrorInfo(ret)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_file_path) + type(para_file_path)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_StartRecordEx(para_file_path)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
-# API: ACQSDK_StopRecord: OK
-def TestACQSDK_API_ACQSDK_StopRecord(objACQSDK_CSDevice_1, para_times):
+# API: ACQSDK_StopRecord
+def TestACQSDK_API_ACQSDK_StopRecord(objACQSDK_CSDevice_1):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Execute " + str(para_times) + "times."
-    while para_times > 0:
-        try:
-            ret = objACQSDK_CSDevice_1.ACQSDK_StopRecord()
-        except:
-            print gDef.Output_Header() + "\t" + "Error happens."
-        finally:
-            TestACQSDK_API_Output(Module_Name, ret)
-            TestACQSDK_API_ErrorInfo(ret)
-        para_times-=1
-        time.sleep(1)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_StopRecord()
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
-# API: ACQSDK_Capture: OK
+# API: ACQSDK_Capture
 def TestACQSDK_API_ACQSDK_Capture(objACQSDK_CSDevice_1, para_lCount):
     Module_Name = sys._getframe().f_code.co_name
-    if isinstance(para_lCount, tuple):
-        print gDef.Output_Header() + "\t" + "Multiple test data received: " + str(para_lCount)
-        for i in range(len(para_lCount)):
-            print gDef.Output_Header() + "\t" + "Parameter [" + str(i+1) + "] "
-            try:
-                ret = objACQSDK_CSDevice_1.ACQSDK_Capture(para_lCount[i])
-            except:
-                print gDef.Output_Header() + "\t" + "Error happens."
-            finally:
-                TestACQSDK_API_Output(Module_Name, ret)
-                TestACQSDK_API_ErrorInfo(ret)
-    else:
-        try:
-            ret = objACQSDK_CSDevice_1.ACQSDK_Capture(para_lCount)
-        except:
-            print gDef.Output_Header() + "\t" + "Error happens."
-        finally:
-            TestACQSDK_API_Output(Module_Name, ret)
-            TestACQSDK_API_ErrorInfo(ret)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_lCount) + type(para_lCount)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_Capture(para_lCount)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_CaptureEx
-# def TestACQSDK_API_ACQSDK_CaptureEx(objACQSDK_CSDevice_1, para_lCount, para_pImageUnit):
+def TestACQSDK_API_ACQSDK_CaptureEx(objACQSDK_CSDevice_1, para_lCount, para_pImageUnit):
+    Module_Name = sys._getframe().f_code.co_name
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_lCount) + type(para_lCount) + " & " + str(para_pImageUnit) + type(para_pImageUnit)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_CaptureEx(para_lCount, para_pImageUnit)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_GetImageData
-# def TestACQSDK_API_ACQSDK_GetImageData(objACQSDK_CSDevice_1, para_pImageUnit):
+def TestACQSDK_API_ACQSDK_GetImageData(objACQSDK_CSDevice_1, para_pImageUnit):
+    Module_Name = sys._getframe().f_code.co_name
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit) + type(para_pImageUnit)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_GetImageData(para_pImageUnit)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_GetWhiteImage
-# def TestACQSDK_API_ACQSDK_GetWhiteImage():
+def TestACQSDK_API_ACQSDK_GetWhiteImage(objACQSDK_CSDevice_1, para_pImageUnit, para_pWhite):
+    Module_Name = sys._getframe().f_code.co_name
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit) + type(para_pImageUnit) + " & " + str(para_pWhite) + type(para_pWhite)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_GetWhiteImage(para_pImageUnit, para_pWhite)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_GetUVImage
-# def TestACQSDK_API_ACQSDK_GetUVImage():
+def TestACQSDK_API_ACQSDK_GetUVImage(objACQSDK_CSDevice_1, para_pImageUnit, para_pUV):
+    Module_Name = sys._getframe().f_code.co_name
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit) + type(para_pImageUnit) + " & " + str(para_pUV) + type(para_pUV)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_GetUVImage(para_pImageUnit, para_pUV)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_FreeImageUnit
-# def TestACQSDK_API_ACQSDK_FreeImageUnit(objACQSDK_CSDevice_1, para_pImageUnit):
+def TestACQSDK_API_ACQSDK_FreeImageUnit(objACQSDK_CSDevice_1, para_pImageUnit):
+    Module_Name = sys._getframe().f_code.co_name
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit) + type(para_pImageUnit)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_FreeImageUnit(para_pImageUnit)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_SetLogPathEx
 def TestACQSDK_API_ACQSDK_SetLogPathEx(objACQSDK_CSDevice_1, para_path):
     Module_Name = sys._getframe().f_code.co_name
-    if isinstance(para_path, tuple):
-        print gDef.Output_Header() + "\t" + "Multiple test data received: " + str(para_path)
-        for i in range(len(para_path)):
-            print gDef.Output_Header() + "\t" + "Parameter [" + str(i+1) + "] " + str(para_path[i])
-            try:
-                ret = objACQSDK_CSDevice_1.ACQSDK_SetLogPathEx(para_path[i])
-            except:
-                print gDef.Output_Header() + "\t" + "Error happens."
-            finally:
-                TestACQSDK_API_Output(Module_Name, ret)
-                TestACQSDK_API_ErrorInfo(ret)
-    else:
-        try:
-            ret = objACQSDK_CSDevice_1.ACQSDK_SetLogPathEx(para_path)
-        except:
-            print gDef.Output_Header() + "\t" + "Error happens."
-        finally:
-            TestACQSDK_API_Output(Module_Name, ret)
-            TestACQSDK_API_ErrorInfo(ret)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_path) + type(para_path)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_SetLogPathEx(para_path)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_GetSerialNumber
 # def TestACQSDK_API_ACQSDK_GetSerialNumber():
@@ -247,7 +244,16 @@ def TestACQSDK_API_ACQSDK_SetLogPathEx(objACQSDK_CSDevice_1, para_path):
 # def TestACQSDK_API_ACQSDK_UpgradeFirmware():
 
 # API: ACQSDK_SaveImage
-# def TestACQSDK_API_ACQSDK_SaveImage(objACQSDK_CSDevice_1, para_file, para_pImageUnit):
+def TestACQSDK_API_ACQSDK_SaveImage(objACQSDK_CSDevice_1, para_file, para_pImageUnit):
+    Module_Name = sys._getframe().f_code.co_name
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_file) + type(para_file) + " & " + str(para_pImageUnit) + type(para_pImageUnit)
+    try:
+        ret = objACQSDK_CSDevice_1.ACQSDK_SaveImage(para_file, para_pImageUnit)
+    except:
+        print gDef.Output_Header() + "\t" + "Error happens."
+    finally:
+        TestACQSDK_API_Output(Module_Name, ret)
+        TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_SetMsgCallback
 # def TestACQSDK_API_ACQSDK_SetMsgCallback(objACQSDK_CSDevice_1, para_pMsgInfo):
