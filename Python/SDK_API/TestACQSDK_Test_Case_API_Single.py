@@ -67,17 +67,17 @@ def TestACQSDK_Test_Case_API_ACQSDK_Init():
 
     print Module_Name + " :: " + "Exception Test Case #" + "1"
     while _test_data > 0 :
-        gDef.DisableUSBCamera()
+        gDef.USBCameraDisable()
         API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_data)
-        gDef.EnableUSBCamera()
+        gDef.USBCameraEnable()
         _test_data-=1
 
     print Module_Name + " :: " + "Exception Test Case #" + "2"
-    gDef.DisableUSBCamera()
+    gDef.USBCameraDisable()
     while _test_data > 0 :
         API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_data)
         _test_data-=1
-    gDef.EnableUSBCamera()
+    gDef.USBCameraEnable()
 
 ### Test: ACQSDK_Uninit
 def TestACQSDK_Test_Case_API_ACQSDK_Uninit():
@@ -107,9 +107,9 @@ def TestACQSDK_Test_Case_API_ACQSDK_Uninit():
 
     print Module_Name + " :: " + "Exception Test Case #" + "1"
     while _test_data > 0 :
-        gDef.DisableUSBCamera()
+        gDef.USBCameraDisable()
         API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
-        gDef.EnableUSBCamera()
+        gDef.USBCameraEnable()
 
 ### Test: ACQSDK_StartPlay
 def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
@@ -187,12 +187,12 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
     print Module_Name + " :: " + "Exception Test Case #" + "2"
     API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
     time.sleep(1)
-    gDef.DisableUSBCamera()
+    gDef.USBCameraDisable()
     while _test_data > 0 :
         API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
         time.sleep(5)
         _test_data-=1
-    gDef.EnableUSBCamera()
+    gDef.USBCameraEnable()
 
 ### Test: ACQSDK_StopPlay
 def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
@@ -263,12 +263,12 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
     time.sleep(1)
     API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
     time.sleep(5)
-    gDef.DisableUSBCamera()
+    gDef.USBCameraDisable()
     while _test_data > 0 :
         API.TestACQSDK_API_ACQSDK_StopPlay(_test_object)
         time.sleep(5)
         _test_data-=1
-    gDef.EnableUSBCamera()
+    gDef.USBCameraEnable()
 
 ### Test: ACQSDK_SetLogPathEx
 def TestACQSDK_Test_Case_API_ACQSDK_SetLogPathEx():
@@ -456,14 +456,14 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
     for i in [1,2,3,4,5]:
         API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
         time.sleep(1)
-        gDef.DisableUSBCamera()
+        gDef.USBCameraDisable()
         API.TestACQSDK_API_ACQSDK_StartRecordEx(_test_object, _test_data)
         time.sleep(5)
         API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
         time.sleep(1)
         API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
         time.sleep(1)
-        gDef.EnableUSBCamera()
+        gDef.USBCameraEnable()
 
     print Module_Name + " :: " + "Exception Test Case #" + "6"
     for i in [1,2,3,4,5]:
@@ -471,14 +471,14 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
         time.sleep(1)
         API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
         time.sleep(1)
-        gDef.DisableUSBCamera()
+        gDef.USBCameraDisable()
         API.TestACQSDK_API_ACQSDK_StartRecordEx(_test_object, _test_data)
         time.sleep(5)
         API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
         time.sleep(1)
         API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
         time.sleep(1)
-        gDef.EnableUSBCamera()
+        gDef.USBCameraEnable()
 
 ### Test: ACQSDK_StopRecord
 def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
@@ -574,7 +574,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
         time.sleep(1)
         API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
         time.sleep(1)
-        gDef.DisableUSBCamera()
+        gDef.USBCameraDisable()
         API.TestACQSDK_API_ACQSDK_StartRecordEx(_test_object, ".")
         time.sleep(5)
         API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
@@ -582,13 +582,13 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
         API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
         time.sleep(1)
         _test_data-=1
-        gDef.EnableUSBCamera()
+        gDef.USBCameraEnable()
 
     print Module_Name + " :: " + "Exception Test Case #" + "4"
     while _test_data > 0 :
         API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
         time.sleep(1)
-        gDef.DisableUSBCamera()
+        gDef.USBCameraDisable()
         API.TestACQSDK_API_ACQSDK_StartRecordEx(_test_object, ".")
         time.sleep(5)
         API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
@@ -596,7 +596,6 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
         API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
         time.sleep(1)
         _test_data-=1
-        gDef.EnableUSBCamera()
+        gDef.USBCameraEnable()
 
 ### Execution
-API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)

@@ -57,7 +57,7 @@ def TestACQSDK_API_ErrorInfo(ret):
 # API: ACQSDK_Init
 def TestACQSDK_API_ACQSDK_Init(objACQSDK_CSDevice_1, para_hWnd):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_hWnd) + str(type(para_hWnd))
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_hWnd)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_Init(para_hWnd)
         time.sleep(1)
@@ -81,7 +81,7 @@ def TestACQSDK_API_ACQSDK_Uninit(objACQSDK_CSDevice_1):
 # API: ACQSDK_QueryDeviceInfo
 def TestACQSDK_API_ACQSDK_QueryDeviceInfo(objACQSDK_CSDevice_1, para_pDeviceInfo):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_pDeviceInfo) + type(para_pDeviceInfo)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_pDeviceInfo)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_QueryDeviceInfo(para_pDeviceInfo)
     except:
@@ -93,7 +93,7 @@ def TestACQSDK_API_ACQSDK_QueryDeviceInfo(objACQSDK_CSDevice_1, para_pDeviceInfo
 # API: ACQSDK_SetHPWorkMode
 def TestACQSDK_API_ACQSDK_SetHPWorkMode(objACQSDK_CSDevice_1, para_lWorkMode):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_lWorkMode) + type(para_lWorkMode)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_lWorkMode)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_SetHPWorkMode(para_lWorkMode)
     except:
@@ -127,7 +127,7 @@ def TestACQSDK_API_ACQSDK_StopPlay(objACQSDK_CSDevice_1):
 # API: ACQSDK_StartRecordEx
 def TestACQSDK_API_ACQSDK_StartRecordEx(objACQSDK_CSDevice_1, para_file_path):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_file_path) + type(para_file_path)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_file_path)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_StartRecordEx(para_file_path)
     except:
@@ -150,7 +150,7 @@ def TestACQSDK_API_ACQSDK_StopRecord(objACQSDK_CSDevice_1):
 # API: ACQSDK_Capture
 def TestACQSDK_API_ACQSDK_Capture(objACQSDK_CSDevice_1, para_lCount):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_lCount) + type(para_lCount)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_lCount)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_Capture(para_lCount)
     except:
@@ -162,7 +162,7 @@ def TestACQSDK_API_ACQSDK_Capture(objACQSDK_CSDevice_1, para_lCount):
 # API: ACQSDK_CaptureEx
 def TestACQSDK_API_ACQSDK_CaptureEx(objACQSDK_CSDevice_1, para_lCount, para_pImageUnit):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_lCount) + type(para_lCount) + " & " + str(para_pImageUnit) + type(para_pImageUnit)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_lCount) + " & " + str(para_pImageUnit)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_CaptureEx(para_lCount, para_pImageUnit)
     except:
@@ -174,7 +174,7 @@ def TestACQSDK_API_ACQSDK_CaptureEx(objACQSDK_CSDevice_1, para_lCount, para_pIma
 # API: ACQSDK_GetImageData
 def TestACQSDK_API_ACQSDK_GetImageData(objACQSDK_CSDevice_1, para_pImageUnit):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit) + type(para_pImageUnit)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_GetImageData(para_pImageUnit)
     except:
@@ -186,7 +186,7 @@ def TestACQSDK_API_ACQSDK_GetImageData(objACQSDK_CSDevice_1, para_pImageUnit):
 # API: ACQSDK_GetWhiteImage
 def TestACQSDK_API_ACQSDK_GetWhiteImage(objACQSDK_CSDevice_1, para_pImageUnit, para_pWhite):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit) + type(para_pImageUnit) + " & " + str(para_pWhite) + type(para_pWhite)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit) + " & " + str(para_pWhite)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_GetWhiteImage(para_pImageUnit, para_pWhite)
     except:
@@ -198,7 +198,7 @@ def TestACQSDK_API_ACQSDK_GetWhiteImage(objACQSDK_CSDevice_1, para_pImageUnit, p
 # API: ACQSDK_GetUVImage
 def TestACQSDK_API_ACQSDK_GetUVImage(objACQSDK_CSDevice_1, para_pImageUnit, para_pUV):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit) + type(para_pImageUnit) + " & " + str(para_pUV) + type(para_pUV)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit) + " & " + str(para_pUV)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_GetUVImage(para_pImageUnit, para_pUV)
     except:
@@ -210,7 +210,7 @@ def TestACQSDK_API_ACQSDK_GetUVImage(objACQSDK_CSDevice_1, para_pImageUnit, para
 # API: ACQSDK_FreeImageUnit
 def TestACQSDK_API_ACQSDK_FreeImageUnit(objACQSDK_CSDevice_1, para_pImageUnit):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit) + type(para_pImageUnit)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_pImageUnit)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_FreeImageUnit(para_pImageUnit)
     except:
@@ -222,7 +222,7 @@ def TestACQSDK_API_ACQSDK_FreeImageUnit(objACQSDK_CSDevice_1, para_pImageUnit):
 # API: ACQSDK_SetLogPathEx
 def TestACQSDK_API_ACQSDK_SetLogPathEx(objACQSDK_CSDevice_1, para_path):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_path) + type(para_path)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_path)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_SetLogPathEx(para_path)
     except:
@@ -246,7 +246,7 @@ def TestACQSDK_API_ACQSDK_SetLogPathEx(objACQSDK_CSDevice_1, para_path):
 # API: ACQSDK_SaveImage
 def TestACQSDK_API_ACQSDK_SaveImage(objACQSDK_CSDevice_1, para_file, para_pImageUnit):
     Module_Name = sys._getframe().f_code.co_name
-    print gDef.Output_Header() + "\t" + "Received: " + str(para_file) + type(para_file) + " & " + str(para_pImageUnit) + type(para_pImageUnit)
+    print gDef.Output_Header() + "\t" + "Received: " + str(para_file) + " & " + str(para_pImageUnit)
     try:
         ret = objACQSDK_CSDevice_1.ACQSDK_SaveImage(para_file, para_pImageUnit)
     except:
