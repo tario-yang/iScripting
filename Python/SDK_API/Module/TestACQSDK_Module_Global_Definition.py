@@ -38,20 +38,23 @@ def USBCameraStatus():
     pwd = os.getcwd()
     cmd = "RUNAS /User:Administrator /SaveCred /ENV /NoProfile" + " \"" + pwd + "\\Tools\\devcon\\USBCameraStatus.bat" + " " + dVer + " " + "\""
     ret = os.system(cmd)
+    time.sleep(1)
     if ret == 0 :
         print Output_Header() + "\t" + "Status of USB Camera is outputted."
         try:
-            status_file = open(pwd + "\\Tools\\devcon\\USBCameraStatus.log", "rU")
+            status_file = open(pwd + "\\Tools\\devcon\\USBCameraStatus.log", "r")
         except:
             print Output_Header() + "\t" + "Fail to open status output file..."
             retString = None
         else:
-            #-----------------------------------------------------------------Read a file as a list
-            if len(status_file.readlines()) == 4 :
-                retString =
+            status_file_content = status_file.read()
+            if status_file_content.find("disabled") != -1 :
+                retString = "Disabled"
             else:
-                print Output_Header() + "\t" + "Format of output file is incorrect! Maybe some issue happened."
-                retString = None
+                if status_file_content.find("running") != -1 :
+                    retString = "Running"
+                else:
+                    retString = None
         finally:
             status_file.close()
     else:
