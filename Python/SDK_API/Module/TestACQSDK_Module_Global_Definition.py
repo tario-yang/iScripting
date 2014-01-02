@@ -15,7 +15,7 @@ ACQSDK_ProgID   = "ACQSDK.CSDevice.1"
 # definition[function]
 ### Output Header for console
 def Output_Header():
-	return "[" + datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + "]" + "\t"
+	return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + "\t"
 ### Check system and define which devcon to use
 def devconVer():
     tmp = os.getcwd()
@@ -81,7 +81,7 @@ def USBCameraDisable():
             print Output_Header() + "\t" + "Error happens when trying to disable USB Camera."
         else:
             print Output_Header() + "\t" + "Unknown error happens."
-            sys.exit(1)
+        sys.exit(1)
     pwd = os.chdir(tmp)
 
 ### Enable USB Camera
@@ -99,7 +99,7 @@ def USBCameraEnable():
             print Output_Header() + "\t" + "Error happens when trying to enable USB Camera."
         else:
             print Output_Header() + "\t" + "Unknown error happens."
-            sys.exit(1)
+        sys.exit(1)
     pwd = os.chdir(tmp)
 
 # definition: Live Video Window
