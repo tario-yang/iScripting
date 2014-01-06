@@ -63,7 +63,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_Init():
 	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
 
 	### ### -
-
+"""
 	_test_data = 5
 
 	print Module_Name + " :: " + "Exception Test Case #" + "1"
@@ -79,7 +79,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_Init():
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_data)
 		_test_data-=1
 	gDef.USBCameraEnable()
-
+"""
 ### Test: ACQSDK_Uninit
 def TestACQSDK_Test_Case_API_ACQSDK_Uninit():
 	Module_Name = sys._getframe().f_code.co_name
@@ -105,7 +105,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_Uninit():
 		_test_data-=1
 
 	### ### -
-	"""
+"""
 	_test_data = 5
 
 	print Module_Name + " :: " + "Exception Test Case #" + "1"
@@ -114,11 +114,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_Uninit():
 		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
 		gDef.USBCameraEnable()
 		_test_data-=1
-	"""
+"""
 ### Test: ACQSDK_StartPlay
 def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 	Module_Name = sys._getframe().f_code.co_name
-	"""
+
 	### ### +
 
 	_test_data = 10
@@ -146,7 +146,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
 		time.sleep(1)
 		_test_data-=1
-	"""
+
 	_test_data = 10
 
 	print Module_Name + " :: " + "Test Case #" + "3"
@@ -160,7 +160,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		_test_data-=1
 	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
 	time.sleep(1)
-	"""
+
 	_test_data = 10
 
 	print Module_Name + " :: " + "Test Case #" + "4"
@@ -194,7 +194,8 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
 		time.sleep(5)
 		_test_data-=1
-
+"""
+	_test_data = 5
 
 	print Module_Name + " :: " + "Exception Test Case #" + "2"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
@@ -205,7 +206,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		time.sleep(5)
 		_test_data-=1
 	gDef.USBCameraEnable()
-	"""
+"""
 ### Test: ACQSDK_StopPlay
 def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 	Module_Name = sys._getframe().f_code.co_name
@@ -269,6 +270,8 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 		API.TestACQSDK_API_ACQSDK_StopPlay(_test_object)
 		time.sleep(5)
 		_test_data-=1
+"""
+	_test_data = 5
 
 	print Module_Name + " :: " + "Exception Test Case #" + "2"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
@@ -281,7 +284,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 		time.sleep(5)
 		_test_data-=1
 	gDef.USBCameraEnable()
-
+"""
 ### Test: ACQSDK_SetLogPathEx
 def TestACQSDK_Test_Case_API_ACQSDK_SetLogPathEx():
 	Module_Name = sys._getframe().f_code.co_name
@@ -476,7 +479,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
 		time.sleep(1)
 		gDef.USBCameraEnable()
-
+"""
 	print Module_Name + " :: " + "Exception Test Case #" + "6"
 	for i in [1,2,3,4,5]:
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
@@ -491,7 +494,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
 		time.sleep(1)
 		gDef.USBCameraEnable()
-
+"""
 ### Test: ACQSDK_StopRecord
 def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 	Module_Name = sys._getframe().f_code.co_name
@@ -570,6 +573,8 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		time.sleep(1)
 		_test_data-=1
 
+	_test_data = 5
+
 	print Module_Name + " :: " + "Exception Test Case #" + "2"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
@@ -579,6 +584,8 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
 		time.sleep(1)
 		_test_data-=1
+"""
+	_test_data = 5
 
 	print Module_Name + " :: " + "Exception Test Case #" + "3"
 	while _test_data > 0 :
@@ -609,7 +616,8 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		time.sleep(1)
 		_test_data-=1
 		gDef.USBCameraEnable()
-
-### Execution
+"""
+### Set SDK's log
 API.TestACQSDK_API_ACQSDK_SetLogPathEx(_test_object, _test_log_dir)
-TestACQSDK_Test_Case_API_ACQSDK_StartPlay()
+
+### Test Case Execution
