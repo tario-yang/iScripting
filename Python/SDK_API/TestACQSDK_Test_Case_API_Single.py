@@ -48,7 +48,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_Init():
 		for i in range(len(_test_data)):
 			API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_data[i])
 			time.sleep(1)
-			API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+			API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 			time.sleep(1)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
@@ -60,7 +60,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_Init():
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_data)
 		time.sleep(1)
 		_test_data-=1
-	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 
 	### ### -
 """
@@ -92,7 +92,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_Uninit():
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
 
@@ -100,7 +100,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_Uninit():
 
 	print Module_Name + " :: " + "Test Case #" + "2"
 	while _test_data > 0 :
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
 
@@ -111,7 +111,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_Uninit():
 	print Module_Name + " :: " + "Exception Test Case #" + "1"
 	while _test_data > 0 :
 		gDef.USBCameraDisable()
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		gDef.USBCameraEnable()
 		_test_data-=1
 """
@@ -131,7 +131,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		time.sleep(5)
 		API.TestACQSDK_API_ACQSDK_StopPlay(_test_object)
 		time.sleep(1)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
 
@@ -143,7 +143,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
 		time.sleep(5)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
 
@@ -158,7 +158,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		API.TestACQSDK_API_ACQSDK_StopPlay(_test_object)
 		time.sleep(1)
 		_test_data-=1
-	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
 
 	_test_data = 10
@@ -169,7 +169,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
 		time.sleep(5)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
 
@@ -182,7 +182,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
 		time.sleep(5)
 		_test_data-=1
-	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
 
 	### ### -
@@ -223,7 +223,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 		time.sleep(5)
 		API.TestACQSDK_API_ACQSDK_StopPlay(_test_object)
 		time.sleep(1)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
 
@@ -236,7 +236,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 		API.TestACQSDK_API_ACQSDK_StopPlay(_test_object)
 		time.sleep(1)
 		_test_data-=1
-	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
 
 	print Module_Name + " :: " + "Test Case #" + "3"
@@ -248,7 +248,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 		API.TestACQSDK_API_ACQSDK_StopPlay(_test_object)
 		time.sleep(1)
 		_test_data-=1
-	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
 
 	print Module_Name + " :: " + "Test Case #" + "3"
@@ -258,7 +258,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 		API.TestACQSDK_API_ACQSDK_StopPlay(_test_object)
 		time.sleep(1)
 		_test_data-=1
-	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
 
 	### ### -
@@ -325,7 +325,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_SetLogPathEx():
 			time.sleep(1)
 			API.TestACQSDK_API_ACQSDK_SetLogPathEx(_test_object, _test_data[i])
 			time.sleep(1)
-			API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+			API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 			time.sleep(1)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
@@ -333,7 +333,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_SetLogPathEx():
 	print Module_Name + " :: " + "Test Case #" + "3"
 	if isinstance(_test_data, tuple):
 		for i in range(len(_test_data)):
-			API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+			API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 			time.sleep(1)
 			API.TestACQSDK_API_ACQSDK_SetLogPathEx(_test_object, _test_data)
 			time.sleep(1)
@@ -378,7 +378,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 			time.sleep(5)
 			API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
 			time.sleep(1)
-			API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+			API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 			time.sleep(1)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
@@ -392,7 +392,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 			time.sleep(1)
 			API.TestACQSDK_API_ACQSDK_StartRecordEx(_test_object, _test_data[i])
 			time.sleep(5)
-			API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+			API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 			time.sleep(1)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
@@ -410,7 +410,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 			time.sleep(1)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
-	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
 
 	print Module_Name + " :: " + "Test Case #" + "4"
@@ -424,7 +424,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 			time.sleep(5)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
-	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
 
 	### ### -
@@ -442,7 +442,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_StartRecordEx(_test_object, _test_data)
 		time.sleep(5)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 
 	print Module_Name + " :: " + "Exception Test Case #" + "3"
@@ -455,14 +455,14 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_StartRecordEx(_test_object, _test_data)
 		time.sleep(5)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 
 	print Module_Name + " :: " + "Exception Test Case #" + "4"
 	for i in [1,2,3,4,5]:
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_StartRecordEx(_test_object, _test_data)
 		time.sleep(5)
@@ -476,7 +476,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		time.sleep(5)
 		API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
 		time.sleep(1)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		gDef.USBCameraEnable()
 """
@@ -491,7 +491,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		time.sleep(5)
 		API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
 		time.sleep(1)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		gDef.USBCameraEnable()
 """
@@ -513,7 +513,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		time.sleep(5)
 		API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
 		time.sleep(1)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
 
@@ -528,7 +528,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
 		time.sleep(1)
 		_test_data-=1
-	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
 
 	print Module_Name + " :: " + "Test Case #" + "3"
@@ -542,7 +542,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
 		time.sleep(1)
 		_test_data-=1
-	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
 
 	print Module_Name + " :: " + "Test Case #" + "4"
@@ -554,7 +554,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
 		time.sleep(1)
 		_test_data-=1
-	API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
 
 	### ### -
@@ -569,7 +569,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
 		time.sleep(1)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
 
@@ -581,7 +581,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
 		time.sleep(1)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
 """
@@ -598,7 +598,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		time.sleep(5)
 		API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
 		time.sleep(1)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
 		gDef.USBCameraEnable()
@@ -612,7 +612,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		time.sleep(5)
 		API.TestACQSDK_API_ACQSDK_StopRecord(_test_object)
 		time.sleep(1)
-		API.TestACQSDK_API_ACQSDK_Uninit(_test_object)
+		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
 		gDef.USBCameraEnable()
