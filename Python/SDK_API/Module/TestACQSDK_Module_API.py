@@ -54,7 +54,7 @@ def TestACQSDK_API_ErrorInfo(ret):
 				print gDef.Output_Header() + "\t" + ErrorCode[str(hex(ret)).upper()]
 			except KeyError:
 				print gDef.Output_Header() + "\t" + "ErrorCode is NOT defined."
-	print "-"*88
+	print ""
 
 # API: ACQSDK_Init
 def TestACQSDK_API_ACQSDK_Init(objACQSDK_CSDevice_1, para_hWnd):
@@ -69,8 +69,7 @@ def TestACQSDK_API_ACQSDK_Init(objACQSDK_CSDevice_1, para_hWnd):
 			type(eval(str(ret)))
 		except NameError:
 			print gDef.Output_Header() + "\t" + "Exception happens when executing" + " " + Module_Name
-			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!"
-			sys.exit(1)
+			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!\n"
 		except TypeError:
 			print gDef.Output_Header() + "\t" + "Unexpected Type of ret is received."
 		else:
@@ -89,19 +88,12 @@ def TestACQSDK_API_ACQSDK_UnInit(objACQSDK_CSDevice_1):
 			type(eval(str(ret)))
 		except NameError:
 			print gDef.Output_Header() + "\t" + "Exception happens when executing" + " " + Module_Name
-			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!"
-			sys.exit(1)
+			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!\n"
 		except TypeError:
 			print gDef.Output_Header() + "\t" + "Unexpected Type of ret is received."
 		else:
 			TestACQSDK_API_Output(Module_Name, ret)
 			TestACQSDK_API_ErrorInfo(ret)
-
-# API: ACQSDK_QueryDeviceInfo
-# def TestACQSDK_API_ACQSDK_QueryDeviceInfo(objACQSDK_CSDevice_1, para_pDeviceInfo):
-
-# API: ACQSDK_SetHPWorkMode
-# def TestACQSDK_API_ACQSDK_SetHPWorkMode(objACQSDK_CSDevice_1, para_lWorkMode):
 
 # API: ACQSDK_StartPlay
 def TestACQSDK_API_ACQSDK_StartPlay(objACQSDK_CSDevice_1):
@@ -115,8 +107,7 @@ def TestACQSDK_API_ACQSDK_StartPlay(objACQSDK_CSDevice_1):
 			type(eval(str(ret)))
 		except NameError:
 			print gDef.Output_Header() + "\t" + "Exception happens when executing" + " " + Module_Name
-			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!"
-			sys.exit(1)
+			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!\n"
 		except TypeError:
 			print gDef.Output_Header() + "\t" + "Unexpected Type of ret is received."
 		else:
@@ -135,8 +126,7 @@ def TestACQSDK_API_ACQSDK_StopPlay(objACQSDK_CSDevice_1):
 			type(eval(str(ret)))
 		except NameError:
 			print gDef.Output_Header() + "\t" + "Exception happens when executing" + " " + Module_Name
-			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!"
-			sys.exit(1)
+			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!\n"
 		except TypeError:
 			print gDef.Output_Header() + "\t" + "Unexpected Type of ret is received."
 		else:
@@ -144,7 +134,7 @@ def TestACQSDK_API_ACQSDK_StopPlay(objACQSDK_CSDevice_1):
 			TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_StartRecordEx
-def TestACQSDK_API_ACQSDK_StartRecordEx(objACQSDK_CSDevice_1, para_file_path):
+def TestACQSDK_API_ACQSDK_StartRecord(objACQSDK_CSDevice_1, para_file_path):
 	Module_Name = sys._getframe().f_code.co_name
 	print gDef.Output_Header() + "\t" + "Received: " + str(para_file_path)
 	try:
@@ -156,8 +146,7 @@ def TestACQSDK_API_ACQSDK_StartRecordEx(objACQSDK_CSDevice_1, para_file_path):
 			type(eval(str(ret)))
 		except NameError:
 			print gDef.Output_Header() + "\t" + "Exception happens when executing" + " " + Module_Name
-			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!"
-			sys.exit(1)
+			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!\n"
 		except TypeError:
 			print gDef.Output_Header() + "\t" + "Unexpected Type of ret is received."
 		else:
@@ -176,8 +165,7 @@ def TestACQSDK_API_ACQSDK_StopRecord(objACQSDK_CSDevice_1):
 			type(eval(str(ret)))
 		except NameError:
 			print gDef.Output_Header() + "\t" + "Exception happens when executing" + " " + Module_Name
-			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!"
-			sys.exit(1)
+			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!\n"
 		except TypeError:
 			print gDef.Output_Header() + "\t" + "Unexpected Type of ret is received."
 		else:
@@ -185,26 +173,17 @@ def TestACQSDK_API_ACQSDK_StopRecord(objACQSDK_CSDevice_1):
 			TestACQSDK_API_ErrorInfo(ret)
 
 # API: ACQSDK_CaptureEx
-# def TestACQSDK_API_ACQSDK_CaptureEx(objACQSDK_CSDevice_1, para_lCount, para_pImageUnit):
-
-# API: ACQSDK_GetImageData
-# def TestACQSDK_API_ACQSDK_GetImageData(objACQSDK_CSDevice_1, para_pImageUnit):
-
-# API: ACQSDK_GetWhiteImage
-# def TestACQSDK_API_ACQSDK_GetWhiteImage(objACQSDK_CSDevice_1, para_pImageUnit, para_pWhite):
-
-# API: ACQSDK_GetUVImage
-# def TestACQSDK_API_ACQSDK_GetUVImage(objACQSDK_CSDevice_1, para_pImageUnit, para_pUV):
-
-# API: ACQSDK_FreeImageUnit
-# def TestACQSDK_API_ACQSDK_FreeImageUnit(objACQSDK_CSDevice_1, para_pImageUnit):
+def TestACQSDK_API_ACQSDK_Capture(objACQSDK_CSDevice_1, para_pImageUnit):
+	Module_Name = sys._getframe().f_code.co_name
+	ret = objACQSDK_CSDevice_1.ACQSDK_Capture(para_pImageUnit)
+	print ret
 
 # API: ACQSDK_SetLogPathEx
-def TestACQSDK_API_ACQSDK_SetLogPathEx(objACQSDK_CSDevice_1, para_path):
+def TestACQSDK_API_ACQSDK_SetLogPath(objACQSDK_CSDevice_1, para_path):
 	Module_Name = sys._getframe().f_code.co_name
 	print gDef.Output_Header() + "\t" + "Received: " + str(para_path)
 	try:
-		ret = objACQSDK_CSDevice_1.ACQSDK_SetLogPathEx(para_path)
+		ret = objACQSDK_CSDevice_1.ACQSDK_SetLogPath(para_path)
 	except:
 		pass
 	finally:
@@ -212,28 +191,9 @@ def TestACQSDK_API_ACQSDK_SetLogPathEx(objACQSDK_CSDevice_1, para_path):
 			type(eval(str(ret)))
 		except NameError:
 			print gDef.Output_Header() + "\t" + "Exception happens when executing" + " " + Module_Name
-			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!"
-			sys.exit(1)
+			print gDef.Output_Header() + "\t" + " - There is no output return, ret does not exist!\n"
 		except TypeError:
 			print gDef.Output_Header() + "\t" + "Unexpected Type of ret is received."
 		else:
 			TestACQSDK_API_Output(Module_Name, ret)
 			TestACQSDK_API_ErrorInfo(ret)
-
-# API: ACQSDK_GetSerialNumber
-# def TestACQSDK_API_ACQSDK_GetSerialNumber():
-
-# API: ACQSDK_SetSerialNumber
-# def TestACQSDK_API_ACQSDK_SetSerialNumber():
-
-# API: ACQSDK_GetFirmwareVersion
-# def TestACQSDK_API_ACQSDK_GetFirmwareVersion():
-
-# API: ACQSDK_UpgradeFirmware
-# def TestACQSDK_API_ACQSDK_UpgradeFirmware():
-
-# API: ACQSDK_SaveImage
-# def TestACQSDK_API_ACQSDK_SaveImage(objACQSDK_CSDevice_1, para_file, para_pImageUnit):
-
-# API: ACQSDK_SetMsgCallback
-# def TestACQSDK_API_ACQSDK_SetMsgCallback(objACQSDK_CSDevice_1, para_pMsgInfo):

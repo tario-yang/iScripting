@@ -24,7 +24,6 @@ else:
 	print gDef.Output_Header() + "\t" + "Required modules are imported.\n"
 	_test_object  = Init_Env.objACQSDK_CSDevice_1
 	_test_window  = Init_Env.WindowObjectCreate()
-	_test_log_dir = r"./Log"
 
 ### Test: ACQSDK_Init
 def TestACQSDK_Test_Case_API_ACQSDK_Init():
@@ -34,16 +33,16 @@ def TestACQSDK_Test_Case_API_ACQSDK_Init():
 
 	_test_data = (
 		_test_window,
-		win32gui.FindWindow("Shell_TrayWnd",""),
-		None,
-		1.0,
-		0,
-		-1,
+		#win32gui.FindWindow("Shell_TrayWnd",""),
+		#None,
+		#1.0,
+		#0,
+		#-1,
 		100L,
-		"str"
+		"str",
 	)
 
-	print Module_Name + " :: " + "Test Case #" + "1"
+	print Module_Name + " :: " + "Test Case #" + "1" + "\n"
 	if isinstance(_test_data, tuple):
 		for i in range(len(_test_data)):
 			API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_data[i])
@@ -52,33 +51,39 @@ def TestACQSDK_Test_Case_API_ACQSDK_Init():
 			time.sleep(1)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
-
+	print Module_Name + " :: " + "Test Case #" + "1" + "<END>" + "\n"
+"""
 	_test_data = 10
 
-	print Module_Name + " :: " + "Test Case #" + "2"
+	print Module_Name + " :: " + "Test Case #" + "2" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_data)
 		time.sleep(1)
 		_test_data-=1
 	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
-
+	print Module_Name + " :: " + "Test Case #" + "2" + "<END>" + "\n"
+"""
 	### ### -
 """
 	_test_data = 5
 
-	print Module_Name + " :: " + "Exception Test Case #" + "1"
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "\n"
 	while _test_data > 0 :
 		gDef.USBCameraDisable()
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_data)
 		gDef.USBCameraEnable()
 		_test_data-=1
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Exception Test Case #" + "2"
+	_test_data = 5
+
+	print Module_Name + " :: " + "Exception Test Case #" + "2" + "\n"
 	gDef.USBCameraDisable()
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_data)
 		_test_data-=1
 	gDef.USBCameraEnable()
+	print Module_Name + " :: " + "Exception Test Case #" + "2" + "<END>" + "\n"
 """
 ### Test: ACQSDK_Uninit
 def TestACQSDK_Test_Case_API_ACQSDK_Uninit():
@@ -88,32 +93,35 @@ def TestACQSDK_Test_Case_API_ACQSDK_Uninit():
 
 	_test_data = 10
 
-	print Module_Name + " :: " + "Test Case #" + "1"
+	print Module_Name + " :: " + "Test Case #" + "1" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
+	print Module_Name + " :: " + "Test Case #" + "1" + "<END>" + "\n"
 
 	_test_data = 10
 
-	print Module_Name + " :: " + "Test Case #" + "2"
+	print Module_Name + " :: " + "Test Case #" + "2" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
+	print Module_Name + " :: " + "Test Case #" + "2" + "<END>" + "\n"
 
 	### ### -
 """
 	_test_data = 5
 
-	print Module_Name + " :: " + "Exception Test Case #" + "1"
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "\n"
 	while _test_data > 0 :
 		gDef.USBCameraDisable()
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		gDef.USBCameraEnable()
 		_test_data-=1
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "<END>" + "\n"
 """
 ### Test: ACQSDK_StartPlay
 def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
@@ -123,7 +131,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 
 	_test_data = 10
 
-	print Module_Name + " :: " + "Test Case #" + "1"
+	print Module_Name + " :: " + "Test Case #" + "1" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
@@ -134,10 +142,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
+	print Module_Name + " :: " + "Test Case #" + "1" + "<END>" + "\n"
 
 	_test_data = 10
 
-	print Module_Name + " :: " + "Test Case #" + "2"
+	print Module_Name + " :: " + "Test Case #" + "2" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
@@ -146,10 +155,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
+	print Module_Name + " :: " + "Test Case #" + "2" + "<END>" + "\n"
 
 	_test_data = 10
 
-	print Module_Name + " :: " + "Test Case #" + "3"
+	print Module_Name + " :: " + "Test Case #" + "3" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	while _test_data > 0 :
@@ -160,10 +170,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		_test_data-=1
 	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
+	print Module_Name + " :: " + "Test Case #" + "3" + "<END>" + "\n"
 
 	_test_data = 10
 
-	print Module_Name + " :: " + "Test Case #" + "4"
+	print Module_Name + " :: " + "Test Case #" + "4" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
@@ -172,10 +183,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
+	print Module_Name + " :: " + "Test Case #" + "4" + "<END>" + "\n"
 
 	_test_data = 10
 
-	print Module_Name + " :: " + "Test Case #" + "5"
+	print Module_Name + " :: " + "Test Case #" + "5" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	while _test_data > 0 :
@@ -184,20 +196,22 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		_test_data-=1
 	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
+	print Module_Name + " :: " + "Test Case #" + "5" + "<END>" + "\n"
 
 	### ### -
 
 	_test_data = 5
 
-	print Module_Name + " :: " + "Exception Test Case #" + "1"
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
 		time.sleep(5)
 		_test_data-=1
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "<END>" + "\n"
 """
 	_test_data = 5
 
-	print Module_Name + " :: " + "Exception Test Case #" + "2"
+	print Module_Name + " :: " + "Exception Test Case #" + "2" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	gDef.USBCameraDisable()
@@ -206,6 +220,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartPlay():
 		time.sleep(5)
 		_test_data-=1
 	gDef.USBCameraEnable()
+	print Module_Name + " :: " + "Exception Test Case #" + "2" + "<END>" + "\n"
 """
 ### Test: ACQSDK_StopPlay
 def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
@@ -215,7 +230,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 
 	_test_data = 10
 
-	print Module_Name + " :: " + "Test Case #" + "1"
+	print Module_Name + " :: " + "Test Case #" + "1" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
@@ -226,8 +241,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
+	print Module_Name + " :: " + "Test Case #" + "1" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Test Case #" + "2"
+	_test_data = 10
+
+	print Module_Name + " :: " + "Test Case #" + "2" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	while _test_data > 0 :
@@ -238,8 +256,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 		_test_data-=1
 	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
+	print Module_Name + " :: " + "Test Case #" + "2" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Test Case #" + "3"
+	_test_data = 10
+
+	print Module_Name + " :: " + "Test Case #" + "3" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
@@ -250,8 +271,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 		_test_data-=1
 	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
+	print Module_Name + " :: " + "Test Case #" + "3" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Test Case #" + "3"
+	_test_data = 10
+
+	print Module_Name + " :: " + "Test Case #" + "4" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	while _test_data > 0 :
@@ -260,20 +284,22 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 		_test_data-=1
 	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
+	print Module_Name + " :: " + "Test Case #" + "4" + "<END>" + "\n"
 
 	### ### -
 
 	_test_data = 5
 
-	print Module_Name + " :: " + "Exception Test Case #" + "1"
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_StopPlay(_test_object)
 		time.sleep(5)
 		_test_data-=1
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "<END>" + "\n"
 """
 	_test_data = 5
 
-	print Module_Name + " :: " + "Exception Test Case #" + "2"
+	print Module_Name + " :: " + "Exception Test Case #" + "2" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
@@ -284,6 +310,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopPlay():
 		time.sleep(5)
 		_test_data-=1
 	gDef.USBCameraEnable()
+	print Module_Name + " :: " + "Exception Test Case #" + "2" + "END" + "\n"
 """
 ### Test: ACQSDK_SetLogPathEx
 def TestACQSDK_Test_Case_API_ACQSDK_SetLogPathEx():
@@ -310,15 +337,16 @@ def TestACQSDK_Test_Case_API_ACQSDK_SetLogPathEx():
 		"string"
 	)
 
-	print Module_Name + " :: " + "Test Case #" + "1"
+	print Module_Name + " :: " + "Test Case #" + "1" + "\n"
 	if isinstance(_test_data, tuple):
 		for i in range(len(_test_data)):
 			API.TestACQSDK_API_ACQSDK_SetLogPathEx(_test_object, _test_data[i])
 			time.sleep(1)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
+	print Module_Name + " :: " + "Test Case #" + "1" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Test Case #" + "2"
+	print Module_Name + " :: " + "Test Case #" + "2" + "\n"
 	if isinstance(_test_data, tuple):
 		for i in range(len(_test_data)):
 			API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
@@ -329,8 +357,9 @@ def TestACQSDK_Test_Case_API_ACQSDK_SetLogPathEx():
 			time.sleep(1)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
+	print Module_Name + " :: " + "Test Case #" + "2" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Test Case #" + "3"
+	print Module_Name + " :: " + "Test Case #" + "3" + "\n"
 	if isinstance(_test_data, tuple):
 		for i in range(len(_test_data)):
 			API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
@@ -339,6 +368,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_SetLogPathEx():
 			time.sleep(1)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
+	print Module_Name + " :: " + "Test Case #" + "3" + "<END>" + "\n"
 
 ### Test: ACQSDK_StartRecordEx
 def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
@@ -367,7 +397,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		"string"
 	)
 
-	print Module_Name + " :: " + "Test Case #" + "1"
+	print Module_Name + " :: " + "Test Case #" + "1" + "\n"
 	if isinstance(_test_data, tuple):
 		for i in range(len(_test_data)):
 			API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
@@ -382,8 +412,9 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 			time.sleep(1)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
+	print Module_Name + " :: " + "Test Case #" + "1" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Test Case #" + "2"
+	print Module_Name + " :: " + "Test Case #" + "2" + "\n"
 	if isinstance(_test_data, tuple):
 		for i in range(len(_test_data)):
 			API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
@@ -396,8 +427,9 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 			time.sleep(1)
 	else:
 		print "Incorrect format of test data (shall be tuple)."
+	print Module_Name + " :: " + "Test Case #" + "2" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Test Case #" + "3"
+	print Module_Name + " :: " + "Test Case #" + "3" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
@@ -412,8 +444,9 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		print "Incorrect format of test data (shall be tuple)."
 	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
+	print Module_Name + " :: " + "Test Case #" + "3" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Test Case #" + "4"
+	print Module_Name + " :: " + "Test Case #" + "4" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
@@ -426,27 +459,30 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		print "Incorrect format of test data (shall be tuple)."
 	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
+	print Module_Name + " :: " + "Test Case #" + "4" + "<END>" + "\n"
 
 	### ### -
 
 	_test_data = "."
 
-	print Module_Name + " :: " + "Exception Test Case #" + "1"
-	for i in [1,2,3,4,5]:
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "\n"
+	for i in range(5):
 		API.TestACQSDK_API_ACQSDK_StartRecordEx(_test_object, _test_data)
 		time.sleep(5)
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Exception Test Case #" + "2"
-	for i in [1,2,3,4,5]:
+	print Module_Name + " :: " + "Exception Test Case #" + "2" + "\n"
+	for i in range(5):
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_StartRecordEx(_test_object, _test_data)
 		time.sleep(5)
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
+	print Module_Name + " :: " + "Exception Test Case #" + "2" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Exception Test Case #" + "3"
-	for i in [1,2,3,4,5]:
+	print Module_Name + " :: " + "Exception Test Case #" + "3" + "\n"
+	for i in range(5):
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
@@ -457,18 +493,20 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		time.sleep(5)
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
+	print Module_Name + " :: " + "Exception Test Case #" + "3" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Exception Test Case #" + "4"
-	for i in [1,2,3,4,5]:
+	print Module_Name + " :: " + "Exception Test Case #" + "4" + "\n"
+	for i in range(5):
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		API.TestACQSDK_API_ACQSDK_StartRecordEx(_test_object, _test_data)
 		time.sleep(5)
-
-	print Module_Name + " :: " + "Exception Test Case #" + "5"
-	for i in [1,2,3,4,5]:
+	print Module_Name + " :: " + "Exception Test Case #" + "4" + "<END>" + "\n"
+"""
+	print Module_Name + " :: " + "Exception Test Case #" + "5" + "\n"
+	for i in range(5):
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
 		gDef.USBCameraDisable()
@@ -479,8 +517,9 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		gDef.USBCameraEnable()
-"""
-	print Module_Name + " :: " + "Exception Test Case #" + "6"
+	print Module_Name + " :: " + "Exception Test Case #" + "5" + "<END>" + "\n"
+
+	print Module_Name + " :: " + "Exception Test Case #" + "6" + "\n"
 	for i in [1,2,3,4,5]:
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
@@ -494,6 +533,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StartRecordEx():
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		gDef.USBCameraEnable()
+	print Module_Name + " :: " + "Exception Test Case #" + "6" + "<END>" + "\n"
 """
 ### Test: ACQSDK_StopRecord
 def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
@@ -503,7 +543,7 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 
 	_test_data = 10
 
-	print Module_Name + " :: " + "Test Case #" + "1"
+	print Module_Name + " :: " + "Test Case #" + "1" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
@@ -516,8 +556,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
+	print Module_Name + " :: " + "Test Case #" + "1" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Test Case #" + "2"
+	_test_data = 10
+
+	print Module_Name + " :: " + "Test Case #" + "2" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
@@ -530,8 +573,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		_test_data-=1
 	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
+	print Module_Name + " :: " + "Test Case #" + "2" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Test Case #" + "3"
+	_test_data = 10
+
+	print Module_Name + " :: " + "Test Case #" + "3" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
@@ -544,8 +590,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		_test_data-=1
 	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
+	print Module_Name + " :: " + "Test Case #" + "3" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Test Case #" + "4"
+	_test_data = 10
+
+	print Module_Name + " :: " + "Test Case #" + "4" + "\n"
 	API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 	time.sleep(1)
 	API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
@@ -556,12 +605,13 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		_test_data-=1
 	API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 	time.sleep(1)
+	print Module_Name + " :: " + "Test Case #" + "4" + "<END>" + "\n"
 
 	### ### -
 
 	_test_data = 5
 
-	print Module_Name + " :: " + "Exception Test Case #" + "1"
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
@@ -572,10 +622,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
+	print Module_Name + " :: " + "Exception Test Case #" + "1" + "<END>" + "\n"
 
 	_test_data = 5
 
-	print Module_Name + " :: " + "Exception Test Case #" + "2"
+	print Module_Name + " :: " + "Exception Test Case #" + "2" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
@@ -584,10 +635,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		API.TestACQSDK_API_ACQSDK_UnInit(_test_object)
 		time.sleep(1)
 		_test_data-=1
+	print Module_Name + " :: " + "Exception Test Case #" + "2" + "<END>" + "\n"
 """
 	_test_data = 5
 
-	print Module_Name + " :: " + "Exception Test Case #" + "3"
+	print Module_Name + " :: " + "Exception Test Case #" + "3" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
@@ -602,8 +654,11 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		time.sleep(1)
 		_test_data-=1
 		gDef.USBCameraEnable()
+	print Module_Name + " :: " + "Exception Test Case #" + "3" + "<END>" + "\n"
 
-	print Module_Name + " :: " + "Exception Test Case #" + "4"
+	_test_data = 5
+
+	print Module_Name + " :: " + "Exception Test Case #" + "4" + "\n"
 	while _test_data > 0 :
 		API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 		time.sleep(1)
@@ -616,8 +671,36 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 		time.sleep(1)
 		_test_data-=1
 		gDef.USBCameraEnable()
+	print Module_Name + " :: " + "Exception Test Case #" + "4" + "<END>" + "\n"
 """
 ### Set SDK's log
-API.TestACQSDK_API_ACQSDK_SetLogPathEx(_test_object, _test_log_dir)
+_test_log_dir = r'./Log/'
+API.TestACQSDK_API_ACQSDK_SetLogPath(_test_object, _test_log_dir)
 
 ### Test Case Execution
+
+API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
+API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
+time.sleep(1)
+
+from ctypes import *
+class UDT_ImageUnit(Structure):
+	pass
+
+UDT_ImageUnit._fields_ = [("data_type", c_long), ("pData", c_char_p), ("data_len", c_long), ("next", POINTER(UDT_ImageUnit))]
+
+objUDT_ImageUnit = UDT_ImageUnit()
+
+objUDT_ImageUnit.data_type = 1
+print "objUDT_ImageUnit.data_type"
+print objUDT_ImageUnit.data_type
+
+objUDT_ImageUnit.pData = c_char_p("image")
+print "objUDT_ImageUnit.pData"
+print objUDT_ImageUnit.pData
+
+objUDT_ImageUnit.data_len = c_long(0)
+print "objUDT_ImageUnit.data_len"
+print objUDT_ImageUnit.data_len
+
+API.TestACQSDK_API_ACQSDK_Capture(_test_object, objUDT_ImageUnit)
