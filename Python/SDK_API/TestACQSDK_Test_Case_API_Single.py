@@ -674,33 +674,17 @@ def TestACQSDK_Test_Case_API_ACQSDK_StopRecord():
 	print Module_Name + " :: " + "Exception Test Case #" + "4" + "<END>" + "\n"
 """
 ### Set SDK's log
-_test_log_dir = r'./Log/'
-API.TestACQSDK_API_ACQSDK_SetLogPath(_test_object, _test_log_dir)
+#_test_log_dir = r'./Log/'
+#API.TestACQSDK_API_ACQSDK_SetLogPath(_test_object, _test_log_dir)
 
 ### Test Case Execution
 
 API.TestACQSDK_API_ACQSDK_Init(_test_object, _test_window)
 API.TestACQSDK_API_ACQSDK_StartPlay(_test_object)
-time.sleep(1)
+time.sleep(3)
 
-from ctypes import *
-class UDT_ImageUnit(Structure):
-	pass
 
-UDT_ImageUnit._fields_ = [("data_type", c_long), ("pData", c_char_p), ("data_len", c_long), ("next", POINTER(UDT_ImageUnit))]
-
-objUDT_ImageUnit = UDT_ImageUnit()
-
-objUDT_ImageUnit.data_type = 1
-print "objUDT_ImageUnit.data_type"
-print objUDT_ImageUnit.data_type
-
-objUDT_ImageUnit.pData = c_char_p("image")
-print "objUDT_ImageUnit.pData"
-print objUDT_ImageUnit.pData
-
-objUDT_ImageUnit.data_len = c_long(0)
-print "objUDT_ImageUnit.data_len"
-print objUDT_ImageUnit.data_len
-
-API.TestACQSDK_API_ACQSDK_Capture(_test_object, objUDT_ImageUnit)
+objAIU = win32com.client.Dispatch("ACQSDK.ASImageUnit.1")
+image = objAIU.get_white_image()
+ret = objAIU.save_image(".//abc.jpg", image)
+print ret
