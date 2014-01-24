@@ -9,21 +9,22 @@ except ImportError:
 	print "One or more required modules are missing!"
 	sys.exit(1)
 
-#
 try:
 	# Function to return Output Header. The header is a timestamp.
 	def Output_Header():
 		return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + "\t"
 
+	# Function to output content to console and log file
+	# [Placeholder]
+
 	# Function of Creating COM Object
 	def CreateCOMObject(ProgID):
 		return win32com.client.Dispatch(ProgID)
-
 	# Function of Creating COM Event
 	def CreateCOMObjectEvent(ProgID, Event):
 		return win32com.client.DispatchEvents(ProgID,Event)
 
-	# Function of Callback
+	# Class of Callback
 	# [Placeholder]
 
 	# Function of XMLReader
@@ -38,7 +39,6 @@ try:
 		if msg == WM_DESTROY:
 			win32gui.PostQuitMessage(0)
 		return win32gui.DefWindowProc(hWnd, msg, wParam, lParam)
-
 	def WindowObjectCreate():
 		objWin = win32gui.WNDCLASS()
 		objWin.hbrBackground = COLOR_BTNFACE
@@ -59,12 +59,13 @@ try:
 		win32gui.ShowWindow(hWnd, SW_SHOWNORMAL)
 		win32gui.UpdateWindow(hWnd)
 		win32gui.PumpMessages()
-
 	def WindowObjectKill(hWnd):
 		win32gui.PostMessage(hWnd, win32con.WM_CLOSE, 0, 0)
-
 except:
-	pass
+	print "Defined function/class includes error/mistake."
+	sys.exit(1)
+else:
+	print Output_Header() + "\t" + "Initiated."
 
 # Display the window when executing directly
 if __name__ == '__main__':

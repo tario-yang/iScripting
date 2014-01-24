@@ -1,11 +1,3 @@
-# Import required modules
-try:
-	import os
-	import sys
-except ImportError:
-	print "One or more required modules are missing!"
-	sys.exit(1)
-
 # ProgID of each CoClass
 ACQSDK_CSDevice_ProgID        = "ACQSDK.CSDevice.1"
 ACQSDK_ASImageUnit_ProgID     = "ACQSDK.ASImageUnit.1"
