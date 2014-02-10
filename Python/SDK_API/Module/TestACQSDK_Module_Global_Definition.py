@@ -18,8 +18,8 @@ ACQSDK_TestCaseXML_SingleAPI = r"../Configuration/TestACQSDK_Test_Case_SingleAPI
 ACQSDK_TestCaseXML_Workflow  = r"../Configuration/TestACQSDK_Test_Case_Workflow.XML"
 
 # Outputs: SDK's log file (ACQSDK_SetLogPath) and execution's log
-ACQSDK_SDKLogger       = ""
-ACQSDK_ExecutionLogger = ""
+ACQSDK_SDKLogger       = r"../Output/"
+ACQSDK_ExecutionLogger = r"../Output/ACQSDK_Execution.log"
 
 # definition: Live Video Window
 TestACQSDK_LiveVideo_Window_Class	= "TestACQSDK"
@@ -62,13 +62,23 @@ try:
 		return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
 
 	# Function to initiate execution log file
-	def InitExecLogger(executionlogger = ACQSDK_ExecutionLogger):
-		if os.path.isfile(executionlogger):
-			os.rename(executionlogger, Output_Header() + "_" + executionlogger)
-		open(executionlogger, "w").close()
+	def InitExecLogger(ExecutionLogger = ACQSDK_ExecutionLogger):
+		if os.path.isfile(ExecutionLogger):
+			os.rename(ExecutionLogger, Output_Header() + "_" + ExecutionLogger)
+		open(ExecutionLogger, "w").close()
 
-	# Function to output content to console and log file
-	def TEE(module_name, parameter, ret, executionlogger = ACQSDK_ExecutionLogger):
+	def WriteLine2ExecLogger(StrLine, ExecutionLogger = ACQSDK_ExecutionLogger):
+		f = open(ExecutionLogger, "a+")
+		f.write(Output_Header().replace(" ", ",") + "," + StrLine)
+		f.close()
+
+	# Function to output content to console and execution log
+	def Logger(StrLine):
+		WriteLine2ExecLogger(StrLine)
+		print Output_Header() + "\t" + StrLine
+
+	# Function to output content to console and log file for API/Workflow
+	def TEE(module_name, parameter, ret, type = 1, ExecutionLogger = ACQSDK_ExecutionLogger):
 		info = "Location: " + str(module_name) + "; Parameter: " + str(parameter) + "; Output: " + str(ret)
 		if ret == 0:
 			result = "Pass"
@@ -80,15 +90,12 @@ try:
 					errorcode = ErrorCode[str(hex(ret)).upper()]
 				except KeyError:
 					errorcode = "Error code is NOT defined."
-		InitExecLogger()
-		f = open(executionlogger, "w")
-		f.write(Output_Header() + "\t" + info)
-		print Output_Header() + "\t" + info
-		f.write(Output_Header() + "\t" + result)
-		print Output_Header() + "\t" + result
-		f.write(Output_Header() + "\t" + errorcode)
-		print Output_Header() + "\t" + errorcode
-		f.close()
+		if type == 1: # if api
+			Logger(info)
+			Logger(result)
+			Logger(errorcode)
+		elif type == 2: # if workflow
+			pass
 
 	# Function of Creating COM Object
 	def CreateCOMObject(ProgID):
