@@ -32,16 +32,31 @@ hwnd = win32gui.CreateWindow(
             0,
             None)
 
-
 win32gui.ShowWindow(hwnd, SW_SHOWNORMAL)
 
-objCSDevice = win32com.client.Dispatch("ACQSDK.CSDevice.1")
+try:
+    class SDKEvents():
+        def OnHPEvents():
+            print "hello"
 
-a = objCSDevice.ACQSDK_Init(hwnd)
-print a
+    objCSDevice        = win32com.client.Dispatch("ACQSDK.CSDevice.1")
+    objCSDeviceEvent   = win32com.client.DispatchWithEvents("ACQSDK.CSDevice.1", SDKEvents)
+    objASImageUnit     = win32com.client.Dispatch("ACQSDK.ASImageUnit.1")
+    objSDKCallbackInfo = win32com.client.Dispatch("ACQSDK.SDKCallbackInfo.1")
 
-b = objCSDevice.ACQSDK_StartPlay()
-print b
+    a = objCSDevice.ACQSDK_SetLogPath(r".")
+    b = objCSDevice.ACQSDK_Init(hwnd)
+    c = objCSDevice.ACQSDK_StartPlay()
+    d = objCSDevice.ACQSDK_Capture(objASImageUnit)
+    x1 = objASImageUnit.get_white_image()
+    x2 = objASImageUnit.save_image(r".\abc", x1)
+
+
+
+
+
+except:
+    print "ERROR"
 
 win32gui.UpdateWindow(hwnd)
 win32gui.PumpMessages()

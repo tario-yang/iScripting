@@ -2,19 +2,28 @@
     This executor is to execute the test cases defined in outside XML file.
 """
 
-def START():
+# Import required modules
+try:
+	import os, sys, time
+	from xml.etree.ElementTree import ElementTree, Element
+	import win32com.client, win32gui
+	import TestACQSDK_Module_Global_Definition as GDEF
+	import TestACQSDK_Module_API as MAPI
+except ImportError:
+	GDEF.Logger("One or more required modules are missing!")
+	sys.exit(1)
+
+def START(XMLFile):
+	# Make sure data source exists
+	if not os.path.isfile(XMLFile):
+		GDEF.Logger("XML file does not exist!")
+		sys.exit(1)
+
 	# Initiate Execution Logger
 	GDEF.InitExecLogger()
 
-	# Import required modules
-	try:
-		import time
-		import win32com.client, win32gui
-		import TestACQSDK_Module_Global_Definition as GDEF
-		import TestACQSDK_Module_API as MAPI
-	except ImportError:
-		GDEF.Logger("One or more required modules are missing!")
-		sys.exit(1)
+	# Initiate Execution Reporter
+	#GDEF.InitExecReporter()
 
 	# Create COM Object
 	try:
@@ -26,7 +35,12 @@ def START():
 		sys.exit(1)
 	else:
 		GDEF.Logger("COM object has been created.")
-		GDEF.Logger("Details:")
-		GDEF.Logger(objACQSDK_CSDevice)
-		GDEF.Logger(objACQSDK_ASImageUnit)
-		GDEF.Logger(objACQSDK_SDKCallbackInfo)
+		print "Details:"
+		print objACQSDK_CSDevice
+		print objACQSDK_ASImageUnit
+		print objACQSDK_SDKCallbackInfo
+
+	# Read XML file
+
+
+START(GDEF.ACQSDK_TestCaseXML_SingleAPI)

@@ -1,9 +1,8 @@
 # Import required modules
 try:
-	import sys, time, datetime
+	import os, os.path, sys, time, datetime
 	import win32com.client, win32gui, win32con
 	from win32con import *
-	from xml.dom import minidom
 except ImportError:
 	print "One or more required modules are missing!"
 	sys.exit(1)
@@ -17,20 +16,21 @@ ACQSDK_SDKCallbackInfo_ProgID = "ACQSDK.SDKCallbackInfo.1"
 ACQSDK_TestCaseXML_SingleAPI = r"../Configuration/TestACQSDK_Test_Case_SingleAPI.XML"
 ACQSDK_TestCaseXML_Workflow  = r"../Configuration/TestACQSDK_Test_Case_Workflow.XML"
 
-# Outputs: SDK's log file (ACQSDK_SetLogPath) and execution's log
-ACQSDK_SDKLogger       = r"../Output/"
-ACQSDK_ExecutionLogger = r"../Output/ACQSDK_Execution.log"
+# Outputs: SDK's log file (ACQSDK_SetLogPath), execution's log and test report.
+ACQSDK_OutputDir       = r"../Output"
+ACQSDK_ExecutionLogger = "ACQSDK_Execution.log"
+ACQSDK_ExecutionReport = "ACQSDK_TestReport.xml"
 
 # definition: Live Video Window
-TestACQSDK_LiveVideo_Window_Class	= "TestACQSDK"
-TestACQSDK_LiveVideo_Window_Title	= "TestACQSDK: Live Video Display"
+TestACQSDK_LiveVideo_Window_Class    = "TestACQSDK"
+TestACQSDK_LiveVideo_Window_Title    = "TestACQSDK: Live Video Display"
 TestACQSDK_LiveVideo_Window_Position = (1,1)
-TestACQSDK_LiveVideo_Window_Size	 = (640,480)
+TestACQSDK_LiveVideo_Window_Size     = (640,480)
 
 # definition: dictionary, Error Code List
 ErrorCode = {
-	"0X20006": "[TEST] DEVICE_CONNECTION_FALSE: Disconnected or Disabled?",
-	"0XF0001": "DEVICE_CONNECTION_FALSE",
+	"0X20006": "[TEST] DEVICE_CONNECTION_FALSE: Disconnected or Disabled?", # Event
+	"0XF0001": "DEVICE_CONNECTION_FALSE",                                   # Return
 	"0XF0002": "DEVICE_CREATED_FAIL",
 	"0XF0003": "HOST_SERVICE_IP_INVALID",
 	"0XF0004": "HOST_SERVICE_CONNECT_FAILED",
@@ -59,31 +59,34 @@ ErrorCode = {
 try:
 	# Function to return Output Header. The header is a timestamp.
 	def Output_Header():
-		return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+		return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H-%M-%S')
 
-	# Function to initiate execution log file
-	def InitExecLogger(ExecutionLogger = ACQSDK_ExecutionLogger):
-		if os.path.isfile(ExecutionLogger):
-			os.rename(ExecutionLogger, Output_Header() + "_" + ExecutionLogger)
-		open(ExecutionLogger, "w").close()
+	# Logger related functions
+	# 	Function to initiate execution log file
+	def InitExecLogger(Dir = ACQSDK_OutputDir, ExecutionLogger = ACQSDK_ExecutionLogger):
+		if os.path.isfile(Dir + "/" + ExecutionLogger):
+			time.sleep(1)
+			os.rename(Dir + "/" + ExecutionLogger, Dir + "/" + Output_Header().replace(" ", "-") + "_" + ExecutionLogger)
+		open(Dir + "/" + ExecutionLogger, "w").close()
 
-	def WriteLine2ExecLogger(StrLine, ExecutionLogger = ACQSDK_ExecutionLogger):
-		f = open(ExecutionLogger, "a+")
-		f.write(Output_Header().replace(" ", ",") + "," + StrLine)
+	#	Function to write execution log file
+	def WriteLine2ExecLogger(StrLine, Dir = ACQSDK_OutputDir, ExecutionLogger = ACQSDK_ExecutionLogger):
+		f = open(Dir + "/" + ExecutionLogger, "a+")
+		f.write(Output_Header().replace(" ", ",") + "," + StrLine + "\n")
 		f.close()
 
-	# Function to output content to console and execution log
+	# 	Function to output content to console and execution log
 	def Logger(StrLine):
 		WriteLine2ExecLogger(StrLine)
 		print Output_Header() + "\t" + StrLine
 
-	# Function to output content to console and log file for API/Workflow
+	# 	Function to output content to console and execution log file for API/Workflow
 	def TEE(module_name, parameter, ret, type = 1, ExecutionLogger = ACQSDK_ExecutionLogger):
 		info = "Location: " + str(module_name) + "; Parameter: " + str(parameter) + "; Output: " + str(ret)
 		if ret == 0:
 			result = "Pass"
 		else:
-			result = "Failure, " + str(hex(ret))
+			result = "Failure"
 			# Fetch the error information via error code
 			if ret != 1:
 				try:
@@ -94,8 +97,23 @@ try:
 			Logger(info)
 			Logger(result)
 			Logger(errorcode)
+			WriteLine2ExecReporter(module_name, result)
 		elif type == 2: # if workflow
 			pass
+
+	# Report related functions
+	#	Function to initiate execution report
+	def InitExecReporter(Dir = ACQSDK_OutputDir, ExecutionReporter = ACQSDK_ExecutionReport):
+		if os.path.isfile(Dir + "/" + ExecutionReporter):
+			time.sleep(1)
+			os.rename(Dir + "/" + ExecutionReporter, Dir + "/" + Output_Header().replace(" ", "-") + "_" + ExecutionReporter)
+		f = open(Dir + "/" + ExecutionReporter, "w")
+		f.write(r"<?xml version="1.0" encoding="utf-8"?>")
+		f.close()
+
+	#	Function to write execution report
+	def WriteLine2ExecReporter(testcase, result, Dir = ACQSDK_OutputDir, ExecutionLogger = ACQSDK_ExecutionLogger):
+		pass
 
 	# Function of Creating COM Object
 	def CreateCOMObject(ProgID):
@@ -107,9 +125,6 @@ try:
 
 	# Class of Callback
 	# [Placeholder]
-
-	# Function of XMLReader
-	# def XMLReader(xmlfile):
 
 	# Functions of Window object
 	def WndProc(hWnd, msg, wParam, lParam):

@@ -1,12 +1,13 @@
-# Import required modules
+# Import required module(s)
 try:
+	import sys
 	import TestACQSDK_Module_Global_Definition as GDEF
 except ImportError:
-	print "The required module is missing!"
+	print "One or more required modules are missing!"
 	sys.exit(1)
 
 # API: ACQSDK_SetLogPath
-def TestACQSDK_API_ACQSDK_SetLogPath(objACQSDK_CSDevice, para_path):
+def TS0001_ACQSDK_SetLogPath(objACQSDK_CSDevice, para_path):
 	Module_Name = sys._getframe().f_code.co_name
 	try:
 		ret = objACQSDK_CSDevice.ACQSDK_SetLogPath(para_path)
