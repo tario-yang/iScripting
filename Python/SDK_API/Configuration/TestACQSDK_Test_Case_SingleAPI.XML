@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TestCase type="API">
-	<TestSet index="TS0001_ACQSDK_SetLogPath">
-		<Parameter name="APIName" value="TS0001_ACQSDK_SetLogPath" />
-		<Parameter name="path" value="../Output" /></TestSet>
-</TestCase>

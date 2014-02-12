@@ -13,8 +13,8 @@ ACQSDK_ASImageUnit_ProgID     = "ACQSDK.ASImageUnit.1"
 ACQSDK_SDKCallbackInfo_ProgID = "ACQSDK.SDKCallbackInfo.1"
 
 # Data Source: XML
-ACQSDK_TestCaseXML_SingleAPI = r"../Configuration/TestACQSDK_Test_Case_SingleAPI.XML"
-ACQSDK_TestCaseXML_Workflow  = r"../Configuration/TestACQSDK_Test_Case_Workflow.XML"
+ACQSDK_TestCaseXML_API      = r"../Configuration/TestACQSDK_TestCase_API.XML"
+ACQSDK_TestCaseXML_Workflow = r"../Configuration/TestACQSDK_TestCase_Workflow.XML"
 
 # Outputs: SDK's log file (ACQSDK_SetLogPath), execution's log and test report.
 ACQSDK_OutputDir       = r"../Output"
@@ -29,8 +29,8 @@ TestACQSDK_LiveVideo_Window_Size     = (640,480)
 
 # definition: dictionary, Error Code List
 ErrorCode = {
-	"0X20006": "[TEST] DEVICE_CONNECTION_FALSE: Disconnected or Disabled?", # Event
-	"0XF0001": "DEVICE_CONNECTION_FALSE",                                   # Return
+	"0X20006": "[Event] DEVICE_CONNECTION_FALSE: Disconnected or Disabled?",
+	"0XF0001": "DEVICE_CONNECTION_FALSE",
 	"0XF0002": "DEVICE_CREATED_FAIL",
 	"0XF0003": "HOST_SERVICE_IP_INVALID",
 	"0XF0004": "HOST_SERVICE_CONNECT_FAILED",
@@ -67,38 +67,42 @@ try:
 		if os.path.isfile(Dir + "/" + ExecutionLogger):
 			time.sleep(1)
 			os.rename(Dir + "/" + ExecutionLogger, Dir + "/" + Output_Header().replace(" ", "-") + "_" + ExecutionLogger)
-		open(Dir + "/" + ExecutionLogger, "w").close()
+		else:
+			pass
+		f = open(Dir + "/" + ExecutionLogger, "w")
+		f.write("Date, Time, Description, Result, Comment\n")
+		f.close()
 
 	#	Function to write execution log file
 	def WriteLine2ExecLogger(StrLine, Dir = ACQSDK_OutputDir, ExecutionLogger = ACQSDK_ExecutionLogger):
 		f = open(Dir + "/" + ExecutionLogger, "a+")
-		f.write(Output_Header().replace(" ", ",") + "," + StrLine + "\n")
+		f.write(Output_Header().replace(" ", ",") + ", %s\n" % StrLine)
 		f.close()
 
 	# 	Function to output content to console and execution log
 	def Logger(StrLine):
 		WriteLine2ExecLogger(StrLine)
-		print Output_Header() + "\t" + StrLine
+		print Output_Header() + "\t%s" % StrLine
 
 	# 	Function to output content to console and execution log file for API/Workflow
-	def TEE(module_name, parameter, ret, type = 1, ExecutionLogger = ACQSDK_ExecutionLogger):
-		info = "Location: " + str(module_name) + "; Parameter: " + str(parameter) + "; Output: " + str(ret)
+	def TEE(module_name, ret, parameter="none", type = "api", ExecutionLogger = ACQSDK_ExecutionLogger):
+		info = "Location: %s; Output: %s; Parameter: %s" % (module_name, ret, parameter)
+		result = ""
+		errorcode = ""
 		if ret == 0:
 			result = "Pass"
 		else:
 			result = "Failure"
-			# Fetch the error information via error code
 			if ret != 1:
 				try:
 					errorcode = ErrorCode[str(hex(ret)).upper()]
 				except KeyError:
 					errorcode = "Error code is NOT defined."
-		if type == 1: # if api
+		if type == "api":
+			info = info + ", %s, %s" % (result, errorcode)
 			Logger(info)
-			Logger(result)
-			Logger(errorcode)
 			WriteLine2ExecReporter(module_name, result)
-		elif type == 2: # if workflow
+		elif type == "workflow":
 			pass
 
 	# Report related functions
@@ -108,23 +112,23 @@ try:
 			time.sleep(1)
 			os.rename(Dir + "/" + ExecutionReporter, Dir + "/" + Output_Header().replace(" ", "-") + "_" + ExecutionReporter)
 		f = open(Dir + "/" + ExecutionReporter, "w")
-		f.write(r"<?xml version="1.0" encoding="utf-8"?>")
+		f.write(r'<?xml version="1.0" encoding="utf-8"?>')
 		f.close()
 
 	#	Function to write execution report
-	def WriteLine2ExecReporter(testcase, result, Dir = ACQSDK_OutputDir, ExecutionLogger = ACQSDK_ExecutionLogger):
+	def WriteLine2ExecReporter(testcase, result, type = "api", Dir = ACQSDK_OutputDir, ExecutionLogger = ACQSDK_ExecutionLogger):
 		pass
 
 	# Function of Creating COM Object
-	def CreateCOMObject(ProgID):
-		return win32com.client.Dispatch(ProgID)
+	def CreateCOMObject(ProgID): return win32com.client.Dispatch(ProgID)
 
 	# Function of Creating COM Event
-	def CreateCOMObjectEvent(ProgID, Event):
-		return win32com.client.DispatchEvents(ProgID,Event)
+	def CreateCOMObjectEvent(ProgID, Event): return win32com.client.DispatchEvents(ProgID,Event)
 
-	# Class of Callback
-	# [Placeholder]
+	# Class of Callback ===> When using multi-thread, this can be invloked to test whether callback works or not.
+	class ACQSDK_Callback():
+		def OnHPEvents(self, objSDKCallbackInfo):
+			return objSDKCallbackInfo.get_event_id()
 
 	# Functions of Window object
 	def WndProc(hWnd, msg, wParam, lParam):
@@ -156,13 +160,12 @@ try:
 		time.sleep(1)
 		win32gui.UpdateWindow(hWnd)
 		win32gui.PumpMessages()
-	def WindowObjectKill(hWnd):
-		win32gui.PostMessage(hWnd, win32con.WM_CLOSE, 0, 0)
+	def WindowObjectKill(hWnd): win32gui.PostMessage(hWnd, win32con.WM_CLOSE, 0, 0)
 except:
-	print "Defined function/class includes error/mistake."
+	Logger(r"Error -> Defined function/class includes error/mistake.")
 	sys.exit(1)
 else:
-	print Output_Header() + "\t" + "Initiated."
+	if __name__ == '__main__': Logger(r"Info -> Initiated.")
 
 # Display the window when executing directly
 if __name__ == '__main__':
