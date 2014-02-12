@@ -1,4 +1,0 @@
-Date, Time, Description, Result, Comment
-2014-02-12,21-47-35, Info -> Initiated.
-2014-02-12,21-47-35, Info -> COM object has been created.
-2014-02-12,21-47-35, Info -> Details: <win32com.gen_py.ACQSDK 1.0 Type Library.ICSDevice instance at 0x45159728>; <win32com.gen_py.ACQSDK 1.0 Type Library.IASImageUnit instance at 0x45159808>; <win32com.gen_py.ACQSDK 1.0 Type Library.ISDKCallbackInfo instance at 0x45159768>
