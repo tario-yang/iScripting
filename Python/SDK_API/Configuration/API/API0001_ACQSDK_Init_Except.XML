@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestCase type="API">
+	<Teststep index="API0001_ACQSDK_Init: parameter is zero">
+		<Parameter name="APIName" value="API0001_ACQSDK_Init"></Parameter>
+		<Parameter name="hWnd" value="0"></Parameter>
+		<Parameter name="Return" value="1"></Parameter>
+	</Teststep>
+	<Teststep index="API0001_ACQSDK_Init: parameter is a number, int">
+		<Parameter name="APIName" value="API0001_ACQSDK_Init"></Parameter>
+		<Parameter name="hWnd" value="65536"></Parameter>
+		<Parameter name="Return" value="1"></Parameter>
+	</Teststep>
+	<Teststep index="API0001_ACQSDK_Init: parameter is a number, long">
+		<Parameter name="APIName" value="API0001_ACQSDK_Init"></Parameter>
+		<Parameter name="hWnd" value="655360000000000"></Parameter>
+		<Parameter name="Return" value="1"></Parameter>
+	</Teststep>
+	<Teststep index="API0001_ACQSDK_Init: parameter is a number, float">
+		<Parameter name="APIName" value="API0001_ACQSDK_Init"></Parameter>
+		<Parameter name="hWnd" value="1.0"></Parameter>
+		<Parameter name="Return" value="1"></Parameter>
+	</Teststep>
+	<Teststep index="API0001_ACQSDK_Init: parameter is a string">
+		<Parameter name="APIName" value="API0001_ACQSDK_Init"></Parameter>
+		<Parameter name="hWnd" value="String"></Parameter>
+		<Parameter name="Return" value="1"></Parameter>
+	</Teststep>
+	<Teststep index="API0001_ACQSDK_Init: parameter is a boolean">
+		<Parameter name="APIName" value="API0001_ACQSDK_Init"></Parameter>
+		<Parameter name="hWnd" value="TRUE"></Parameter>
+		<Parameter name="Return" value="1"></Parameter>
+	</Teststep>
+</TestCase>

@@ -4,22 +4,35 @@ try:
 	import win32com.client, win32gui, win32con
 	from win32con import *
 except ImportError:
-	print "One or more required modules are missing!"
+	GDEF.Logger("Info -> %r" % sys._getframe().f_code.co_filename)
+	GDEF.Logger("Error -> One or more required modules are missing!")
 	sys.exit(1)
 
-# ProgID of each CoClass
-ACQSDK_CSDevice_ProgID        = "ACQSDK.CSDevice.1"
-ACQSDK_ASImageUnit_ProgID     = "ACQSDK.ASImageUnit.1"
-ACQSDK_SDKCallbackInfo_ProgID = "ACQSDK.SDKCallbackInfo.1"
+# definition: ProgID of each CoClass
+ACQSDK_CSDevice_ProgID               = "ACQSDK.CSDevice.1"
+ACQSDK_ASImageUnit_ProgID            = "ACQSDK.ASImageUnit.1"
+ACQSDK_SDKCallbackInfo_ProgID        = "ACQSDK.SDKCallbackInfo.1"
 
-# Data Source: XML
-ACQSDK_TestCaseXML_API      = r"../Configuration/TestACQSDK_TestCase_API.XML"
-ACQSDK_TestCaseXML_Workflow = r"../Configuration/TestACQSDK_TestCase_Workflow.XML"
+# definition: Data source directory for XML files
+ACQSDK_TestCaseXML_APIDir            = r"../Configuration/API"
+ACQSDK_TestCaseXML_WorkflowDir       = r"../Configuration/Workflow"
 
-# Outputs: SDK's log file (ACQSDK_SetLogPath), execution's log and test report.
-ACQSDK_OutputDir       = r"../Output"
-ACQSDK_ExecutionLogger = "ACQSDK_Execution.log"
-ACQSDK_ExecutionReport = "ACQSDK_TestReport.xml"
+# definition: Data source list
+ACQSDK_TestCaseXML_List              = r"../Configuration/ACQSDK_TestCaseXML_List.txt"
+
+# definition: Keywords in XML
+ACQSDK_TestSummaryTag                = "index"
+ACQSDK_TestCase                      = "APIName"
+ACQSDK_ExpectedResult                = "Return"
+ACQSDK_TestStepTag                   = "Teststep"
+ACQSDK_ParameterTag                  = "Parameter"
+ACQSDK_ParameterNameTag              = "name"
+ACQSDK_ParameterValueTag             = "value"
+
+# definition: Outputs: SDK's log file (ACQSDK_SetLogPath), execution's log and test report.
+ACQSDK_OutputDir                     = r"../Output"
+ACQSDK_ExecutionLogger               = "ACQSDK_Execution.csv"
+ACQSDK_ExecutionReport               = "ACQSDK_TestReport.xml"
 
 # definition: Live Video Window
 TestACQSDK_LiveVideo_Window_Class    = "TestACQSDK"
@@ -85,7 +98,7 @@ try:
 		print Output_Header() + "\t%s" % StrLine
 
 	# 	Function to output content to console and execution log file for API/Workflow
-	def TEE(module_name, ret, parameter="none", type = "api", ExecutionLogger = ACQSDK_ExecutionLogger):
+	def TEE(module_name, ret, parameter="none", flag = "api", ExecutionLogger = ACQSDK_ExecutionLogger):
 		info = "Location: %s; Output: %s; Parameter: %s" % (module_name, ret, parameter)
 		result = ""
 		errorcode = ""
@@ -98,11 +111,11 @@ try:
 					errorcode = ErrorCode[str(hex(ret)).upper()]
 				except KeyError:
 					errorcode = "Error code is NOT defined."
-		if type == "api":
+		if flag == "api":
 			info = info + ", %s, %s" % (result, errorcode)
 			Logger(info)
 			WriteLine2ExecReporter(module_name, result)
-		elif type == "workflow":
+		elif flag == "workflow":
 			pass
 
 	# Report related functions
@@ -116,7 +129,7 @@ try:
 		f.close()
 
 	#	Function to write execution report
-	def WriteLine2ExecReporter(testcase, result, type = "api", Dir = ACQSDK_OutputDir, ExecutionLogger = ACQSDK_ExecutionLogger):
+	def WriteLine2ExecReporter(testcase, result, flag = "api", Dir = ACQSDK_OutputDir, ExecutionLogger = ACQSDK_ExecutionLogger):
 		pass
 
 	# Function of Creating COM Object
@@ -169,4 +182,5 @@ else:
 
 # Display the window when executing directly
 if __name__ == '__main__':
+	print sys._getframe().f_code.co_filename
 	WindowObjectCreate()
