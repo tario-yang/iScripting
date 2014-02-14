@@ -24,27 +24,53 @@ else:
 	GDEF.Logger("Info -> Initiated.")
 
 # Function to invoke pointed test case
-def Action(action):
+def Action(action, objects, debug = 0):
 	# Get parameter value
 	arg0 = action[0] # Test Summary
 	arg1 = action[1] # Test Case Name
 	arg2 = action[2] # Expected Result
- 	arg3 = action[3] # Parameter Line
+	arg3 = action[3] # Parameter Line
+	obj0 = objects[0] # objACQSDK_CSDevice
+	obj1 = objects[1] # objACQSDK_ASImageUnit
+	obj2 = objects[2] # objACQSDK_SDKCallbackInfo
 
- 	# Store test result
- 	result = []
+	if debug == 1:
+		print "-"*33
+		print "Test Summary: %s" % arg0
+		print "Test Case Name: %s" % arg1
+		print "Expected Result: %s" % arg2
+		print "Parameter Line: %r" % arg3
+		print "objACQSDK_CSDevice: %r" % obj0
+		print "objACQSDK_ASImageUnit: %r" % obj1
+		print "objACQSDK_SDKCallbackInfo: %r" % obj2
+		print
 
- 	# Parse parameter
- 	Scope = {}
- 	parameter_line  = arg3.split("#")
- 	for parameter in parameter_line:
- 		exec("parameter") in Scope
+	# Store test result
+	result = []
 
+	# Parse parameter
+	parameter_line  = arg3.split(";")
+	para_list = []
+	for parameter in parameter_line:
+		exec_string = ""
+		para_list.append(x[0])
+		x = parameter.split("=")
+		if x[1].upper() == "TRUE": # is boolean
+			exec_string = "%s = bool(1)" % x[0]
+		elif x[1].upper() == "FALSE": # is boolean
+			exec_string = "%s = bool(0)" % x[0]
+		elif x[1].upper() == x[1].lower() and x[1].count(".") == 0: # is int
+			exec_string = "%s = int(%s)" % (x[0], x[1])
+		elif x[1].upper() == x[1].lower() and x[1].count(".") == 0: # is float
+			exec_string = "%s = float(%s)" % (x[0], x[1])
+		else:
+			exec_string = "%s = str(%s)" % (x[0], x[1])
+		print exec_string
+		#exec(exec_string)
 
- 	print
- 	string = "TCAPI.arg1(objACQSDK_CSDevice, )"
+	# Invoke test case
+	#exec_string = "%s(%r," % arg1
 
- 	print string
 
 # Function to get XML data and then parse it, finally, trigger the test.
 def START(flag = "api", switch = "full"):
@@ -81,10 +107,10 @@ def START(flag = "api", switch = "full"):
 
 	# Create COM Object
 	try:
-		global objACQSDK_CSDevice, objACQSDK_ASImageUnit, objACQSDK_SDKCallbackInfo
 		objACQSDK_CSDevice        = GDEF.CreateCOMObject(GDEF.ACQSDK_CSDevice_ProgID)
 		objACQSDK_ASImageUnit     = GDEF.CreateCOMObject(GDEF.ACQSDK_ASImageUnit_ProgID)
 		objACQSDK_SDKCallbackInfo = GDEF.CreateCOMObject(GDEF.ACQSDK_SDKCallbackInfo_ProgID)
+		objects = (objACQSDK_CSDevice, objACQSDK_ASImageUnit, objACQSDK_SDKCallbackInfo)
 	except:
 		GDEF.Logger("Info -> %r" % sys._getframe().f_code.co_filename)
 		GDEF.Logger("Error: Exception occurs when creating COM object(s).")
@@ -93,6 +119,7 @@ def START(flag = "api", switch = "full"):
 		GDEF.Logger("Info -> COM object has been created.")
 		GDEF.Logger("Info -> Details: %r; %r; %r" % (objACQSDK_CSDevice, objACQSDK_ASImageUnit, objACQSDK_SDKCallbackInfo))
 
+	# Parse data
 	try:
 		for datasource in datasource_list:
 			datasource_xml = minidom.parse("%s/%s" % (location, datasource))
@@ -111,8 +138,8 @@ def START(flag = "api", switch = "full"):
 				name_list  = []
 				value_list = []
 				for para in para_list:
-					name  = para.getAttribute(GDEF.ACQSDK_ParameterNameTag)
-					value = para.getAttribute(GDEF.ACQSDK_ParameterValueTag)
+					name  = str(para.getAttribute(GDEF.ACQSDK_ParameterNameTag))
+					value = str(para.getAttribute(GDEF.ACQSDK_ParameterValueTag))
 					name_list.append(name)
 					value_list.append(value)
 				if len(name_list) > 0 and len(value_list) > 0 and len(name_list) == len(value_list):
@@ -129,10 +156,12 @@ def START(flag = "api", switch = "full"):
 						if para_line == "":
 							para_line = name_list.pop() + "=" + value_list.pop()
 						else:
-							para_line = name_list.pop() + "=" + value_list.pop() + "#" + para_line
+							para_line = name_list.pop() + "=" + value_list.pop() + ";" + para_line
 					# Parameter List
 					action.append(para_line)
-					print action
+
+					# Trigger the execution
+					Action(action, objects, 1)
 				else:
 					GDEF.Logger("Info -> %r" % sys._getframe().f_code.co_filename)
 					GDEF.Logger("Error -> Exception occurs when fetching parameters from XML file, %r." % datasource)
@@ -142,8 +171,5 @@ def START(flag = "api", switch = "full"):
 		GDEF.Logger("Info -> %r" % sys._getframe().f_code.co_filename)
 		GDEF.Logger("Error -> Exception occurs when fetching parameters from XML file.")
 		sys.exit(1)
-	else:
-		# Execute testing
-		Action(action)
 
 START()

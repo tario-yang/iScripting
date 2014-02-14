@@ -178,9 +178,7 @@ except:
 	Logger(r"Error -> Defined function/class includes error/mistake.")
 	sys.exit(1)
 else:
-	if __name__ == '__main__': Logger(r"Info -> Initiated.")
-
-# Display the window when executing directly
-if __name__ == '__main__':
-	print sys._getframe().f_code.co_filename
-	WindowObjectCreate()
+	# Display the window when executing directly
+	if __name__ == '__main__':
+		print sys._getframe().f_code.co_filename
+		WindowObjectCreate()
