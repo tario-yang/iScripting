@@ -3,7 +3,7 @@
 """
 import os, sys, datetime, time
 import win32com.client, win32gui, time
-import Tkinter
+from Tkinter import *
 
 def ACQSDK_Init(): # OK
 	ACQSDK_SetLogPath()
@@ -60,18 +60,19 @@ def ACQSDK_GetImageData(): # Need multithread + callback
 	ret = objACQSDK_CSDevice.ACQSDK_GetImageData(pImageUnit)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 def ACQSDK_SetLogPath(): # OK
-	path=r"."
-	ret = objACQSDK_CSDevice.ACQSDK_SetLogPath(path)
+	path = r"."
+	ret  = objACQSDK_CSDevice.ACQSDK_SetLogPath(path)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetSerialNumber():
-	len = 1
-	ret = objACQSDK_CSDevice.ACQSDK_GetSerialNumber(len)
+def ACQSDK_GetSerialNumber(): # ISSUE
+	length = 8
+	ret    = objACQSDK_CSDevice.ACQSDK_GetSerialNumber(length)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetSerialNumber():
-	pSn, len = 1
+def ACQSDK_SetSerialNumber(): # ISSUE
+	pSn = "ASDF0001"
+	length = 8
 	ret = objACQSDK_CSDevice.ACQSDK_SetSerialNumber(pSn, len)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetFirmwareVersion(): # ISSUE
+def ACQSDK_GetFirmwareVersion(): # ISSUE; From CHM, it said this API will be changed.
 	length = 10
 	ret = objACQSDK_CSDevice.ACQSDK_GetFirmwareVersion(length)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
@@ -132,20 +133,20 @@ def ACQSDK_EnableAutoPowerOff(): # OK, suggest not to use parameter
 	bEnable = 1
 	ret = objACQSDK_CSDevice.ACQSDK_EnableAutoPowerOff(bEnable)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetAutoPowerOffTime():
-	secondsCount = 1
+def ACQSDK_SetAutoPowerOffTime(): # OK
+	secondsCount = 0
 	ret = objACQSDK_CSDevice.ACQSDK_SetAutoPowerOffTime(secondsCount)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_EnableStandBy():
+def ACQSDK_EnableStandBy(): # OK
 	bEnable = 1
 	ret = objACQSDK_CSDevice.ACQSDK_EnableStandBy(bEnable)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetStandByTime():
-	secondsCount = 1
+def ACQSDK_SetStandByTime(): # OK
+	secondsCount = 10
 	ret = objACQSDK_CSDevice.ACQSDK_SetStandByTime(secondsCount)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetSystemTime():
-	secondsCount = 1
+def ACQSDK_SetSystemTime(): # OK
+	secondsCount = 1000
 	ret = objACQSDK_CSDevice.ACQSDK_SetSystemTime(secondsCount)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 def ACQSDK_SetMirrorFlag():
@@ -172,46 +173,70 @@ objACQSDK_ASImageUnit         = win32com.client.Dispatch(ACQSDK_ASImageUnit_Prog
 objACQSDK_SDKCallbackInfo     = win32com.client.Dispatch(ACQSDK_SDKCallbackInfo_ProgID)
 objACQSDK_ASDeviceInfor       = win32com.client.Dispatch(ACQSDK_ASDeviceInfor_ProgID)
 
-wControlPanel = Tkinter.Tk()
-wLiveVideo    = Tkinter.Tk()
+wControlPanel = Tk()
+wLiveVideo    = Tk()
 
-wControlPanel.geometry("353x480+655+0")
+wControlPanel.geometry("352x768+0+0")
 wControlPanel.title("SDK Testing: Control Panel")
-wLiveVideo.geometry("640x480+0+0")
+wLiveVideo.geometry("640x480+368+0")
 wLiveVideo.title("SDK Testing: Live Video")
 
-frame_BasicControl = Tkinter.Frame(wControlPanel).grid()
+# Create frame
+frame_Controls = Frame(wControlPanel).grid(row = 0, column = 0)
 
-Tkinter.Label(frame_BasicControl, text = "Basic Functions").grid(                                                                           row = 1,  column = 1)
-Tkinter.Button(frame_BasicControl, text ="Init",               bd = 3, width = 15, height = 1, command = ACQSDK_Init).grid(                 row = 2,  column = 1)
-Tkinter.Button(frame_BasicControl, text ="UnInit",             bd = 3, width = 15, height = 1, command = ACQSDK_UnInit).grid(               row = 3,  column = 1)
-Tkinter.Button(frame_BasicControl, text ="Refresh Live Video", bd = 3, width = 15, height = 1, command = ACQSDK_OnUpdateLiveWnd).grid(      row = 4,  column = 1)
-Tkinter.Button(frame_BasicControl, text ="Start Play",         bd = 3, width = 15, height = 1, command = ACQSDK_StartPlay).grid(            row = 2,  column = 2)
-Tkinter.Button(frame_BasicControl, text ="Pause Play",         bd = 3, width = 15, height = 1, command = ACQSDK_PausePlay).grid(            row = 3,  column = 2)
-Tkinter.Button(frame_BasicControl, text ="Stop Play",          bd = 3, width = 15, height = 1, command = ACQSDK_StopPlay).grid(             row = 4,  column = 2)
-Tkinter.Button(frame_BasicControl, text ="Capture Image",      bd = 3, width = 15, height = 1, command = ACQSDK_Capture).grid(              row = 2,  column = 3)
-Tkinter.Button(frame_BasicControl, text ="Start Record",       bd = 3, width = 15, height = 1, command = ACQSDK_StartRecord).grid(          row = 3,  column = 3)
-Tkinter.Button(frame_BasicControl, text ="Stop Record",        bd = 3, width = 15, height = 1, command = ACQSDK_StopRecord).grid(           row = 4,  column = 3)
-
-Tkinter.Label(frame_BasicControl,  text = "Others").grid(                                                                                   row = 6,  column = 1)
-
-Tkinter.Label(frame_BasicControl,  text = "Query & Upgrade").grid(                                                                          row = 7,  column = 2)
-Tkinter.Button(frame_BasicControl, text ="Query Device Info",  bd = 3, width = 15, height = 1, command = ACQSDK_QueryDeviceInfo).grid(      row = 8,  column = 1)
-Tkinter.Button(frame_BasicControl, text ="?Get FW Version",     bd = 3, width = 15, height = 1, command = ACQSDK_GetFirmwareVersion).grid(   row = 9,  column = 1)
-Tkinter.Button(frame_BasicControl, text ="?Get Serial Number",  bd = 3, width = 15, height = 1, command = ACQSDK_GetSerialNumber).grid(      row = 8,  column = 2)
-Tkinter.Button(frame_BasicControl, text ="?Set Serial Number",  bd = 3, width = 15, height = 1, command = ACQSDK_SetSerialNumber).grid(      row = 9,  column = 2)
-Tkinter.Button(frame_BasicControl, text ="?Upgrade FW",         bd = 3, width = 15, height = 1, command = ACQSDK_UpgradeFirmware).grid(      row = 8,  column = 3)
-Tkinter.Button(frame_BasicControl, text ="?Abort Upgrade",      bd = 3, width = 15, height = 1, command = ACQSDK_AbortUpgrade).grid(         row = 9,  column = 3)
-
-Tkinter.Label(frame_BasicControl,  text = "HP Configuration").grid(                                                                         row = 10, column = 2)
-Tkinter.Button(frame_BasicControl, text ="Get Brightness",     bd = 3, width = 15, height = 1, command = ACQSDK_GetBrightness).grid(        row = 11, column = 1)
-Tkinter.Button(frame_BasicControl, text ="Set Brightness",     bd = 3, width = 15, height = 1, command = ACQSDK_SetBrightness).grid(        row = 12, column = 1)
-Tkinter.Button(frame_BasicControl, text ="Get Contrast",       bd = 3, width = 15, height = 1, command = ACQSDK_GetContrast).grid(          row = 13, column = 1)
-Tkinter.Button(frame_BasicControl, text ="Set Contrast",       bd = 3, width = 15, height = 1, command = ACQSDK_SetContrast).grid(          row = 14, column = 1)
-Tkinter.Button(frame_BasicControl, text ="Get Frequency",      bd = 3, width = 15, height = 1, command = ACQSDK_GetPowerlineFrequency).grid(row = 11, column = 2)
-Tkinter.Button(frame_BasicControl, text ="Set Frequency",      bd = 3, width = 15, height = 1, command = ACQSDK_SetPowerlineFrequency).grid(row = 12, column = 2)
-Tkinter.Button(frame_BasicControl, text ="Enable Auto On",     bd = 3, width = 15, height = 1, command = ACQSDK_EnableAutoPowerOn).grid(    row = 13, column = 2)
-Tkinter.Button(frame_BasicControl, text ="Enable Auto Off",    bd = 3, width = 15, height = 1, command = ACQSDK_EnableAutoPowerOff).grid(   row = 14, column = 2)
-
+#	Button Set 1
+#	Title
+Label(frame_Controls,  text = "Basic").grid(                                                                               row = 0,  column = 0)
+#	Buttons
+Button(frame_Controls, text = "Init",               bd = 3, width = 15, height = 1, command = ACQSDK_Init).grid(           row = 1,  column = 0)
+Button(frame_Controls, text = "UnInit",             bd = 3, width = 15, height = 1, command = ACQSDK_UnInit).grid(         row = 2,  column = 0)
+Button(frame_Controls, text = "Refresh Live Video", bd = 3, width = 15, height = 1, command = ACQSDK_OnUpdateLiveWnd).grid(row = 3,  column = 0)
+Button(frame_Controls, text = "Start Play",         bd = 3, width = 15, height = 1, command = ACQSDK_StartPlay).grid(      row = 1,  column = 1)
+Button(frame_Controls, text = "Pause Play",         bd = 3, width = 15, height = 1, command = ACQSDK_PausePlay).grid(      row = 2,  column = 1)
+Button(frame_Controls, text = "Stop Play",          bd = 3, width = 15, height = 1, command = ACQSDK_StopPlay).grid(       row = 3,  column = 1)
+Button(frame_Controls, text = "Capture Image",      bd = 3, width = 15, height = 1, command = ACQSDK_Capture).grid(        row = 1,  column = 2)
+Button(frame_Controls, text = "Start Record",       bd = 3, width = 15, height = 1, command = ACQSDK_StartRecord).grid(    row = 2,  column = 2)
+Button(frame_Controls, text = "Stop Record",        bd = 3, width = 15, height = 1, command = ACQSDK_StopRecord).grid(     row = 3,  column = 2)
+#	Button Set 2
+Label(frame_Controls,  text = "Extention").grid(                                                                             row = 4, column = 0)
+#	Buttons
+Label(frame_Controls,  text = "Query & Upgrade").grid(                                                                       row = 5, column = 1)
+Button(frame_Controls, text = "Query Device Info", bd = 3, width = 15, height = 1, command = ACQSDK_QueryDeviceInfo).grid(   row = 6, column = 0)
+Button(frame_Controls, text = "Get FW Version",    bd = 3, width = 15, height = 1, command = ACQSDK_GetFirmwareVersion).grid(row = 7, column = 0)
+Button(frame_Controls, text = "Get Serial Number", bd = 3, width = 15, height = 1, command = ACQSDK_GetSerialNumber).grid(   row = 6, column = 1)
+Button(frame_Controls, text = "Set Serial Number", bd = 3, width = 15, height = 1, command = ACQSDK_SetSerialNumber).grid(   row = 7, column = 1)
+Button(frame_Controls, text = "Upgrade FW",        bd = 3, width = 15, height = 1, command = ACQSDK_UpgradeFirmware).grid(   row = 6, column = 2)
+Button(frame_Controls, text = "Abort Upgrade",     bd = 3, width = 15, height = 1, command = ACQSDK_AbortUpgrade).grid(      row = 7, column = 2)
+#	Button Set 3
+Label(frame_Controls,  text = "HP Configuration").grid(                                                                          row = 8, column = 1)
+#	Buttons
+Button(frame_Controls, text = "Get Brightness",     bd = 3, width = 15, height = 1, command = ACQSDK_GetBrightness).grid(        row = 9,  column = 0)
+Button(frame_Controls, text = "Set Brightness",     bd = 3, width = 15, height = 1, command = ACQSDK_SetBrightness).grid(        row = 10, column = 0)
+Button(frame_Controls, text = "Get Contrast",       bd = 3, width = 15, height = 1, command = ACQSDK_GetContrast).grid(          row = 11, column = 0)
+Button(frame_Controls, text = "Set Contrast",       bd = 3, width = 15, height = 1, command = ACQSDK_SetContrast).grid(          row = 12, column = 0)
+Button(frame_Controls, text = "Get Frequency",      bd = 3, width = 15, height = 1, command = ACQSDK_GetPowerlineFrequency).grid(row = 9,  column = 1)
+Button(frame_Controls, text = "Set Frequency",      bd = 3, width = 15, height = 1, command = ACQSDK_SetPowerlineFrequency).grid(row = 10, column = 1)
+Button(frame_Controls, text = "Auto Power On",      bd = 3, width = 15, height = 1, command = ACQSDK_EnableAutoPowerOn).grid(    row = 11, column = 1)
+Button(frame_Controls, text = "Auto Power Off",     bd = 3, width = 15, height = 1, command = ACQSDK_EnableAutoPowerOff).grid(   row = 12, column = 1)
+Button(frame_Controls, text = "Enable Standby",     bd = 3, width = 15, height = 1, command = ACQSDK_EnableStandBy).grid(        row = 9,  column = 2)
+Button(frame_Controls, text = "Set Standby Time",   bd = 3, width = 15, height = 1, command = ACQSDK_SetStandByTime).grid(       row = 10, column = 2)
+Button(frame_Controls, text = "Set System Time",    bd = 3, width = 15, height = 1, command = ACQSDK_SetSystemTime).grid(        row = 11, column = 2)
+Button(frame_Controls, text = "Set Power Off Time", bd = 3, width = 15, height = 1, command = ACQSDK_SetAutoPowerOffTime).grid(  row = 12, column = 2)
+#	Button Set 4
+Label(frame_Controls,  text = "Mirror & Rotation").grid(                                                                  row = 13, column = 1)
+#	Buttons
+Button(frame_Controls, text = "Get Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_GetMirrorFlag).grid(  row = 14, column = 0)
+Button(frame_Controls, text = "Set Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_SetMirrorFlag).grid(  row = 15, column = 0)
+Button(frame_Controls, text = "Get Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_GetRotationFlag).grid(row = 14, column = 1)
+Button(frame_Controls, text = "Set Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_SetRotationFlag).grid(row = 15, column = 1)
+#	Button Set 5
+Label(frame_Controls,  text = "File Operation").grid(                                                              row = 16, column = 1)
+#	Buttons
+Button(frame_Controls, text = "Upload File",   bd = 3, width = 15, height = 1, command = ACQSDK_UploadFile).grid(  row = 17, column = 0)
+Button(frame_Controls, text = "Download File", bd = 3, width = 15, height = 1, command = ACQSDK_DownloadFile).grid(row = 17, column = 1)
+#	Button Set 6
+Label(frame_Controls,  text = "").grid(                                    row = 18, column = 2)
+#	Button: Exit
+Button(frame_Controls, text = "Exit", bd = 3, width = 15, height = 1).grid(row = 19, column = 2)
 
 wLiveVideo.mainloop()
