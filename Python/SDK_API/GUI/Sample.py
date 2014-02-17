@@ -4,6 +4,15 @@
 import os, sys, datetime, time
 import win32com.client, win32gui, time
 from Tkinter import *
+from tkFileDialog import *
+import tkMessageBox
+
+def ResetWindow(width, height): wLiveVideo.geometry("%sx%s+368+0" % (width, height))
+def EXITAPP():
+	objACQSDK_CSDevice.ACQSDK_UnInit()
+	wControlPanel.quit()
+def WinCallback():
+	EXITAPP()
 
 def ACQSDK_Init(): # OK
 	ACQSDK_SetLogPath()
@@ -21,10 +30,10 @@ def ACQSDK_QueryDeviceInfo(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_QueryDeviceInfo(pDeviceInfo)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 	if ret == 0:
-		print "Device Type is '%r'" % pDeviceInfo.get_device_type()
-		print "Mode Type is '%r'" % pDeviceInfo.get_mode_type()
-		print "Serial Number is '%r'" % pDeviceInfo.get_sn()
-		print "Firmware Version is '%r'" % pDeviceInfo.get_fw_version()
+		print "\tDevice Type is '%r'" % pDeviceInfo.get_device_type()
+		print "\tMode Type is '%r'" % pDeviceInfo.get_mode_type()
+		print "\tSerial Number is '%r'" % pDeviceInfo.get_sn()
+		print "\tFirmware Version is '%r'" % pDeviceInfo.get_fw_version()
 def ACQSDK_SetHPWorkMode(): # Not implemented
 	lWorkMode = 1
 	ret = objACQSDK_CSDevice.ACQSDK_SetHPWorkMode(lWorkMode)
@@ -59,36 +68,44 @@ def ACQSDK_GetImageData(): # Need multithread + callback
 	pImageUnit = objACQSDK_ASImageUnit
 	ret = objACQSDK_CSDevice.ACQSDK_GetImageData(pImageUnit)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	if ret == 0:
+		img = pImageUnit.get_white_image()
+		print "\tGet white image -> %r" % img
+		print "\tSave image -> %r" % pImageUnit.save_image(r"./%s" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S'), img)
+		print "\tFree image -> %r" % pImageUnit.free_image(img)
+		print "\tFree unit -> %r" % pImageUnit.free_unit()
 def ACQSDK_SetLogPath(): # OK
 	path = r"."
 	ret  = objACQSDK_CSDevice.ACQSDK_SetLogPath(path)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetSerialNumber(): # ISSUE
+def ACQSDK_GetSerialNumber(): # ->>> ISSUE
 	length = 8
 	ret    = objACQSDK_CSDevice.ACQSDK_GetSerialNumber(length)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetSerialNumber(): # ISSUE
+def ACQSDK_SetSerialNumber(): # ->>> ISSUE
 	pSn = "ASDF0001"
 	length = 8
 	ret = objACQSDK_CSDevice.ACQSDK_SetSerialNumber(pSn, len)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetFirmwareVersion(): # ISSUE; From CHM, it said this API will be changed.
+def ACQSDK_GetFirmwareVersion(): # ->>> ISSUE
 	length = 10
 	ret = objACQSDK_CSDevice.ACQSDK_GetFirmwareVersion(length)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 def ACQSDK_UpgradeFirmware():
-	pFullPathName = r"."
+	pFullPathName = askopenfilename()
+	print "\tfile name is, %s" % pFullPathName
 	ret = objACQSDK_CSDevice.ACQSDK_UpgradeFirmware(pFullPathName)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 def ACQSDK_AbortUpgrade():
 	ret = objACQSDK_CSDevice.ACQSDK_AbortUpgrade()
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 def ACQSDK_UploadFile():
-	pFileName = 1
+	pFileName = askopenfilename()
 	ret = objACQSDK_CSDevice.ACQSDK_UploadFile(pFileName)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 def ACQSDK_DownloadFile():
-	fileID, pFileName = 1
+	fileID = 1
+	pFileName = "."
 	ret = objACQSDK_CSDevice.ACQSDK_DownloadFile(fileID, pFileName)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 def ACQSDK_EnableAutoPowerOn(): # OK, suggest not to use parameter
@@ -99,22 +116,22 @@ def ACQSDK_GetBrightness(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_GetBrightness()
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 	if ret[0] == 0:
-		print "Current brightness: %r" % ret[1]
-		print "Maximum brightness: %r" % ret[2]
-		print "Minimum brightness: %r" % ret[3]
-		print "Default brightness: %r" % ret[4]
+		print "\tCurrent brightness: %r" % ret[1]
+		print "\tMaximum brightness: %r" % ret[2]
+		print "\tMinimum brightness: %r" % ret[3]
+		print "\tDefault brightness: %r" % ret[4]
 def ACQSDK_SetBrightness(): # OK
-	brightness = 7
+	brightness = 4
 	ret = objACQSDK_CSDevice.ACQSDK_SetBrightness(brightness)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 def ACQSDK_GetContrast(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_GetContrast()
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 	if ret[0] == 0:
-		print "Current contrast: %r" % ret[1]
-		print "Maximum contrast: %r" % ret[2]
-		print "Minimum contrast: %r" % ret[3]
-		print "Default contrast: %r" % ret[4]
+		print "\tCurrent contrast: %r" % ret[1]
+		print "\tMaximum contrast: %r" % ret[2]
+		print "\tMinimum contrast: %r" % ret[3]
+		print "\tDefault contrast: %r" % ret[4]
 def ACQSDK_SetContrast(): # OK
 	contrast = 7
 	ret = objACQSDK_CSDevice.ACQSDK_SetContrast(contrast)
@@ -142,50 +159,60 @@ def ACQSDK_EnableStandBy(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_EnableStandBy(bEnable)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 def ACQSDK_SetStandByTime(): # OK
-	secondsCount = 10
+	secondsCount = 1000
 	ret = objACQSDK_CSDevice.ACQSDK_SetStandByTime(secondsCount)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
 def ACQSDK_SetSystemTime(): # OK
 	secondsCount = 1000
 	ret = objACQSDK_CSDevice.ACQSDK_SetSystemTime(secondsCount)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetMirrorFlag():
+def ACQSDK_SetMirrorFlag(): # Not Implemented
 	bEnable = 1
 	ret = objACQSDK_CSDevice.ACQSDK_SetMirrorFlag(bEnable)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetMirrorFlag():
+def ACQSDK_GetMirrorFlag(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_GetMirrorFlag()
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetRotationFlag():
-	rotation = 1
+def ACQSDK_SetRotationFlag(): # Not Implemented
+	rotation = 90 # 0, 90, 180, 270
 	ret = objACQSDK_CSDevice.ACQSDK_SetRotationFlag(rotation)
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetRotationFlag():
+def ACQSDK_GetRotationFlag(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_GetRotationFlag()
 	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+
+class SDKEvents():
+	def OnHPEvents(self, objACQSDK_SDKCallbackInfo):
+		print "Parameter data type: %r" % objACQSDK_SDKCallbackInfo
+		objACQSDK_SDKCallbackInfo.get_event_id()
 
 ACQSDK_CSDevice_ProgID        = "ACQSDK.CSDevice.1"
 ACQSDK_ASImageUnit_ProgID     = "ACQSDK.ASImageUnit.1"
 ACQSDK_SDKCallbackInfo_ProgID = "ACQSDK.SDKCallbackInfo.1"
 ACQSDK_ASDeviceInfor_ProgID   = "ACQSDK.ASDeviceInfor.1"
-objACQSDK_CSDevice            = win32com.client.Dispatch(ACQSDK_CSDevice_ProgID)
+
+objACQSDK_CSDevice            = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
 objACQSDK_ASImageUnit         = win32com.client.Dispatch(ACQSDK_ASImageUnit_ProgID)
+
 objACQSDK_SDKCallbackInfo     = win32com.client.Dispatch(ACQSDK_SDKCallbackInfo_ProgID)
+print "SDKCallbackInfo: %r" % objACQSDK_SDKCallbackInfo
+
 objACQSDK_ASDeviceInfor       = win32com.client.Dispatch(ACQSDK_ASDeviceInfor_ProgID)
 
 wControlPanel = Tk()
 wLiveVideo    = Tk()
 
-wControlPanel.geometry("352x768+0+0")
+wControlPanel.geometry("352x512+5+5")
 wControlPanel.title("SDK Testing: Control Panel")
+wControlPanel.resizable(width = False, height = False)
 wLiveVideo.geometry("640x480+368+0")
 wLiveVideo.title("SDK Testing: Live Video")
+wLiveVideo.resizable(width = True, height = True)
 
 # Create frame
 frame_Controls = Frame(wControlPanel).grid(row = 0, column = 0)
 
 #	Button Set 1
-#	Title
 Label(frame_Controls,  text = "Basic").grid(                                                                               row = 0,  column = 0)
 #	Buttons
 Button(frame_Controls, text = "Init",               bd = 3, width = 15, height = 1, command = ACQSDK_Init).grid(           row = 1,  column = 0)
@@ -197,6 +224,7 @@ Button(frame_Controls, text = "Stop Play",          bd = 3, width = 15, height =
 Button(frame_Controls, text = "Capture Image",      bd = 3, width = 15, height = 1, command = ACQSDK_Capture).grid(        row = 1,  column = 2)
 Button(frame_Controls, text = "Start Record",       bd = 3, width = 15, height = 1, command = ACQSDK_StartRecord).grid(    row = 2,  column = 2)
 Button(frame_Controls, text = "Stop Record",        bd = 3, width = 15, height = 1, command = ACQSDK_StopRecord).grid(     row = 3,  column = 2)
+
 #	Button Set 2
 Label(frame_Controls,  text = "Extention").grid(                                                                             row = 4, column = 0)
 #	Buttons
@@ -207,6 +235,7 @@ Button(frame_Controls, text = "Get Serial Number", bd = 3, width = 15, height = 
 Button(frame_Controls, text = "Set Serial Number", bd = 3, width = 15, height = 1, command = ACQSDK_SetSerialNumber).grid(   row = 7, column = 1)
 Button(frame_Controls, text = "Upgrade FW",        bd = 3, width = 15, height = 1, command = ACQSDK_UpgradeFirmware).grid(   row = 6, column = 2)
 Button(frame_Controls, text = "Abort Upgrade",     bd = 3, width = 15, height = 1, command = ACQSDK_AbortUpgrade).grid(      row = 7, column = 2)
+
 #	Button Set 3
 Label(frame_Controls,  text = "HP Configuration").grid(                                                                          row = 8, column = 1)
 #	Buttons
@@ -222,13 +251,17 @@ Button(frame_Controls, text = "Enable Standby",     bd = 3, width = 15, height =
 Button(frame_Controls, text = "Set Standby Time",   bd = 3, width = 15, height = 1, command = ACQSDK_SetStandByTime).grid(       row = 10, column = 2)
 Button(frame_Controls, text = "Set System Time",    bd = 3, width = 15, height = 1, command = ACQSDK_SetSystemTime).grid(        row = 11, column = 2)
 Button(frame_Controls, text = "Set Power Off Time", bd = 3, width = 15, height = 1, command = ACQSDK_SetAutoPowerOffTime).grid(  row = 12, column = 2)
+
 #	Button Set 4
-Label(frame_Controls,  text = "Mirror & Rotation").grid(                                                                  row = 13, column = 1)
+Label(frame_Controls,  text = "Mirror & Rotation").grid(                                                                             row = 13, column = 1)
 #	Buttons
-Button(frame_Controls, text = "Get Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_GetMirrorFlag).grid(  row = 14, column = 0)
-Button(frame_Controls, text = "Set Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_SetMirrorFlag).grid(  row = 15, column = 0)
-Button(frame_Controls, text = "Get Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_GetRotationFlag).grid(row = 14, column = 1)
-Button(frame_Controls, text = "Set Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_SetRotationFlag).grid(row = 15, column = 1)
+Button(frame_Controls, text = "Get Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_GetMirrorFlag).grid(             row = 14, column = 0)
+Button(frame_Controls, text = "Set Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_SetMirrorFlag).grid(             row = 15, column = 0)
+Button(frame_Controls, text = "Get Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_GetRotationFlag).grid(           row = 14, column = 1)
+Button(frame_Controls, text = "Set Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_SetRotationFlag).grid(           row = 15, column = 1)
+Button(frame_Controls, text = "Set to 640*480",    bd = 3, width = 15, height = 1, command = lambda: ResetWindow("640", "480")).grid(row = 14, column = 2)
+Button(frame_Controls, text = "Set to 480*640",    bd = 3, width = 15, height = 1, command = lambda: ResetWindow("480", "640")).grid(row = 15, column = 2)
+
 #	Button Set 5
 Label(frame_Controls,  text = "File Operation").grid(                                                              row = 16, column = 1)
 #	Buttons
@@ -237,6 +270,10 @@ Button(frame_Controls, text = "Download File", bd = 3, width = 15, height = 1, c
 #	Button Set 6
 Label(frame_Controls,  text = "").grid(                                    row = 18, column = 2)
 #	Button: Exit
-Button(frame_Controls, text = "Exit", bd = 3, width = 15, height = 1).grid(row = 19, column = 2)
+Button(frame_Controls, text = "Exit", bd = 3, width = 15, height = 1, command = EXITAPP).grid(row = 19, column = 2)
 
-wLiveVideo.mainloop()
+# Exit event
+wControlPanel.protocol("WM_DELETE_WINDOW", WinCallback)
+wLiveVideo.protocol("WM_DELETE_WINDOW", WinCallback)
+
+mainloop()
