@@ -4,6 +4,7 @@
 import os, sys, datetime, time
 import win32com.client, win32gui, time
 from Tkinter import *
+from ScrolledText import ScrolledText
 from tkFileDialog import *
 import tkMessageBox
 
@@ -18,172 +19,176 @@ def ACQSDK_Init(): # OK
 	ACQSDK_SetLogPath()
 	hWnd = win32gui.FindWindow("TkTopLevel","SDK Testing: Live Video")
 	ret = objACQSDK_CSDevice.ACQSDK_Init(hWnd)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_UnInit(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_UnInit()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_OnUpdateLiveWnd(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_OnUpdateLiveWnd()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_QueryDeviceInfo(): # OK
 	pDeviceInfo = objACQSDK_ASDeviceInfor
 	ret = objACQSDK_CSDevice.ACQSDK_QueryDeviceInfo(pDeviceInfo)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 	if ret == 0:
-		print "\tDevice Type is '%r'" % pDeviceInfo.get_device_type()
-		print "\tMode Type is '%r'" % pDeviceInfo.get_mode_type()
-		print "\tSerial Number is '%r'" % pDeviceInfo.get_sn()
-		print "\tFirmware Version is '%r'" % pDeviceInfo.get_fw_version()
+		Logger("\tDevice Type is '%r'" % pDeviceInfo.get_device_type())
+		Logger("\tMode Type is '%r'" % pDeviceInfo.get_mode_type())
+		Logger("\tSerial Number is '%r'" % pDeviceInfo.get_sn())
+		Logger("\tFirmware Version is '%r'" % pDeviceInfo.get_fw_version())
 def ACQSDK_SetHPWorkMode(): # Not implemented
 	lWorkMode = 1
 	ret = objACQSDK_CSDevice.ACQSDK_SetHPWorkMode(lWorkMode)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_StartPlay(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_StartPlay()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_PausePlay(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_PausePlay()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_StopPlay(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_StopPlay()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_StartRecord(): # OK
 	path = r"./%s.avi" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S')
 	ret = objACQSDK_CSDevice.ACQSDK_StartRecord(path)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_StopRecord(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_StopRecord()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_Capture(): # OK
 	pImageUnit = objACQSDK_ASImageUnit
 	ret = objACQSDK_CSDevice.ACQSDK_Capture(pImageUnit)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 	if ret == 0:
 		img = pImageUnit.get_white_image()
-		print "\tGet white image -> %r" % img
-		print "\tSave image -> %r" % pImageUnit.save_image(r"./%s" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S'), img)
-		print "\tFree image -> %r" % pImageUnit.free_image(img)
-		print "\tFree unit -> %r" % pImageUnit.free_unit()
+		Logger("\tGet white image -> %r" % img)
+		Logger("\tSave image -> %r" % pImageUnit.save_image(r"./%s" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S'), img))
+		Logger("\tFree image -> %r" % pImageUnit.free_image(img))
+		Logger("\tFree unit -> %r" % pImageUnit.free_unit())
 def ACQSDK_GetImageData(): # Need multithread + callback
 	pImageUnit = objACQSDK_ASImageUnit
 	ret = objACQSDK_CSDevice.ACQSDK_GetImageData(pImageUnit)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 	if ret == 0:
 		img = pImageUnit.get_white_image()
-		print "\tGet white image -> %r" % img
-		print "\tSave image -> %r" % pImageUnit.save_image(r"./%s" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S'), img)
-		print "\tFree image -> %r" % pImageUnit.free_image(img)
-		print "\tFree unit -> %r" % pImageUnit.free_unit()
+		Logger("\tGet white image -> %r" % img)
+		Logger("\tSave image -> %r" % pImageUnit.save_image(r"./%s" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S'), img))
+		Logger("\tFree image -> %r" % pImageUnit.free_image(img))
+		Logger("\tFree unit -> %r" % pImageUnit.free_unit())
 def ACQSDK_SetLogPath(): # OK
 	path = r"."
 	ret  = objACQSDK_CSDevice.ACQSDK_SetLogPath(path)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_GetSerialNumber(): # ->>> ISSUE
 	length = 8
 	ret    = objACQSDK_CSDevice.ACQSDK_GetSerialNumber(length)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_SetSerialNumber(): # ->>> ISSUE
 	pSn = "ASDF0001"
 	length = 8
 	ret = objACQSDK_CSDevice.ACQSDK_SetSerialNumber(pSn, len)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_GetFirmwareVersion(): # ->>> ISSUE
 	length = 10
 	ret = objACQSDK_CSDevice.ACQSDK_GetFirmwareVersion(length)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_UpgradeFirmware():
 	pFullPathName = askopenfilename()
-	print "\tfile name is, %s" % pFullPathName
 	ret = objACQSDK_CSDevice.ACQSDK_UpgradeFirmware(pFullPathName)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_AbortUpgrade():
 	ret = objACQSDK_CSDevice.ACQSDK_AbortUpgrade()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_UploadFile():
 	pFileName = askopenfilename()
 	ret = objACQSDK_CSDevice.ACQSDK_UploadFile(pFileName)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_DownloadFile():
 	fileID = 1
 	pFileName = "."
 	ret = objACQSDK_CSDevice.ACQSDK_DownloadFile(fileID, pFileName)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_EnableAutoPowerOn(): # OK, suggest not to use parameter
 	bEnable = 1
 	ret = objACQSDK_CSDevice.ACQSDK_EnableAutoPowerOn(bEnable)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_GetBrightness(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_GetBrightness()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 	if ret[0] == 0:
-		print "\tCurrent brightness: %r" % ret[1]
-		print "\tMaximum brightness: %r" % ret[2]
-		print "\tMinimum brightness: %r" % ret[3]
-		print "\tDefault brightness: %r" % ret[4]
+		Logger("\tCurrent brightness: %r" % ret[1])
+		Logger("\tMaximum brightness: %r" % ret[2])
+		Logger("\tMinimum brightness: %r" % ret[3])
+		Logger("\tDefault brightness: %r" % ret[4])
 def ACQSDK_SetBrightness(): # OK
 	brightness = 4
 	ret = objACQSDK_CSDevice.ACQSDK_SetBrightness(brightness)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_GetContrast(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_GetContrast()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 	if ret[0] == 0:
-		print "\tCurrent contrast: %r" % ret[1]
-		print "\tMaximum contrast: %r" % ret[2]
-		print "\tMinimum contrast: %r" % ret[3]
-		print "\tDefault contrast: %r" % ret[4]
+		Logger("\tCurrent contrast: %r" % ret[1])
+		Logger("\tMaximum contrast: %r" % ret[2])
+		Logger("\tMinimum contrast: %r" % ret[3])
+		Logger("\tDefault contrast: %r" % ret[4])
 def ACQSDK_SetContrast(): # OK
 	contrast = 7
 	ret = objACQSDK_CSDevice.ACQSDK_SetContrast(contrast)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_SetPowerlineFrequency(): # OK
 	frequency = 60
 	ret = objACQSDK_CSDevice.ACQSDK_SetPowerlineFrequency(frequency)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_GetPowerlineFrequency(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_GetPowerlineFrequency()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 	if ret[0] == 0:
-		print("Current frequency: %r" % ret[1])
-		print("Default frequency: %r" % ret[2])
+		Logger("Current frequency: %r" % ret[1])
+		Logger("Default frequency: %r" % ret[2])
 def ACQSDK_EnableAutoPowerOff(): # OK, suggest not to use parameter
 	bEnable = 1
 	ret = objACQSDK_CSDevice.ACQSDK_EnableAutoPowerOff(bEnable)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_SetAutoPowerOffTime(): # OK
 	secondsCount = 0
 	ret = objACQSDK_CSDevice.ACQSDK_SetAutoPowerOffTime(secondsCount)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_EnableStandBy(): # OK
 	bEnable = 1
 	ret = objACQSDK_CSDevice.ACQSDK_EnableStandBy(bEnable)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_SetStandByTime(): # OK
 	secondsCount = 1000
 	ret = objACQSDK_CSDevice.ACQSDK_SetStandByTime(secondsCount)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_SetSystemTime(): # OK
 	secondsCount = 1000
 	ret = objACQSDK_CSDevice.ACQSDK_SetSystemTime(secondsCount)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_SetMirrorFlag(): # Not Implemented
 	bEnable = 1
 	ret = objACQSDK_CSDevice.ACQSDK_SetMirrorFlag(bEnable)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_GetMirrorFlag(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_GetMirrorFlag()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_SetRotationFlag(): # Not Implemented
 	rotation = 90 # 0, 90, 180, 270
 	ret = objACQSDK_CSDevice.ACQSDK_SetRotationFlag(rotation)
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
 def ACQSDK_GetRotationFlag(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_GetRotationFlag()
-	print "%s -> %r" % (sys._getframe().f_code.co_name, ret)
+	Logger("%s -> %r" % (sys._getframe().f_code.co_name, ret))
+
+def Logger(strLine):
+	strLine = "%s\n" % strLine
+	txtLogger.insert(INSERT, strLine)
+def CLEANHistory(): txtLogger.delete('1.0', END)
 
 class SDKEvents():
 	def OnHPEvents(self, objACQSDK_SDKCallbackInfo):
-		print "Parameter data type: %r" % objACQSDK_SDKCallbackInfo
+		Logger("Parameter data type: %r" % objACQSDK_SDKCallbackInfo)
 		objACQSDK_SDKCallbackInfo.get_event_id()
 
 ACQSDK_CSDevice_ProgID        = "ACQSDK.CSDevice.1"
@@ -193,16 +198,13 @@ ACQSDK_ASDeviceInfor_ProgID   = "ACQSDK.ASDeviceInfor.1"
 
 objACQSDK_CSDevice            = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
 objACQSDK_ASImageUnit         = win32com.client.Dispatch(ACQSDK_ASImageUnit_ProgID)
-
 objACQSDK_SDKCallbackInfo     = win32com.client.Dispatch(ACQSDK_SDKCallbackInfo_ProgID)
-print "SDKCallbackInfo: %r" % objACQSDK_SDKCallbackInfo
-
 objACQSDK_ASDeviceInfor       = win32com.client.Dispatch(ACQSDK_ASDeviceInfor_ProgID)
 
 wControlPanel = Tk()
 wLiveVideo    = Tk()
 
-wControlPanel.geometry("352x512+5+5")
+wControlPanel.geometry("352x755+5+5")
 wControlPanel.title("SDK Testing: Control Panel")
 wControlPanel.resizable(width = False, height = False)
 wLiveVideo.geometry("640x480+368+0")
@@ -267,13 +269,21 @@ Label(frame_Controls,  text = "File Operation").grid(                           
 #	Buttons
 Button(frame_Controls, text = "Upload File",   bd = 3, width = 15, height = 1, command = ACQSDK_UploadFile).grid(  row = 17, column = 0)
 Button(frame_Controls, text = "Download File", bd = 3, width = 15, height = 1, command = ACQSDK_DownloadFile).grid(row = 17, column = 1)
-#	Button Set 6
-Label(frame_Controls,  text = "").grid(                                    row = 18, column = 2)
+
+#	Logger
+Label(frame_Controls,  text = "Operation History").grid(row = 18, column = 2)
+#	Use Text
+txtLogger = ScrolledText(frame_Controls, bd = 3, width = 46, height = 18)
+txtLogger.grid(row = 19, column = 0, columnspan = 3)
+#	Button: Clean
+Button(frame_Controls, text = "Clean", bd = 3, width = 15, height = 1, command = CLEANHistory).grid(row = 20, column = 0)
+
 #	Button: Exit
-Button(frame_Controls, text = "Exit", bd = 3, width = 15, height = 1, command = EXITAPP).grid(row = 19, column = 2)
+Button(frame_Controls, text = "Exit", bd = 3, width = 15, height = 1, command = EXITAPP).grid(row = 20, column = 2)
 
 # Exit event
 wControlPanel.protocol("WM_DELETE_WINDOW", WinCallback)
 wLiveVideo.protocol("WM_DELETE_WINDOW", WinCallback)
 
+# Wait for message
 mainloop()
