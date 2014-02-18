@@ -11,13 +11,195 @@ try:
 	import win32com.client, win32gui
 	from Tkinter import *
 	from ScrolledText import ScrolledText
-	from tkFileDialog import *
+	#from tkFileDialog import *
 except:
 	print "Error occurs when importing required modules."
 	sys.exit(1)
 else:
 	if win32gui.FindWindow("TkTopLevel","SDK Testing: Live Video") != 0:
 		sys.exit(1)
+
+# Generate GUI
+def GenerateGUI():
+	#--------------------------------------------------[Panel]--------------------------------------------------
+	#	Button Set 1, basic APIs
+	Label(wControlPanel,  text = "Basic")                                                                               .grid(row = 0,  column = 0)
+	Button(wControlPanel, text = "Init",               bd = 3, width = 15, height = 1, command = ACQSDK_Init).           grid(row = 1,  column = 0)
+	Button(wControlPanel, text = "UnInit",             bd = 3, width = 15, height = 1, command = ACQSDK_UnInit)         .grid(row = 2,  column = 0)
+	Button(wControlPanel, text = "Refresh Live Video", bd = 3, width = 15, height = 1, command = ACQSDK_OnUpdateLiveWnd).grid(row = 3,  column = 0)
+	Button(wControlPanel, text = "Start Play",         bd = 3, width = 15, height = 1, command = ACQSDK_StartPlay)      .grid(row = 1,  column = 1)
+	Button(wControlPanel, text = "Pause Play",         bd = 3, width = 15, height = 1, command = ACQSDK_PausePlay)      .grid(row = 2,  column = 1)
+	Button(wControlPanel, text = "Stop Play",          bd = 3, width = 15, height = 1, command = ACQSDK_StopPlay)       .grid(row = 3,  column = 1)
+	Button(wControlPanel, text = "Capture Image",      bd = 3, width = 15, height = 1, command = ACQSDK_Capture)        .grid(row = 1,  column = 2)
+	Button(wControlPanel, text = "Start Record",       bd = 3, width = 15, height = 1, command = ACQSDK_StartRecord)    .grid(row = 2,  column = 2)
+	Button(wControlPanel, text = "Stop Record",        bd = 3, width = 15, height = 1, command = ACQSDK_StopRecord)     .grid(row = 3,  column = 2)
+
+	#	The other APIs
+	Label(wControlPanel,  text = "Extention")                                                                             .grid(row = 4, column = 0)
+
+	#	Buttons Set 2
+	Label(wControlPanel,  text = "Query & Upgrade")                                                                       .grid(row = 5, column = 1)
+	Button(wControlPanel, text = "Query Device Info", bd = 3, width = 15, height = 1, command = ACQSDK_QueryDeviceInfo)   .grid(row = 6, column = 0)
+	Button(wControlPanel, text = "Upgrade FW",        bd = 3, width = 15, height = 1, command = ACQSDK_UpgradeFirmware)   .grid(row = 6, column = 1)
+	Button(wControlPanel, text = "Abort Upgrade",     bd = 3, width = 15, height = 1, command = ACQSDK_AbortUpgrade)      .grid(row = 6, column = 2)
+
+	#	Button Set 3
+	Label(wControlPanel,  text = "HP Configuration")                                                                          .grid(row = 7,  column = 1)
+	Button(wControlPanel, text = "Get Brightness",     bd = 3, width = 15, height = 1, command = ACQSDK_GetBrightness)        .grid(row = 8,  column = 0)
+	Button(wControlPanel, text = "Set Brightness",     bd = 3, width = 15, height = 1, command = ACQSDK_SetBrightness)        .grid(row = 9,  column = 0)
+	Button(wControlPanel, text = "Get Contrast",       bd = 3, width = 15, height = 1, command = ACQSDK_GetContrast)          .grid(row = 10, column = 0)
+	Button(wControlPanel, text = "Set Contrast",       bd = 3, width = 15, height = 1, command = ACQSDK_SetContrast)          .grid(row = 11, column = 0)
+	Button(wControlPanel, text = "Get Frequency",      bd = 3, width = 15, height = 1, command = ACQSDK_GetPowerlineFrequency).grid(row = 8,  column = 1)
+	Button(wControlPanel, text = "Set Frequency",      bd = 3, width = 15, height = 1, command = ACQSDK_SetPowerlineFrequency).grid(row = 9,  column = 1)
+	Button(wControlPanel, text = "Auto Power On",      bd = 3, width = 15, height = 1, command = ACQSDK_EnableAutoPowerOn)    .grid(row = 10, column = 1)
+	Button(wControlPanel, text = "Auto Power Off",     bd = 3, width = 15, height = 1, command = ACQSDK_EnableAutoPowerOff)   .grid(row = 11, column = 1)
+	Button(wControlPanel, text = "Enable StandBy",     bd = 3, width = 15, height = 1, command = ACQSDK_EnableStandBy)        .grid(row = 8,  column = 2)
+	Button(wControlPanel, text = "Set StandBy Time",   bd = 3, width = 15, height = 1, command = ACQSDK_SetStandByTime)       .grid(row = 9,  column = 2)
+	Button(wControlPanel, text = "Set System Time",    bd = 3, width = 15, height = 1, command = ACQSDK_SetSystemTime)        .grid(row = 10, column = 2)
+	Button(wControlPanel, text = "Set Power Off Time", bd = 3, width = 15, height = 1, command = ACQSDK_SetAutoPowerOffTime)  .grid(row = 11, column = 2)
+
+	#	Button Set 4
+	Label(wControlPanel,  text = "Mirror & Rotation")                                                                             .grid(row = 12, column = 1)
+	Button(wControlPanel, text = "Get Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_GetMirrorFlag)             .grid(row = 13, column = 0)
+	Button(wControlPanel, text = "Set Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_SetMirrorFlag)             .grid(row = 14, column = 0)
+	Button(wControlPanel, text = "Get Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_GetRotationFlag)           .grid(row = 13, column = 1)
+	Button(wControlPanel, text = "Set Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_SetRotationFlag)           .grid(row = 14, column = 1)
+	#		The following two buttons are added for Rotation APIs
+	Button(wControlPanel, text = "Set to 640*480",    bd = 3, width = 15, height = 1, command = lambda: ResetWindow("640", "480")).grid(row = 13, column = 2)
+	Button(wControlPanel, text = "Set to 480*640",    bd = 3, width = 15, height = 1, command = lambda: ResetWindow("480", "640")).grid(row = 14, column = 2)
+
+	#	Button Set 5
+	Label(wControlPanel,  text = "Factory")                                                                               .grid(row = 15, column = 1)
+	Button(wControlPanel, text = "Get FW Version",    bd = 3, width = 15, height = 1, command = ACQSDK_GetFirmwareVersion).grid(row = 16, column = 0)
+	Button(wControlPanel, text = "Get Serial Number", bd = 3, width = 15, height = 1, command = ACQSDK_GetSerialNumber)   .grid(row = 16, column = 1)
+	Button(wControlPanel, text = "Set Serial Number", bd = 3, width = 15, height = 1, command = ACQSDK_SetSerialNumber)   .grid(row = 16, column = 2)
+	Button(wControlPanel, text = "Set HP Work Mode",  bd = 3, width = 15, height = 1, command = ACQSDK_SetHPWorkMode)     .grid(row = 17, column = 0)
+	Button(wControlPanel, text = "Upload File",       bd = 3, width = 15, height = 1, command = ACQSDK_UploadFile)        .grid(row = 17, column = 1)
+	Button(wControlPanel, text = "Download File",     bd = 3, width = 15, height = 1, command = ACQSDK_DownloadFile)      .grid(row = 17, column = 2)
+
+	#	Logger
+	Label(wControlPanel,  text = "Operation History").grid(row = 18, column = 1)
+	global txtLogger
+	txtLogger = ScrolledText(wControlPanel, bd = 3, width = 46, height = 18)
+	txtLogger.grid(row = 19, column = 0, columnspan = 3)
+
+	#	Button: Clean
+	Button(wControlPanel, text = "Clean",  bd = 3, width = 15, height = 1, command = CLEANHistory).grid(row = 20, column = 0)
+
+	#	Button: Exit this script
+	Button(wControlPanel, text = "Exit",   bd = 3, width = 15, height = 1, command = EXITAPP)     .grid(row = 20, column = 1)
+
+	#	Button: Control whether Preference Setting Dialog is Visable
+	global PSDV
+	PSDV = Button(wControlPanel, text = "Config >>", bd = 3, width = 15, height = 1, command = PreferenceSettingDialogVisable)
+	PSDV.grid(row = 20, column = 2)
+
+	#--------------------------------------------------[Done]--------------------------------------------------
+
+	#--------------------------------------------------[Preference Setting]--------------------------------------------------
+	#	Prefix of each API
+	Label(wPreference, bd = 3, text = "ACQSDK_").grid(row = 0, sticky = W+S+N)
+
+	#	Left Part: Label
+	Label(wPreference, bd = 3, text = "Set System Time")  .grid(row = 1, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "Set Log Path")     .grid(row = 2, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "HP Work Mode")     .grid(row = 3, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "Set Serial Number").grid(row = 4, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "Set Brightness")   .grid(row = 5, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "Set Contrast")     .grid(row = 6, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "Set Frequency")    .grid(row = 7, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
+
+	#	Input: text box
+	SetSystemTime         = Entry(wPreference, bd = 3, width = 20)
+	SetLogPath            = Entry(wPreference, bd = 3, width = 20)
+	SetHPWorkMode         = Entry(wPreference, bd = 3, width = 20)
+	SetSerialNumber       = Entry(wPreference, bd = 3, width = 20)
+	SetBrightness         = Entry(wPreference, bd = 3, width = 20)
+	SetContrast           = Entry(wPreference, bd = 3, width = 20)
+	SetPowerlineFrequency = Entry(wPreference, bd = 3, width = 20)
+
+	#	Input: Grid Properties
+	SetSystemTime.        grid(row = 1, column = 1)
+	SetLogPath           .grid(row = 2, column = 1)
+	SetHPWorkMode        .grid(row = 3, column = 1)
+	SetSerialNumber      .grid(row = 4, column = 1)
+	SetBrightness        .grid(row = 5, column = 1)
+	SetContrast          .grid(row = 6, column = 1)
+	SetPowerlineFrequency.grid(row = 7, column = 1)
+
+	#	Input: Default value
+	SetSystemTime        .insert(0, "0")
+	SetLogPath           .insert(0, ".")
+	SetHPWorkMode        .insert(0, "1")
+	SetSerialNumber      .insert(0, "ABCD1234")
+	SetBrightness        .insert(0, "4")
+	SetContrast          .insert(0, "4")
+	SetPowerlineFrequency.insert(0, "50")
+
+	#	Center Part: Label
+	Label(wPreference, bd = 3, text = "Auto PowerOn")      .grid(row = 1, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "Auto Power Off")    .grid(row = 2, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "Set Power Off Time").grid(row = 3, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "Enable StandBy")    .grid(row = 4, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "Set StandBy Time")  .grid(row = 5, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "Set Mirror Flag")   .grid(row = 6, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
+	Label(wPreference, bd = 3, text = "Set Rotation Flag") .grid(row = 7, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
+
+	#	Input
+	EnableAutoPowerOn   = Entry(wPreference, bd = 3, width = 20)
+	EnableAutoPowerOff  = Entry(wPreference, bd = 3, width = 20)
+	SetAutoPowerOffTime = Entry(wPreference, bd = 3, width = 20)
+	EnableStandBy       = Entry(wPreference, bd = 3, width = 20)
+	SetStandByTime      = Entry(wPreference, bd = 3, width = 20)
+	SetMirrorFlag       = Entry(wPreference, bd = 3, width = 20)
+	SetRotationFlag     = Entry(wPreference, bd = 3, width = 20)
+
+	#	Input: Grid Properties
+	EnableAutoPowerOn  .grid(row = 1, column = 3)
+	EnableAutoPowerOff .grid(row = 2, column = 3)
+	SetAutoPowerOffTime.grid(row = 3, column = 3)
+	EnableStandBy      .grid(row = 4, column = 3)
+	SetStandByTime     .grid(row = 5, column = 3)
+	SetMirrorFlag      .grid(row = 6, column = 3)
+	SetRotationFlag    .grid(row = 7, column = 3)
+
+	#	Input: Default value
+	EnableAutoPowerOn  .insert(0, "1")
+	EnableAutoPowerOff .insert(0, "1")
+	SetAutoPowerOffTime.insert(0, "3600")
+	EnableStandBy      .insert(0, "1")
+	SetStandByTime     .insert(0, "60")
+	SetMirrorFlag      .insert(0, "1")
+	SetRotationFlag    .insert(0, "90")
+
+	#	Right Part: Buttons
+	Label( wPreference, text = "#1", bd = 3).grid(row = 1, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "#2", bd = 3).grid(row = 2, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "#3", bd = 3).grid(row = 3, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "#4", bd = 3).grid(row = 4, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "#5", bd = 3).grid(row = 5, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "#6", bd = 3).grid(row = 6, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "#7", bd = 3).grid(row = 7, column = 4, ipadx = 11, ipady = 2)
+	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func1).grid(row = 1, column = 5)
+	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func2).grid(row = 2, column = 5)
+	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func3).grid(row = 3, column = 5)
+	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func4).grid(row = 4, column = 5)
+	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func5).grid(row = 5, column = 5)
+	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func6).grid(row = 6, column = 5)
+	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func7).grid(row = 7, column = 5)
+
+	#	Bottom
+	Label(wPreference, bd = 3, text = "Test Application of UVC Camera SDK, built by ActivePython 2.7 (x86)").grid(row = 8, columnspan = 6, sticky = E+S+N)
+
+	#--------------------------------------------------[Done]--------------------------------------------------
+
+	# Trace window's event: DELETE
+	wControlPanel.protocol("WM_DELETE_WINDOW", WinCallback)
+	wLiveVideo   .protocol("WM_DELETE_WINDOW", WinCallback)
+	wPreference  .protocol("WM_DELETE_WINDOW", WinCallback)
+
+	# Wait for message
+	mainloop()
 
 # Windows' events
 def ResetWindow(width, height):
@@ -246,18 +428,10 @@ def ACQSDK_GetRotationFlag(): # OK
 	if ret[0] == 0:
 		Logger("\tCurrent status: %r" % ret[1])
 
-# Temporary buttons
-def TMP_Func1():
-	while True:
-		ACQSDK_Init()
-		time.sleep(3)
-		ACQSDK_UnInit()
-def TMP_Func2(): pass
-def TMP_Func3(): pass
-def TMP_Func4(): pass
-def TMP_Func5(): pass
-def TMP_Func6(): pass
-def TMP_Func7(): pass
+# Class needed by Callback
+class SDKEvents():
+	def OnHPEvents(self, objACQSDK_SDKCallbackInfo):
+		print objACQSDK_SDKCallbackInfo.get_event_id()
 
 # Functions for Logger box
 def CheckResult(api, ret):
@@ -278,10 +452,16 @@ def Logger(strLine):
 	txtLogger.yview(END)
 def CLEANHistory(): txtLogger.delete('1.0', END)
 
-# Class needed by Callback
-class SDKEvents():
-	def OnHPEvents(self, objACQSDK_SDKCallbackInfo):
-		print objACQSDK_SDKCallbackInfo.get_event_id()
+# Temporary buttons
+def TMP_Func1(): pass
+def TMP_Func2(): pass
+def TMP_Func3(): pass
+def TMP_Func4(): pass
+def TMP_Func5(): pass
+def TMP_Func6(): pass
+def TMP_Func7(): pass
+
+# Body
 
 # definition: dictionary, "acq_sdk/SDK Document/SDKDef.h"
 Device_Type = {
@@ -292,7 +472,6 @@ Device_Type = {
 	"0X20005" : "DEV_UVC",
 	"0X20006" : "DEV_UNDEFINED",
 }
-
 Model_Type = {
 	"0X30001" : "MODEL_WIRED_DOCK",
 	"0X30002" : "MODEL_WIRELESS_ONE",
@@ -300,7 +479,6 @@ Model_Type = {
 	"0X30004" : "MODEL_DIRECT_WIRED_ONE",
 	"0X30005" : "MODEL_UNDEFINED",
 }
-
 OPERATOR_ERROR = {
 	"0XF0001" : "DEVICE_CONNECTION_FALSE",
 	"0XF0002" : "DEVICE_CREATED_FAIL",
@@ -332,7 +510,6 @@ OPERATOR_ERROR = {
 	"0XF001C" : "ACQSDK_ERROR_UPLOADED_FAILED",
 	"0XF001D" : "ACQSDK_ERROR_DOWNLOADED_FAILED",
 }
-
 Callback_MsgType = {
 	"0X200001" : "DEVICE_USB_PLUG_OUT",
 	"0X200002" : "DEVICE_USB_PLUG_IN",
@@ -369,9 +546,9 @@ ACQSDK_ASDeviceInfor_ProgID   = "ACQSDK.ASDeviceInfor.1"
 
 # Create COM objects and Event
 objACQSDK_CSDevice            = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
-objACQSDK_ASImageUnit         = win32com.client.          Dispatch(ACQSDK_ASImageUnit_ProgID)
-objACQSDK_SDKCallbackInfo     = win32com.client.          Dispatch(ACQSDK_SDKCallbackInfo_ProgID)
-objACQSDK_ASDeviceInfor       = win32com.client.          Dispatch(ACQSDK_ASDeviceInfor_ProgID)
+objACQSDK_ASImageUnit         = win32com.client          .Dispatch(ACQSDK_ASImageUnit_ProgID)
+objACQSDK_SDKCallbackInfo     = win32com.client          .Dispatch(ACQSDK_SDKCallbackInfo_ProgID)
+objACQSDK_ASDeviceInfor       = win32com.client          .Dispatch(ACQSDK_ASDeviceInfor_ProgID)
 
 # Create Tkinter windows
 wControlPanel = Tk()	# List buttons
@@ -379,193 +556,22 @@ wLiveVideo    = Tk()	# Display Live Window
 wPreference   = Tk()	# Preference Setting dialog
 
 # Properties of created windows
+
 #	Panel
 wControlPanel.geometry("352x754+5+5")
 wControlPanel.title("SDK Testing: Control Panel")
 wControlPanel.resizable(width = False, height = False)
+
 #	Live Video
 wLiveVideo.geometry("640x480+369+0")
 wLiveVideo.title("SDK Testing: Live Video")
 wLiveVideo.resizable(width = True, height = True)	# Allow to change the window size
+
 #	Preference Setting
 wPreference.geometry("640x236+374+523")
 wPreference.title("Preference Setting")
 wPreference.resizable(width = False, height = False)
 wPreference.withdraw()
 
-# [Panel]
-
-#	Button Set 1, basic APIs
-Label(wControlPanel,  text = "Basic")                                                                               .grid(row = 0,  column = 0)
-Button(wControlPanel, text = "Init",               bd = 3, width = 15, height = 1, command = ACQSDK_Init).           grid(row = 1,  column = 0)
-Button(wControlPanel, text = "UnInit",             bd = 3, width = 15, height = 1, command = ACQSDK_UnInit)         .grid(row = 2,  column = 0)
-Button(wControlPanel, text = "Refresh Live Video", bd = 3, width = 15, height = 1, command = ACQSDK_OnUpdateLiveWnd).grid(row = 3,  column = 0)
-Button(wControlPanel, text = "Start Play",         bd = 3, width = 15, height = 1, command = ACQSDK_StartPlay)      .grid(row = 1,  column = 1)
-Button(wControlPanel, text = "Pause Play",         bd = 3, width = 15, height = 1, command = ACQSDK_PausePlay)      .grid(row = 2,  column = 1)
-Button(wControlPanel, text = "Stop Play",          bd = 3, width = 15, height = 1, command = ACQSDK_StopPlay)       .grid(row = 3,  column = 1)
-Button(wControlPanel, text = "Capture Image",      bd = 3, width = 15, height = 1, command = ACQSDK_Capture)        .grid(row = 1,  column = 2)
-Button(wControlPanel, text = "Start Record",       bd = 3, width = 15, height = 1, command = ACQSDK_StartRecord)    .grid(row = 2,  column = 2)
-Button(wControlPanel, text = "Stop Record",        bd = 3, width = 15, height = 1, command = ACQSDK_StopRecord)     .grid(row = 3,  column = 2)
-
-#	The other APIs
-Label(wControlPanel,  text = "Extention")                                                                             .grid(row = 4, column = 0)
-
-#	Buttons Set 2
-Label(wControlPanel,  text = "Query & Upgrade")                                                                       .grid(row = 5, column = 1)
-Button(wControlPanel, text = "Query Device Info", bd = 3, width = 15, height = 1, command = ACQSDK_QueryDeviceInfo)   .grid(row = 6, column = 0)
-Button(wControlPanel, text = "Upgrade FW",        bd = 3, width = 15, height = 1, command = ACQSDK_UpgradeFirmware)   .grid(row = 6, column = 1)
-Button(wControlPanel, text = "Abort Upgrade",     bd = 3, width = 15, height = 1, command = ACQSDK_AbortUpgrade)      .grid(row = 6, column = 2)
-
-#	Button Set 3
-Label(wControlPanel,  text = "HP Configuration")                                                                          .grid(row = 7,  column = 1)
-Button(wControlPanel, text = "Get Brightness",     bd = 3, width = 15, height = 1, command = ACQSDK_GetBrightness)        .grid(row = 8,  column = 0)
-Button(wControlPanel, text = "Set Brightness",     bd = 3, width = 15, height = 1, command = ACQSDK_SetBrightness)        .grid(row = 9,  column = 0)
-Button(wControlPanel, text = "Get Contrast",       bd = 3, width = 15, height = 1, command = ACQSDK_GetContrast)          .grid(row = 10, column = 0)
-Button(wControlPanel, text = "Set Contrast",       bd = 3, width = 15, height = 1, command = ACQSDK_SetContrast)          .grid(row = 11, column = 0)
-Button(wControlPanel, text = "Get Frequency",      bd = 3, width = 15, height = 1, command = ACQSDK_GetPowerlineFrequency).grid(row = 8,  column = 1)
-Button(wControlPanel, text = "Set Frequency",      bd = 3, width = 15, height = 1, command = ACQSDK_SetPowerlineFrequency).grid(row = 9,  column = 1)
-Button(wControlPanel, text = "Auto Power On",      bd = 3, width = 15, height = 1, command = ACQSDK_EnableAutoPowerOn)    .grid(row = 10, column = 1)
-Button(wControlPanel, text = "Auto Power Off",     bd = 3, width = 15, height = 1, command = ACQSDK_EnableAutoPowerOff)   .grid(row = 11, column = 1)
-Button(wControlPanel, text = "Enable StandBy",     bd = 3, width = 15, height = 1, command = ACQSDK_EnableStandBy)        .grid(row = 8,  column = 2)
-Button(wControlPanel, text = "Set StandBy Time",   bd = 3, width = 15, height = 1, command = ACQSDK_SetStandByTime)       .grid(row = 9,  column = 2)
-Button(wControlPanel, text = "Set System Time",    bd = 3, width = 15, height = 1, command = ACQSDK_SetSystemTime)        .grid(row = 10, column = 2)
-Button(wControlPanel, text = "Set Power Off Time", bd = 3, width = 15, height = 1, command = ACQSDK_SetAutoPowerOffTime)  .grid(row = 11, column = 2)
-
-#	Button Set 4
-Label(wControlPanel,  text = "Mirror & Rotation")                                                                             .grid(row = 12, column = 1)
-Button(wControlPanel, text = "Get Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_GetMirrorFlag)             .grid(row = 13, column = 0)
-Button(wControlPanel, text = "Set Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_SetMirrorFlag)             .grid(row = 14, column = 0)
-Button(wControlPanel, text = "Get Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_GetRotationFlag)           .grid(row = 13, column = 1)
-Button(wControlPanel, text = "Set Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_SetRotationFlag)           .grid(row = 14, column = 1)
-#		The following two buttons are added for Rotation APIs
-Button(wControlPanel, text = "Set to 640*480",    bd = 3, width = 15, height = 1, command = lambda: ResetWindow("640", "480")).grid(row = 13, column = 2)
-Button(wControlPanel, text = "Set to 480*640",    bd = 3, width = 15, height = 1, command = lambda: ResetWindow("480", "640")).grid(row = 14, column = 2)
-
-#	Button Set 5
-Label(wControlPanel,  text = "Factory")                                                                               .grid(row = 15, column = 1)
-Button(wControlPanel, text = "Get FW Version",    bd = 3, width = 15, height = 1, command = ACQSDK_GetFirmwareVersion).grid(row = 16, column = 0)
-Button(wControlPanel, text = "Get Serial Number", bd = 3, width = 15, height = 1, command = ACQSDK_GetSerialNumber)   .grid(row = 16, column = 1)
-Button(wControlPanel, text = "Set Serial Number", bd = 3, width = 15, height = 1, command = ACQSDK_SetSerialNumber)   .grid(row = 16, column = 2)
-Button(wControlPanel, text = "Set HP Work Mode",  bd = 3, width = 15, height = 1, command = ACQSDK_SetHPWorkMode)     .grid(row = 17, column = 0)
-Button(wControlPanel, text = "Upload File",       bd = 3, width = 15, height = 1, command = ACQSDK_UploadFile)        .grid(row = 17, column = 1)
-Button(wControlPanel, text = "Download File",     bd = 3, width = 15, height = 1, command = ACQSDK_DownloadFile)      .grid(row = 17, column = 2)
-
-#	Logger
-Label(wControlPanel,  text = "Operation History").grid(row = 18, column = 1)
-txtLogger = ScrolledText(wControlPanel, bd = 3, width = 46, height = 18)
-txtLogger.grid(row = 19, column = 0, columnspan = 3)
-
-#	Button: Clean
-Button(wControlPanel, text = "Clean",  bd = 3, width = 15, height = 1, command = CLEANHistory).grid(row = 20, column = 0)
-
-#	Button: Exit this script
-Button(wControlPanel, text = "Exit",   bd = 3, width = 15, height = 1, command = EXITAPP)     .grid(row = 20, column = 1)
-
-#	Button: Control whether Preference Setting Dialog is Visable
-PSDV = Button(wControlPanel, text = "Config >>", bd = 3, width = 15, height = 1, command = PreferenceSettingDialogVisable)
-PSDV.grid(row = 20, column = 2)
-
-
-
-# [Preference Setting]
-#	Prefix of each API
-Label(wPreference, bd = 3, text = "ACQSDK_").grid(row = 0, sticky = W+S+N)
-
-#	Left Part: Label
-Label(wPreference, bd = 3, text = "Set System Time")  .grid(row = 1, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "Set Log Path")     .grid(row = 2, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "HP Work Mode")     .grid(row = 3, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "Set Serial Number").grid(row = 4, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "Set Brightness")   .grid(row = 5, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "Set Contrast")     .grid(row = 6, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "Set Frequency")    .grid(row = 7, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-
-#	Input: text box
-SetSystemTime         = Entry(wPreference, bd = 3, width = 20)
-SetLogPath            = Entry(wPreference, bd = 3, width = 20)
-SetHPWorkMode         = Entry(wPreference, bd = 3, width = 20)
-SetSerialNumber       = Entry(wPreference, bd = 3, width = 20)
-SetBrightness         = Entry(wPreference, bd = 3, width = 20)
-SetContrast           = Entry(wPreference, bd = 3, width = 20)
-SetPowerlineFrequency = Entry(wPreference, bd = 3, width = 20)
-
-#	Input: Grid Properties
-SetSystemTime.        grid(row = 1, column = 1)
-SetLogPath           .grid(row = 2, column = 1)
-SetHPWorkMode        .grid(row = 3, column = 1)
-SetSerialNumber      .grid(row = 4, column = 1)
-SetBrightness        .grid(row = 5, column = 1)
-SetContrast          .grid(row = 6, column = 1)
-SetPowerlineFrequency.grid(row = 7, column = 1)
-
-#	Input: Default value
-SetSystemTime        .insert(0, "0")
-SetLogPath           .insert(0, ".")
-SetHPWorkMode        .insert(0, "1")
-SetSerialNumber      .insert(0, "ABCD1234")
-SetBrightness        .insert(0, "4")
-SetContrast          .insert(0, "4")
-SetPowerlineFrequency.insert(0, "50")
-
-#	Center Part: Label
-Label(wPreference, bd = 3, text = "Auto PowerOn")      .grid(row = 1, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "Auto Power Off")    .grid(row = 2, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "Set Power Off Time").grid(row = 3, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "Enable StandBy")    .grid(row = 4, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "Set StandBy Time")  .grid(row = 5, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "Set Mirror Flag")   .grid(row = 6, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-Label(wPreference, bd = 3, text = "Set Rotation Flag") .grid(row = 7, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-
-#	Input
-EnableAutoPowerOn   = Entry(wPreference, bd = 3, width = 20)
-EnableAutoPowerOff  = Entry(wPreference, bd = 3, width = 20)
-SetAutoPowerOffTime = Entry(wPreference, bd = 3, width = 20)
-EnableStandBy       = Entry(wPreference, bd = 3, width = 20)
-SetStandByTime      = Entry(wPreference, bd = 3, width = 20)
-SetMirrorFlag       = Entry(wPreference, bd = 3, width = 20)
-SetRotationFlag     = Entry(wPreference, bd = 3, width = 20)
-
-#	Input: Grid Properties
-EnableAutoPowerOn  .grid(row = 1, column = 3)
-EnableAutoPowerOff .grid(row = 2, column = 3)
-SetAutoPowerOffTime.grid(row = 3, column = 3)
-EnableStandBy      .grid(row = 4, column = 3)
-SetStandByTime     .grid(row = 5, column = 3)
-SetMirrorFlag      .grid(row = 6, column = 3)
-SetRotationFlag    .grid(row = 7, column = 3)
-
-#	Input: Default value
-EnableAutoPowerOn  .insert(0, "1")
-EnableAutoPowerOff .insert(0, "1")
-SetAutoPowerOffTime.insert(0, "3600")
-EnableStandBy      .insert(0, "1")
-SetStandByTime     .insert(0, "60")
-SetMirrorFlag      .insert(0, "1")
-SetRotationFlag    .insert(0, "90")
-
-#	Right Part: Buttons
-Label( wPreference, text = "#1", bd = 3).grid(row = 1, column = 4, ipadx = 11, ipady = 2)
-Label( wPreference, text = "#2", bd = 3).grid(row = 2, column = 4, ipadx = 11, ipady = 2)
-Label( wPreference, text = "#3", bd = 3).grid(row = 3, column = 4, ipadx = 11, ipady = 2)
-Label( wPreference, text = "#4", bd = 3).grid(row = 4, column = 4, ipadx = 11, ipady = 2)
-Label( wPreference, text = "#5", bd = 3).grid(row = 5, column = 4, ipadx = 11, ipady = 2)
-Label( wPreference, text = "#6", bd = 3).grid(row = 6, column = 4, ipadx = 11, ipady = 2)
-Label( wPreference, text = "#7", bd = 3).grid(row = 7, column = 4, ipadx = 11, ipady = 2)
-Button(wPreference, text = "Init+Uninit", bd = 1, width = 10, height = 1, command = TMP_Func1).grid(row = 1, column = 5)
-Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func2).grid(row = 2, column = 5)
-Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func3).grid(row = 3, column = 5)
-Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func4).grid(row = 4, column = 5)
-Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func5).grid(row = 5, column = 5)
-Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func6).grid(row = 6, column = 5)
-Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func7).grid(row = 7, column = 5)
-
-#	Bottom
-Label(wPreference, bd = 3, text = "Test Application of UVC Camera SDK, built by ActivePython 2.7 (x86)").grid(row = 8, columnspan = 6, sticky = E+S+N)
-
-# Trace window's event: DELETE
-wControlPanel.protocol("WM_DELETE_WINDOW", WinCallback)
-wLiveVideo   .protocol("WM_DELETE_WINDOW", WinCallback)
-wPreference  .protocol("WM_DELETE_WINDOW", WinCallback)
-
-# Wait for message
-mainloop()
+#	Generate GUI elements
+GenerateGUI()
