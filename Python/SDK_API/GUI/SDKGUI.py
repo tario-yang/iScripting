@@ -30,7 +30,7 @@ def GenerateGUI():
 	# Properties of created windows
 
 	#	Panel
-	wControlPanel.geometry("+5+5")
+	wControlPanel.geometry("+0+0")
 	wControlPanel.title("SDK Testing: Control Panel")
 	wControlPanel.resizable(width = False, height = False)
 
@@ -49,28 +49,27 @@ def GenerateGUI():
 
 	#--------------------------------------------------[Panel]--------------------------------------------------
 	#	Button Set 1, basic APIs
-	Label(wControlPanel,  text = "Basic")                                                                               .grid(row = 0,  column = 0)
-	Button(wControlPanel, text = "Init",               bd = 3, width = 15, height = 1, command = ACQSDK_Init).           grid(row = 1,  column = 0)
-	Button(wControlPanel, text = "UnInit",             bd = 3, width = 15, height = 1, command = ACQSDK_UnInit)         .grid(row = 2,  column = 0)
-	Button(wControlPanel, text = "Refresh Live Video", bd = 3, width = 15, height = 1, command = ACQSDK_OnUpdateLiveWnd).grid(row = 3,  column = 0)
-	Button(wControlPanel, text = "Start Play",         bd = 3, width = 15, height = 1, command = ACQSDK_StartPlay)      .grid(row = 1,  column = 1)
-	Button(wControlPanel, text = "Pause Play",         bd = 3, width = 15, height = 1, command = ACQSDK_PausePlay)      .grid(row = 2,  column = 1)
-	Button(wControlPanel, text = "Stop Play",          bd = 3, width = 15, height = 1, command = ACQSDK_StopPlay)       .grid(row = 3,  column = 1)
-	Button(wControlPanel, text = "Capture Image",      bd = 3, width = 15, height = 1, command = ACQSDK_Capture)        .grid(row = 1,  column = 2)
-	Button(wControlPanel, text = "Start Record",       bd = 3, width = 15, height = 1, command = ACQSDK_StartRecord)    .grid(row = 2,  column = 2)
-	Button(wControlPanel, text = "Stop Record",        bd = 3, width = 15, height = 1, command = ACQSDK_StopRecord)     .grid(row = 3,  column = 2)
+	Label(wControlPanel,  text = "Basic")                                                                            .grid(row = 0,  column = 0, columnspan = 2)
+	Button(wControlPanel, text = "Init",               bd = 3, width = 15, height = 1, command = ACQSDK_Init).        grid(row = 1,  column = 0)
+	Button(wControlPanel, text = "UnInit",             bd = 3, width = 15, height = 1, command = ACQSDK_UnInit)      .grid(row = 2,  column = 0)
+	Button(wControlPanel, text = "Start Play",         bd = 3, width = 15, height = 1, command = ACQSDK_StartPlay)   .grid(row = 1,  column = 1)
+	Button(wControlPanel, text = "Stop Play",          bd = 3, width = 15, height = 1, command = ACQSDK_StopPlay)    .grid(row = 2,  column = 1)
+	Button(wControlPanel, text = "Start Record",       bd = 3, width = 15, height = 1, command = ACQSDK_StartRecord) .grid(row = 1,  column = 2)
+	Button(wControlPanel, text = "Stop Record",        bd = 3, width = 15, height = 1, command = ACQSDK_StopRecord)  .grid(row = 2,  column = 2)
+	Button(wControlPanel, text = "Capture",            bd = 3, width = 15, height = 1, command = ACQSDK_Capture)     .grid(row = 3,  column = 1)
+	Button(wControlPanel, text = "Get Image Data",     bd = 3, width = 15, height = 1, command = ACQSDK_GetImageData).grid(row = 3,  column = 2)
 
 	#	The other APIs
-	Label(wControlPanel,  text = "Extention")                                                                             .grid(row = 4, column = 0)
+	# Label(wControlPanel,  text = "Extention").grid(row = 4, column = 0)
 
 	#	Buttons Set 2
-	Label(wControlPanel,  text = "Query & Upgrade")                                                                       .grid(row = 5, column = 1)
+	Label(wControlPanel,  text = "Query & Upgrade")                                                                       .grid(row = 5, column = 0, columnspan = 2)
 	Button(wControlPanel, text = "Query Device Info", bd = 3, width = 15, height = 1, command = ACQSDK_QueryDeviceInfo)   .grid(row = 6, column = 0)
 	Button(wControlPanel, text = "Upgrade FW",        bd = 3, width = 15, height = 1, command = ACQSDK_UpgradeFirmware)   .grid(row = 6, column = 1)
 	Button(wControlPanel, text = "Abort Upgrade",     bd = 3, width = 15, height = 1, command = ACQSDK_AbortUpgrade)      .grid(row = 6, column = 2)
 
 	#	Button Set 3
-	Label(wControlPanel,  text = "HP Configuration")                                                                          .grid(row = 7,  column = 1)
+	Label(wControlPanel,  text = "HP Configuration")                                                                          .grid(row = 7,  column = 0, columnspan = 2)
 	Button(wControlPanel, text = "Get Brightness",     bd = 3, width = 15, height = 1, command = ACQSDK_GetBrightness)        .grid(row = 8,  column = 0)
 	Button(wControlPanel, text = "Set Brightness",     bd = 3, width = 15, height = 1, command = ACQSDK_SetBrightness)        .grid(row = 9,  column = 0)
 	Button(wControlPanel, text = "Get Contrast",       bd = 3, width = 15, height = 1, command = ACQSDK_GetContrast)          .grid(row = 10, column = 0)
@@ -85,17 +84,16 @@ def GenerateGUI():
 	Button(wControlPanel, text = "Set Power Off Time", bd = 3, width = 15, height = 1, command = ACQSDK_SetAutoPowerOffTime)  .grid(row = 11, column = 2)
 
 	#	Button Set 4
-	Label(wControlPanel,  text = "Mirror & Rotation")                                                                             .grid(row = 12, column = 1)
-	Button(wControlPanel, text = "Get Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_GetMirrorFlag)             .grid(row = 13, column = 0)
-	Button(wControlPanel, text = "Set Mirror Flag",   bd = 3, width = 15, height = 1, command = ACQSDK_SetMirrorFlag)             .grid(row = 14, column = 0)
-	Button(wControlPanel, text = "Get Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_GetRotationFlag)           .grid(row = 13, column = 1)
-	Button(wControlPanel, text = "Set Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_SetRotationFlag)           .grid(row = 14, column = 1)
+	Label(wControlPanel,  text = "Mirror & Rotation")                                                                                  .grid(row = 12, column = 0, columnspan = 2)
+	Button(wControlPanel, text = "Set Mirror Flag",    bd = 3, width = 15, height = 1, command = ACQSDK_SetMirrorFlag)                 .grid(row = 13, column = 0)
+	Button(wControlPanel, text = "Set Rotation Flag",  bd = 3, width = 15, height = 1, command = ACQSDK_SetRotationFlag)               .grid(row = 14, column = 0)
 	#		The following two buttons are added for Rotation APIs
-	Button(wControlPanel, text = "Set to 640*480",    bd = 3, width = 15, height = 1, command = lambda: ResetWindowSize("640", "480")).grid(row = 13, column = 2)
-	Button(wControlPanel, text = "Set to 480*640",    bd = 3, width = 15, height = 1, command = lambda: ResetWindowSize("480", "640")).grid(row = 14, column = 2)
+	Button(wControlPanel, text = "Set to 640*480",     bd = 3, width = 15, height = 1, command = lambda: ResetWindowSize("640", "480")).grid(row = 13, column = 1)
+	Button(wControlPanel, text = "Set to 480*640",     bd = 3, width = 15, height = 1, command = lambda: ResetWindowSize("480", "640")).grid(row = 14, column = 1)
+	Button(wControlPanel, text = "Update LiveVideo",   bd = 3, width = 15, height = 1, command = ACQSDK_OnUpdateLiveWnd)               .grid(row = 13, column = 2)
 
 	#	Button Set 5
-	Label(wControlPanel,  text = "Factory")                                                                               .grid(row = 15, column = 1)
+	Label(wControlPanel,  text = "Factory")                                                                               .grid(row = 15, column = 0, columnspan = 2)
 	Button(wControlPanel, text = "Get FW Version",    bd = 3, width = 15, height = 1, command = ACQSDK_GetFirmwareVersion).grid(row = 16, column = 0)
 	Button(wControlPanel, text = "Get Serial Number", bd = 3, width = 15, height = 1, command = ACQSDK_GetSerialNumber)   .grid(row = 16, column = 1)
 	Button(wControlPanel, text = "Set Serial Number", bd = 3, width = 15, height = 1, command = ACQSDK_SetSerialNumber)   .grid(row = 16, column = 2)
@@ -106,7 +104,7 @@ def GenerateGUI():
 	#	Logger
 	Label(wControlPanel,  text = "Operation History").grid(row = 18, column = 1)
 	global txtLogger
-	txtLogger = ScrolledText(wControlPanel, bd = 3, width = 46, height = 18)
+	txtLogger = ScrolledText(wControlPanel, bd = 3, width = 46, height = 20)
 	txtLogger.grid(row = 19, column = 0, columnspan = 3)
 
 	#	Button: Clean
@@ -193,7 +191,7 @@ def GenerateGUI():
 	Label( wPreference, text = "", bd = 3).grid(row = 6, column = 4, ipadx = 5, ipady = 2)
 	Label( wPreference, text = "", bd = 3).grid(row = 7, column = 4, ipadx = 5, ipady = 2)
 	Button(wPreference, text = "RESET PARAMETER", wraplength = 70, bd = 2, width = 11, height = 3, command = TMP_Func1).grid(row = 2, column = 5, rowspan = 2)
-	Button(wPreference, text = "Temporary     ?", wraplength = 70, bd = 2, width = 11, height = 3, command = TMP_Func2).grid(row = 5, column = 5, rowspan = 2)
+	Button(wPreference, text = "EXECUTION",       wraplength = 70, bd = 2, width = 11, height = 3, command = TMP_Func2).grid(row = 5, column = 5, rowspan = 2)
 	Label( wPreference, text = "", bd = 3).grid(row = 1, column = 6, ipadx = 5, ipady = 2)
 	Label( wPreference, text = "", bd = 3).grid(row = 2, column = 6, ipadx = 5, ipady = 2)
 	Label( wPreference, text = "", bd = 3).grid(row = 3, column = 6, ipadx = 5, ipady = 2)
@@ -254,8 +252,8 @@ def ResetWindowPosition(Message):
 		size           = original_start[0].split("x")
 		width          = int(size[0])
 		height         = int(size[1])
-		x              = 5
-		y              = 5
+		x              = 0
+		y              = 0
 	else:
 		# wControlPanel
 		original_start = wControlPanel.winfo_geometry().split("+")
@@ -266,7 +264,7 @@ def ResetWindowPosition(Message):
 		y              = int(original_start[2])
 
 	# wLiveVideo
-	wLiveVideo.geometry("+%s+%s" % (str(width + x + 16), str(y)))
+	wLiveVideo.geometry("+%s+%s" % (str(width + x + 8), str(y)))
 	wLiveVideo.update()
 	# Check status of wLiveVideo
 	if wLiveVideo.state() == "withdrawn":
@@ -275,7 +273,7 @@ def ResetWindowPosition(Message):
 	# wPreference
 	i = wLiveVideo.winfo_geometry().split("+")
 	j = i[0].split("x")
-	wPreference.geometry("+%s+%s" % (i[1], str(int(j[1]) + y + 36)))
+	wPreference.geometry("+%s+%s" % (i[1], str(int(j[1]) + y + 30)))
 	wPreference.update()
 def ResetWindowSize(width, height):
 	wLiveVideo.geometry("%sx%s" % (width, height))
@@ -332,9 +330,9 @@ def ACQSDK_SetHPWorkMode(): # Not implemented
 def ACQSDK_StartPlay(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_StartPlay()
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_PausePlay(): # OK
-	ret = objACQSDK_CSDevice.ACQSDK_PausePlay()
-	CheckResult(sys._getframe().f_code.co_name, ret)
+#def ACQSDK_PausePlay(): # This api is removed from SDK build, 0.1.0.3
+#	ret = objACQSDK_CSDevice.ACQSDK_PausePlay()
+#	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_StopPlay(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_StopPlay()
 	CheckResult(sys._getframe().f_code.co_name, ret)
@@ -480,7 +478,7 @@ def ACQSDK_SetMirrorFlag(): # OK
 	Logger("<%r>" % bEnable)
 	ret = objACQSDK_CSDevice.ACQSDK_SetMirrorFlag(bEnable)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetMirrorFlag(): # OK
+def ACQSDK_GetMirrorFlag(): # Will be removed after 0.1.0.3
 	ret = objACQSDK_CSDevice.ACQSDK_GetMirrorFlag()
 	CheckResult(sys._getframe().f_code.co_name, ret[0])
 	Logger("\t%s" % str(ret))
@@ -491,7 +489,7 @@ def ACQSDK_SetRotationFlag(): # Need to check on 0.1.0.3
 	Logger("<%r>" % rotation)
 	ret = objACQSDK_CSDevice.ACQSDK_SetRotationFlag(rotation)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetRotationFlag(): # OK
+def ACQSDK_GetRotationFlag(): # Will be removed after 0.1.0.3
 	ret = objACQSDK_CSDevice.ACQSDK_GetRotationFlag()
 	CheckResult(sys._getframe().f_code.co_name, ret[0])
 	Logger("\t%s" % str(ret))
@@ -500,8 +498,8 @@ def ACQSDK_GetRotationFlag(): # OK
 
 # Class needed by Callback
 class SDKEvents():
-	def OnHPEvents(self, objACQSDK_SDKCallbackInfo):
-		print objACQSDK_SDKCallbackInfo.get_event_id()
+	def OnHPEvents(self, SDKCallbackInfo):
+		print "-> Callback <-"
 
 # Functions for Logger box
 def CheckResult(api, ret):
@@ -525,12 +523,7 @@ def CLEANHistory(): txtLogger.delete('1.0', END)
 # Temporary buttons
 def TMP_Func1(): ResetDefaultParameter()
 def TMP_Func2(): pass
-def TMP_Func3(): pass
-def TMP_Func4(): pass
-def TMP_Func5(): pass
-def TMP_Func6(): pass
-def TMP_Func7(): pass
-
+TMP_Func2
 # >>Body<<
 
 # definition: dictionary, "acq_sdk/SDK Document/SDKDef.h"
@@ -609,21 +602,21 @@ Callback_MsgType = {
 }
 
 # ProgID list
-ACQSDK_CSDevice_ProgID        = "ACQSDK.CSDevice.1"
-ACQSDK_ASImageUnit_ProgID     = "ACQSDK.ASImageUnit.1"
-ACQSDK_SDKCallbackInfo_ProgID = "ACQSDK.SDKCallbackInfo.1"
-ACQSDK_ASDeviceInfor_ProgID   = "ACQSDK.ASDeviceInfor.1"
+ACQSDK_CSDevice_ProgID          = "ACQSDK.CSDevice.1"
+ACQSDK_ASImageUnit_ProgID       = "ACQSDK.ASImageUnit.1"
+# ACQSDK_SDKCallbackInfo_ProgID = "ACQSDK.SDKCallbackInfo.1"
+ACQSDK_ASDeviceInfor_ProgID     = "ACQSDK.ASDeviceInfor.1"
 
 # Create COM objects and Event
 objACQSDK_CSDevice            = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
 objACQSDK_ASImageUnit         = win32com.client          .Dispatch(ACQSDK_ASImageUnit_ProgID)
-objACQSDK_SDKCallbackInfo     = win32com.client          .Dispatch(ACQSDK_SDKCallbackInfo_ProgID)
+# objACQSDK_SDKCallbackInfo   = win32com.client          .Dispatch(ACQSDK_SDKCallbackInfo_ProgID) # No Need
 objACQSDK_ASDeviceInfor       = win32com.client          .Dispatch(ACQSDK_ASDeviceInfor_ProgID)
 
 #	Generate GUI elements for three window
 GenerateGUI()
 
-#
+# Event after window has displayed for some time
 wControlPanel.after(1000, lambda: ResetWindowPosition("origin"))
 
 # Wait for message
