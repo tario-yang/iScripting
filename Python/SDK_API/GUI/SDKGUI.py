@@ -110,6 +110,7 @@ def GenerateGUI():
 	Label(wPreference, bd = 3, text = "Set Frequency")    .grid(row = 7, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
 
 	#	Input: text box
+	global SetSystemTime, SetLogPath, SetHPWorkMode, SetSerialNumber, SetBrightness, SetContrast, SetPowerlineFrequency
 	SetSystemTime         = Entry(wPreference, bd = 3, width = 20)
 	SetLogPath            = Entry(wPreference, bd = 3, width = 20)
 	SetHPWorkMode         = Entry(wPreference, bd = 3, width = 20)
@@ -127,15 +128,6 @@ def GenerateGUI():
 	SetContrast          .grid(row = 6, column = 1)
 	SetPowerlineFrequency.grid(row = 7, column = 1)
 
-	#	Input: Default value
-	SetSystemTime        .insert(0, "0")
-	SetLogPath           .insert(0, ".")
-	SetHPWorkMode        .insert(0, "1")
-	SetSerialNumber      .insert(0, "ABCD1234")
-	SetBrightness        .insert(0, "4")
-	SetContrast          .insert(0, "4")
-	SetPowerlineFrequency.insert(0, "50")
-
 	#	Center Part: Label
 	Label(wPreference, bd = 3, text = "Auto PowerOn")      .grid(row = 1, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
 	Label(wPreference, bd = 3, text = "Auto Power Off")    .grid(row = 2, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
@@ -146,6 +138,7 @@ def GenerateGUI():
 	Label(wPreference, bd = 3, text = "Set Rotation Flag") .grid(row = 7, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
 
 	#	Input
+	global EnableAutoPowerOn, EnableAutoPowerOff, SetAutoPowerOffTime, EnableStandBy, SetStandByTime, SetMirrorFlag, SetRotationFlag
 	EnableAutoPowerOn   = Entry(wPreference, bd = 3, width = 20)
 	EnableAutoPowerOff  = Entry(wPreference, bd = 3, width = 20)
 	SetAutoPowerOffTime = Entry(wPreference, bd = 3, width = 20)
@@ -163,30 +156,18 @@ def GenerateGUI():
 	SetMirrorFlag      .grid(row = 6, column = 3)
 	SetRotationFlag    .grid(row = 7, column = 3)
 
-	#	Input: Default value
-	EnableAutoPowerOn  .insert(0, "1")
-	EnableAutoPowerOff .insert(0, "1")
-	SetAutoPowerOffTime.insert(0, "3600")
-	EnableStandBy      .insert(0, "1")
-	SetStandByTime     .insert(0, "60")
-	SetMirrorFlag      .insert(0, "1")
-	SetRotationFlag    .insert(0, "90")
+	ResetDefaultParameter()
 
 	#	Right Part: Buttons
-	Label( wPreference, text = "#1", bd = 3).grid(row = 1, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "#2", bd = 3).grid(row = 2, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "#3", bd = 3).grid(row = 3, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "#4", bd = 3).grid(row = 4, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "#5", bd = 3).grid(row = 5, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "#6", bd = 3).grid(row = 6, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "#7", bd = 3).grid(row = 7, column = 4, ipadx = 11, ipady = 2)
-	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func1).grid(row = 1, column = 5)
-	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func2).grid(row = 2, column = 5)
-	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func3).grid(row = 3, column = 5)
-	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func4).grid(row = 4, column = 5)
-	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func5).grid(row = 5, column = 5)
-	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func6).grid(row = 6, column = 5)
-	Button(wPreference, text = "SET", bd = 1, width = 10, height = 1, command = TMP_Func7).grid(row = 7, column = 5)
+	Label( wPreference, text = "", bd = 3).grid(row = 1, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 2, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 3, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 4, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 5, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 6, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 7, column = 4, ipadx = 11, ipady = 2)
+	Button(wPreference, text = "RESET PARAMETER", wraplength = 70, bd = 2, width = 11, height = 3, command = TMP_Func1).grid(row = 2, column = 5, rowspan = 2)
+	Button(wPreference, text = "Temporary     ?", wraplength = 70, bd = 2, width = 11, height = 3, command = TMP_Func2).grid(row = 5, column = 5, rowspan = 2)
 
 	#	Bottom
 	Label(wPreference, bd = 3, text = "Test Application of UVC Camera SDK, built by ActivePython 2.7 (x86)").grid(row = 8, columnspan = 6, sticky = E+S+N)
@@ -194,12 +175,43 @@ def GenerateGUI():
 	#--------------------------------------------------[Done]--------------------------------------------------
 
 	# Trace window's event: DELETE
-	wControlPanel.protocol("WM_DELETE_WINDOW", WinCallback)
-	wLiveVideo   .protocol("WM_DELETE_WINDOW", WinCallback)
-	wPreference  .protocol("WM_DELETE_WINDOW", WinCallback)
+	wControlPanel.protocol("WM_DELETE_WINDOW", EXITAPP)
+	wLiveVideo   .protocol("WM_DELETE_WINDOW", EXITAPP)
+	wPreference  .protocol("WM_DELETE_WINDOW", EXITAPP)
 
-	# Wait for message
-	mainloop()
+# Parameter value: Reset
+def ResetDefaultParameter():
+	# Clean
+	SetSystemTime        .delete(0, END)
+	SetLogPath           .delete(0, END)
+	SetHPWorkMode        .delete(0, END)
+	SetSerialNumber      .delete(0, END)
+	SetBrightness        .delete(0, END)
+	SetContrast          .delete(0, END)
+	SetPowerlineFrequency.delete(0, END)
+	EnableAutoPowerOn    .delete(0, END)
+	EnableAutoPowerOff   .delete(0, END)
+	SetAutoPowerOffTime  .delete(0, END)
+	EnableStandBy        .delete(0, END)
+	SetStandByTime       .delete(0, END)
+	SetMirrorFlag        .delete(0, END)
+	SetRotationFlag      .delete(0, END)
+
+	# Input: Default value
+	SetSystemTime        .insert(0, "0")
+	SetLogPath           .insert(0, ".")
+	SetHPWorkMode        .insert(0, "1")
+	SetSerialNumber      .insert(0, "ABCD1234")
+	SetBrightness        .insert(0, "4")
+	SetContrast          .insert(0, "4")
+	SetPowerlineFrequency.insert(0, "50")
+	EnableAutoPowerOn    .insert(0, "1")
+	EnableAutoPowerOff   .insert(0, "1")
+	SetAutoPowerOffTime  .insert(0, "3600")
+	EnableStandBy        .insert(0, "1")
+	SetStandByTime       .insert(0, "60")
+	SetMirrorFlag        .insert(0, "1")
+	SetRotationFlag      .insert(0, "90")
 
 # Windows' events
 def ResetWindow(width, height):
@@ -220,13 +232,11 @@ def PreferenceSettingDialogVisable():
 def EXITAPP():
 	objACQSDK_CSDevice.ACQSDK_UnInit()
 	wControlPanel.quit()
-def WinCallback():
-	EXITAPP()
 
 # SDK's API
 def ACQSDK_Init(): # OK
 	ACQSDK_SetLogPath()
-	hWnd = win32gui.FindWindow("TkTopLevel","SDK Testing: Live Video")
+	hWnd = win32gui.FindWindow("TkTopLevel", wLiveVideo_title)
 	ret = objACQSDK_CSDevice.ACQSDK_Init(hWnd)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_UnInit(): # OK
@@ -448,12 +458,12 @@ def CheckResult(api, ret):
 		Logger("%s -> %r" % (api, ret))
 def Logger(strLine):
 	strLine = "%s\n" % str(strLine)
-	txtLogger.insert(INSERT, strLine)
+	txtLogger.insert(END, strLine)
 	txtLogger.yview(END)
 def CLEANHistory(): txtLogger.delete('1.0', END)
 
 # Temporary buttons
-def TMP_Func1(): pass
+def TMP_Func1(): ResetDefaultParameter()
 def TMP_Func2(): pass
 def TMP_Func3(): pass
 def TMP_Func4(): pass
@@ -461,7 +471,7 @@ def TMP_Func5(): pass
 def TMP_Func6(): pass
 def TMP_Func7(): pass
 
-# Body
+# >>Body<<
 
 # definition: dictionary, "acq_sdk/SDK Document/SDKDef.h"
 Device_Type = {
@@ -563,6 +573,8 @@ wControlPanel.title("SDK Testing: Control Panel")
 wControlPanel.resizable(width = False, height = False)
 
 #	Live Video
+global wLiveVideo_title
+wLiveVideo_title = "SDK Testing: Live Video"
 wLiveVideo.geometry("640x480+369+0")
 wLiveVideo.title("SDK Testing: Live Video")
 wLiveVideo.resizable(width = True, height = True)	# Allow to change the window size
@@ -573,5 +585,8 @@ wPreference.title("Preference Setting")
 wPreference.resizable(width = False, height = False)
 wPreference.withdraw()
 
-#	Generate GUI elements
+#	Generate GUI elements for three window
 GenerateGUI()
+
+# Wait for message
+mainloop()
