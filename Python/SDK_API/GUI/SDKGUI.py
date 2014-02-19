@@ -11,7 +11,7 @@ try:
 	import win32com.client, win32gui
 	from Tkinter import *
 	from ScrolledText import ScrolledText
-	#from tkFileDialog import *
+	from tkFileDialog import *
 except:
 	print "Error occurs when importing required modules."
 	sys.exit(1)
@@ -21,6 +21,32 @@ else:
 
 # Generate GUI
 def GenerateGUI():
+	# Create Tkinter windows
+	global wControlPanel, wLiveVideo, wPreference
+	wControlPanel = Tk()	# List buttons
+	wLiveVideo    = Tk()	# Display Live Window
+	wPreference   = Tk()	# Preference Setting dialog
+
+	# Properties of created windows
+
+	#	Panel
+	wControlPanel.geometry("+5+5")
+	wControlPanel.title("SDK Testing: Control Panel")
+	wControlPanel.resizable(width = False, height = False)
+
+	#	Live Video
+	global wLiveVideo_title
+	wLiveVideo_title = "SDK Testing: Live Video"
+	wLiveVideo.geometry("640x480")
+	wLiveVideo.title("SDK Testing: Live Video")
+	wLiveVideo.resizable(width = False, height = False)
+	wLiveVideo.withdraw()
+
+	#	Preference Setting
+	wPreference.title("Preference Setting")
+	wPreference.resizable(width = False, height = False)
+	wPreference.withdraw()
+
 	#--------------------------------------------------[Panel]--------------------------------------------------
 	#	Button Set 1, basic APIs
 	Label(wControlPanel,  text = "Basic")                                                                               .grid(row = 0,  column = 0)
@@ -65,8 +91,8 @@ def GenerateGUI():
 	Button(wControlPanel, text = "Get Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_GetRotationFlag)           .grid(row = 13, column = 1)
 	Button(wControlPanel, text = "Set Rotation Flag", bd = 3, width = 15, height = 1, command = ACQSDK_SetRotationFlag)           .grid(row = 14, column = 1)
 	#		The following two buttons are added for Rotation APIs
-	Button(wControlPanel, text = "Set to 640*480",    bd = 3, width = 15, height = 1, command = lambda: ResetWindow("640", "480")).grid(row = 13, column = 2)
-	Button(wControlPanel, text = "Set to 480*640",    bd = 3, width = 15, height = 1, command = lambda: ResetWindow("480", "640")).grid(row = 14, column = 2)
+	Button(wControlPanel, text = "Set to 640*480",    bd = 3, width = 15, height = 1, command = lambda: ResetWindowSize("640", "480")).grid(row = 13, column = 2)
+	Button(wControlPanel, text = "Set to 480*640",    bd = 3, width = 15, height = 1, command = lambda: ResetWindowSize("480", "640")).grid(row = 14, column = 2)
 
 	#	Button Set 5
 	Label(wControlPanel,  text = "Factory")                                                                               .grid(row = 15, column = 1)
@@ -159,18 +185,25 @@ def GenerateGUI():
 	ResetDefaultParameter()
 
 	#	Right Part: Buttons
-	Label( wPreference, text = "", bd = 3).grid(row = 1, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "", bd = 3).grid(row = 2, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "", bd = 3).grid(row = 3, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "", bd = 3).grid(row = 4, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "", bd = 3).grid(row = 5, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "", bd = 3).grid(row = 6, column = 4, ipadx = 11, ipady = 2)
-	Label( wPreference, text = "", bd = 3).grid(row = 7, column = 4, ipadx = 11, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 1, column = 4, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 2, column = 4, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 3, column = 4, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 4, column = 4, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 5, column = 4, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 6, column = 4, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 7, column = 4, ipadx = 5, ipady = 2)
 	Button(wPreference, text = "RESET PARAMETER", wraplength = 70, bd = 2, width = 11, height = 3, command = TMP_Func1).grid(row = 2, column = 5, rowspan = 2)
 	Button(wPreference, text = "Temporary     ?", wraplength = 70, bd = 2, width = 11, height = 3, command = TMP_Func2).grid(row = 5, column = 5, rowspan = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 1, column = 6, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 2, column = 6, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 3, column = 6, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 4, column = 6, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 5, column = 6, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 6, column = 6, ipadx = 5, ipady = 2)
+	Label( wPreference, text = "", bd = 3).grid(row = 7, column = 6, ipadx = 5, ipady = 2)
 
 	#	Bottom
-	Label(wPreference, bd = 3, text = "Test Application of UVC Camera SDK, built by ActivePython 2.7 (x86)").grid(row = 8, columnspan = 6, sticky = E+S+N)
+	Label(wPreference, bd = 3, text = "Test Application of UVC Camera SDK, built by ActivePython 2.7 (x86)").grid(row = 8, columnspan = 7, sticky = E+S+N)
 
 	#--------------------------------------------------[Done]--------------------------------------------------
 
@@ -214,12 +247,39 @@ def ResetDefaultParameter():
 	SetRotationFlag      .insert(0, "90")
 
 # Windows' events
-def ResetWindow(width, height):
-	if width == "480":
-		wPreference.geometry("640x236+374+685")
-	elif width == "640":
-		wPreference.geometry("640x236+374+523")
-	wLiveVideo.geometry("%sx%s+369+0" % (width, height))
+def ResetWindowPosition(Message):
+	if Message == "origin":
+		# wControlPanel
+		original_start = wControlPanel.winfo_geometry().split("+")
+		size           = original_start[0].split("x")
+		width          = int(size[0])
+		height         = int(size[1])
+		x              = 5
+		y              = 5
+	else:
+		# wControlPanel
+		original_start = wControlPanel.winfo_geometry().split("+")
+		size           = original_start[0].split("x")
+		width          = int(size[0])
+		height         = int(size[1])
+		x              = int(original_start[1])
+		y              = int(original_start[2])
+
+	# wLiveVideo
+	wLiveVideo.geometry("+%s+%s" % (str(width + x + 16), str(y)))
+	wLiveVideo.update()
+	# Check status of wLiveVideo
+	if wLiveVideo.state() == "withdrawn":
+		wLiveVideo.deiconify()
+
+	# wPreference
+	i = wLiveVideo.winfo_geometry().split("+")
+	j = i[0].split("x")
+	wPreference.geometry("+%s+%s" % (i[1], str(int(j[1]) + y + 36)))
+	wPreference.update()
+def ResetWindowSize(width, height):
+	wLiveVideo.geometry("%sx%s" % (width, height))
+	ResetWindowPosition("DOIT")
 def PreferenceSettingDialogVisable():
 	if wPreference.state() == "withdrawn":
 		wPreference.update()
@@ -560,33 +620,11 @@ objACQSDK_ASImageUnit         = win32com.client          .Dispatch(ACQSDK_ASImag
 objACQSDK_SDKCallbackInfo     = win32com.client          .Dispatch(ACQSDK_SDKCallbackInfo_ProgID)
 objACQSDK_ASDeviceInfor       = win32com.client          .Dispatch(ACQSDK_ASDeviceInfor_ProgID)
 
-# Create Tkinter windows
-wControlPanel = Tk()	# List buttons
-wLiveVideo    = Tk()	# Display Live Window
-wPreference   = Tk()	# Preference Setting dialog
-
-# Properties of created windows
-
-#	Panel
-wControlPanel.geometry("352x754+5+5")
-wControlPanel.title("SDK Testing: Control Panel")
-wControlPanel.resizable(width = False, height = False)
-
-#	Live Video
-global wLiveVideo_title
-wLiveVideo_title = "SDK Testing: Live Video"
-wLiveVideo.geometry("640x480+369+0")
-wLiveVideo.title("SDK Testing: Live Video")
-wLiveVideo.resizable(width = True, height = True)	# Allow to change the window size
-
-#	Preference Setting
-wPreference.geometry("640x236+374+523")
-wPreference.title("Preference Setting")
-wPreference.resizable(width = False, height = False)
-wPreference.withdraw()
-
 #	Generate GUI elements for three window
 GenerateGUI()
+
+#
+wControlPanel.after(1000, lambda: ResetWindowPosition("origin"))
 
 # Wait for message
 mainloop()
