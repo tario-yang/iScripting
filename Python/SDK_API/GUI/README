@@ -1,1 +1,3 @@
-GUI Tool
+GUI Tool to cover all APIs defined in SDK.
+ - F12: open script's directory.
+ - Click on File Version label: open SDK's installation directory.

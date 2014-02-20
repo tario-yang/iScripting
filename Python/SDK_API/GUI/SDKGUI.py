@@ -8,7 +8,8 @@
 
 try:
 	import os, sys, datetime, time
-	import win32com.client, win32gui
+	import win32com.client, win32gui, win32api
+	import pythoncom
 	from Tkinter import *
 	from ScrolledText import ScrolledText
 	from tkFileDialog import *
@@ -103,9 +104,9 @@ def GenerateGUI():
 
 	#	Logger
 	Label(wControlPanel,  text = "Operation History").grid(row = 18, column = 1)
-	global txtLogger
-	txtLogger = ScrolledText(wControlPanel, bd = 3, width = 46, height = 20)
-	txtLogger.grid(row = 19, column = 0, columnspan = 3)
+	global pLogger
+	pLogger = ScrolledText(wControlPanel, bd = 3, width = 46, height = 36)
+	pLogger.grid(row = 19, column = 0, columnspan = 3)
 
 	#	Button: Clean
 	Button(wControlPanel, text = "Clean",  bd = 3, width = 15, height = 1, command = CLEANHistory).grid(row = 20, column = 0)
@@ -114,15 +115,17 @@ def GenerateGUI():
 	Button(wControlPanel, text = "Exit",   bd = 3, width = 15, height = 1, command = EXITAPP)     .grid(row = 20, column = 1)
 
 	#	Button: Control whether Preference Setting Dialog is Visable
-	global PSDV
-	PSDV = Button(wControlPanel, text = "Config >>", bd = 3, width = 15, height = 1, command = PreferenceSettingDialogVisable)
-	PSDV.grid(row = 20, column = 2)
+	global pPSDV
+	pPSDV = Button(wControlPanel, text = "Config >>", bd = 3, width = 15, height = 1, command = PreferenceSettingDialogVisable)
+	pPSDV.grid(row = 20, column = 2)
 
 	#--------------------------------------------------[Done]--------------------------------------------------
 
 	#--------------------------------------------------[Preference Setting]--------------------------------------------------
 	#	Prefix of each API
-	Label(wPreference, bd = 3, text = "ACQSDK_").grid(row = 0, sticky = W+S+N)
+	pFileVersion = Label(wPreference, bd = 3, text = "ACQSDK.DLL -> %s" % DLL_FileVersion())
+	pFileVersion.grid(row = 0, sticky = W+S+N)
+	pFileVersion.bind("<Button-1>", lambda x: OpenDirectory("ACQSDK.DLL"))
 
 	#	Left Part: Label
 	Label(wPreference, bd = 3, text = "Set System Time")  .grid(row = 1, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
@@ -205,10 +208,23 @@ def GenerateGUI():
 
 	#--------------------------------------------------[Done]--------------------------------------------------
 
+	# Bind customized event
+	wControlPanel.bind("<F12>", OpenDirectory)
+
 	# Trace window's event: DELETE
 	wControlPanel.protocol("WM_DELETE_WINDOW", EXITAPP)
 	wLiveVideo   .protocol("WM_DELETE_WINDOW", EXITAPP)
 	wPreference  .protocol("WM_DELETE_WINDOW", EXITAPP)
+
+# Check DLL's File Version
+def DLL_FileVersion():
+	try:
+		DLL_VerInfo = win32api.GetFileVersionInfo (ACQSDK_DLL, "\\")
+		ms = DLL_VerInfo['FileVersionMS']
+		ls = DLL_VerInfo['FileVersionLS']
+		return "%s.%s.%s.%s" % (win32api.HIWORD(ms),win32api.LOWORD(ms),win32api.HIWORD(ls),win32api.LOWORD(ls))
+	except:
+		return "NOT FOUND"
 
 # Parameter value: Reset
 def ResetDefaultParameter():
@@ -245,8 +261,8 @@ def ResetDefaultParameter():
 	SetRotationFlag      .insert(0, "90")
 
 # Windows' events
-def ResetWindowPosition(Message):
-	if Message == "origin":
+def ResetWindowPosition(message):
+	if message == "origin":
 		# wControlPanel
 		original_start = wControlPanel.winfo_geometry().split("+")
 		size           = original_start[0].split("x")
@@ -264,7 +280,7 @@ def ResetWindowPosition(Message):
 		y              = int(original_start[2])
 
 	# wLiveVideo
-	wLiveVideo.geometry("+%s+%s" % (str(width + x + 8), str(y)))
+	wLiveVideo.geometry("+%s+%s" % (str(width + x + 7), str(y)))
 	wLiveVideo.update()
 	# Check status of wLiveVideo
 	if wLiveVideo.state() == "withdrawn":
@@ -273,7 +289,7 @@ def ResetWindowPosition(Message):
 	# wPreference
 	i = wLiveVideo.winfo_geometry().split("+")
 	j = i[0].split("x")
-	wPreference.geometry("+%s+%s" % (i[1], str(int(j[1]) + y + 30)))
+	wPreference.geometry("+%s+%s" % (i[1], str(int(j[1]) + y + 26)))
 	wPreference.update()
 def ResetWindowSize(width, height):
 	wLiveVideo.geometry("%sx%s" % (width, height))
@@ -282,14 +298,22 @@ def PreferenceSettingDialogVisable():
 	if wPreference.state() == "withdrawn":
 		wPreference.update()
 		wPreference.deiconify()
-		PSDV.config(text = "Config <<")
+		pPSDV.config(text = "Config <<")
 	elif wPreference.state() == "normal":
 		wPreference.update()
 		wPreference.withdraw()
-		PSDV.config(text = "Config >>")
+		pPSDV.config(text = "Config >>")
 def EXITAPP():
 	objACQSDK_CSDevice.ACQSDK_UnInit()
 	wControlPanel.quit()
+
+# Customized events
+def OpenDirectory(location = "."):
+	if location == "ACQSDK.DLL":
+		target_path = "C:\\Program Files (x86)\\Common Files\\Trophy\Acquisition\\AcqSdk"
+	else:
+		target_path = "."
+	os.system("explorer.exe %s" % target_path)
 
 # SDK's API
 def ACQSDK_Init(): # OK
@@ -330,9 +354,6 @@ def ACQSDK_SetHPWorkMode(): # Not implemented
 def ACQSDK_StartPlay(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_StartPlay()
 	CheckResult(sys._getframe().f_code.co_name, ret)
-#def ACQSDK_PausePlay(): # This api is removed from SDK build, 0.1.0.3
-#	ret = objACQSDK_CSDevice.ACQSDK_PausePlay()
-#	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_StopPlay(): # OK
 	ret = objACQSDK_CSDevice.ACQSDK_StopPlay()
 	CheckResult(sys._getframe().f_code.co_name, ret)
@@ -353,7 +374,7 @@ def ACQSDK_Capture(): # OK
 		Logger("\tSave image -> %r" % pImageUnit.save_image(r"./%s" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S'), img))
 		Logger("\tFree image -> %r" % pImageUnit.free_image(img))
 		Logger("\tFree unit -> %r" % pImageUnit.free_unit())
-def ACQSDK_GetImageData(): # Need callback to trigger
+def ACQSDK_GetImageData(): # OK
 	pImageUnit = objACQSDK_ASImageUnit
 	ret = objACQSDK_CSDevice.ACQSDK_GetImageData(pImageUnit)
 	CheckResult(sys._getframe().f_code.co_name, ret)
@@ -478,28 +499,27 @@ def ACQSDK_SetMirrorFlag(): # OK
 	Logger("<%r>" % bEnable)
 	ret = objACQSDK_CSDevice.ACQSDK_SetMirrorFlag(bEnable)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetMirrorFlag(): # Will be removed after 0.1.0.3
-	ret = objACQSDK_CSDevice.ACQSDK_GetMirrorFlag()
-	CheckResult(sys._getframe().f_code.co_name, ret[0])
-	Logger("\t%s" % str(ret))
-	if ret[0] == 0:
-		Logger("\tCurrent status: %r" % ret[1])
 def ACQSDK_SetRotationFlag(): # Need to check on 0.1.0.3
 	rotation = int(SetRotationFlag.get())
 	Logger("<%r>" % rotation)
 	ret = objACQSDK_CSDevice.ACQSDK_SetRotationFlag(rotation)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetRotationFlag(): # Will be removed after 0.1.0.3
-	ret = objACQSDK_CSDevice.ACQSDK_GetRotationFlag()
-	CheckResult(sys._getframe().f_code.co_name, ret[0])
-	Logger("\t%s" % str(ret))
-	if ret[0] == 0:
-		Logger("\tCurrent status: %r" % ret[1])
 
 # Class needed by Callback
 class SDKEvents():
-	def OnHPEvents(self, SDKCallbackInfo):
-		print "-> Callback <-"
+	def OnHPEvents(self, Callback):
+		i = Callback.QueryInterface(pythoncom.IID_IDispatch)
+		objSDKCallbackInfo = win32com.client.Dispatch(i)
+		EventID = str(hex(objSDKCallbackInfo.get_event_id())).upper()
+		Logger(" * Callback -> %s" % EventID)
+		try:
+			EventID_Value = Callback_MsgType[EventID]
+		except:
+			EventID_Value = "NOT DEFINED"
+		finally:
+			Logger("\t%s -> %s" % (EventID, EventID_Value))
+		if EventID == "0X200005": ACQSDK_GetImageData()
+		if EventID == "0X200003": Logger("\t -> %r" %objSDKCallbackInfo.get_fw_upgrade_percent())
 
 # Functions for Logger box
 def CheckResult(api, ret):
@@ -516,14 +536,14 @@ def CheckResult(api, ret):
 		Logger("%s -> %r" % (api, ret))
 def Logger(strLine):
 	strLine = "%s\n" % str(strLine)
-	txtLogger.insert(END, strLine)
-	txtLogger.yview(END)
-def CLEANHistory(): txtLogger.delete('1.0', END)
+	pLogger.insert(END, strLine)
+	pLogger.yview(END)
+def CLEANHistory(): pLogger.delete('1.0', END)
 
 # Temporary buttons
 def TMP_Func1(): ResetDefaultParameter()
 def TMP_Func2(): pass
-TMP_Func2
+
 # >>Body<<
 
 # definition: dictionary, "acq_sdk/SDK Document/SDKDef.h"
@@ -602,16 +622,18 @@ Callback_MsgType = {
 }
 
 # ProgID list
-ACQSDK_CSDevice_ProgID          = "ACQSDK.CSDevice.1"
-ACQSDK_ASImageUnit_ProgID       = "ACQSDK.ASImageUnit.1"
-# ACQSDK_SDKCallbackInfo_ProgID = "ACQSDK.SDKCallbackInfo.1"
-ACQSDK_ASDeviceInfor_ProgID     = "ACQSDK.ASDeviceInfor.1"
+ACQSDK_CSDevice_ProgID      = "ACQSDK.CSDevice.1"
+ACQSDK_ASImageUnit_ProgID   = "ACQSDK.ASImageUnit.1"
+ACQSDK_ASDeviceInfor_ProgID = "ACQSDK.ASDeviceInfor.1"
+
+# Location
+ACQSDK_DLL = "C:\\Program Files (x86)\\Common Files\\Trophy\Acquisition\\AcqSdk\\ACQSDK.DLL"
+
 
 # Create COM objects and Event
-objACQSDK_CSDevice            = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
-objACQSDK_ASImageUnit         = win32com.client          .Dispatch(ACQSDK_ASImageUnit_ProgID)
-# objACQSDK_SDKCallbackInfo   = win32com.client          .Dispatch(ACQSDK_SDKCallbackInfo_ProgID) # No Need
-objACQSDK_ASDeviceInfor       = win32com.client          .Dispatch(ACQSDK_ASDeviceInfor_ProgID)
+objACQSDK_CSDevice      = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
+objACQSDK_ASImageUnit   = win32com.client          .Dispatch(ACQSDK_ASImageUnit_ProgID)
+objACQSDK_ASDeviceInfor = win32com.client          .Dispatch(ACQSDK_ASDeviceInfor_ProgID)
 
 #	Generate GUI elements for three window
 GenerateGUI()
