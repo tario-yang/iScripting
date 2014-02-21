@@ -40,7 +40,7 @@ def GenerateGUI():
 	wLiveVideo_title = "SDK Testing: Live Video"
 	wLiveVideo.geometry("640x480")
 	wLiveVideo.title("SDK Testing: Live Video")
-	wLiveVideo.resizable(width = False, height = False)
+	#wLiveVideo.resizable(width = False, height = False) # Comment out this line to allow to change the window's size
 	wLiveVideo.withdraw()
 
 	#	Preference Setting
@@ -103,21 +103,24 @@ def GenerateGUI():
 	Button(wControlPanel, text = "Download File",     bd = 3, width = 15, height = 1, command = ACQSDK_DownloadFile)      .grid(row = 17, column = 2)
 
 	#	Logger
-	Label(wControlPanel,  text = "Operation History").grid(row = 18, column = 1)
+	Label(wControlPanel,  text = "")                 .grid(row = 18, column = 1)
+	Label(wControlPanel,  text = "Operation History").grid(row = 19, column = 1)
+	Button(wControlPanel, text = "Height: 36", bd = 3, width = 15, height = 1, command = lambda: ChangeScrolledTextHeight("INCREASE")).grid(row = 20, column = 1)
+	Button(wControlPanel, text = "Height: 12", bd = 3, width = 15, height = 1, command = lambda: ChangeScrolledTextHeight("DECREASE")).grid(row = 20, column = 2)
 	global pLogger
 	pLogger = ScrolledText(wControlPanel, bd = 3, width = 46, height = 36)
-	pLogger.grid(row = 19, column = 0, columnspan = 3)
+	pLogger.grid(row = 21, column = 0, columnspan = 3)
 
 	#	Button: Clean
-	Button(wControlPanel, text = "Clean",  bd = 3, width = 15, height = 1, command = CLEANHistory).grid(row = 20, column = 0)
+	Button(wControlPanel, text = "Clean",  bd = 3, width = 15, height = 1, command = CLEANHistory).grid(row = 22, column = 0)
 
 	#	Button: Exit this script
-	Button(wControlPanel, text = "Exit",   bd = 3, width = 15, height = 1, command = EXITAPP)     .grid(row = 20, column = 1)
+	Button(wControlPanel, text = "Exit",   bd = 3, width = 15, height = 1, command = EXITAPP)     .grid(row = 22, column = 1)
 
 	#	Button: Control whether Preference Setting Dialog is Visable
 	global pPSDV
 	pPSDV = Button(wControlPanel, text = "Config >>", bd = 3, width = 15, height = 1, command = PreferenceSettingDialogVisable)
-	pPSDV.grid(row = 20, column = 2)
+	pPSDV.grid(row = 22, column = 2)
 
 	#--------------------------------------------------[Done]--------------------------------------------------
 
@@ -246,7 +249,7 @@ def ResetDefaultParameter():
 
 	# Input: Default value
 	SetSystemTime        .insert(0, "0")
-	SetLogPath           .insert(0, ".")
+	SetLogPath           .insert(0, "./")
 	SetHPWorkMode        .insert(0, "1")
 	SetSerialNumber      .insert(0, "ABCD1234")
 	SetBrightness        .insert(0, "4")
@@ -258,7 +261,7 @@ def ResetDefaultParameter():
 	EnableStandBy        .insert(0, "1")
 	SetStandByTime       .insert(0, "60")
 	SetMirrorFlag        .insert(0, "1")
-	SetRotationFlag      .insert(0, "90")
+	SetRotationFlag      .insert(0, "0")
 
 # Windows' events
 def ResetWindowPosition(message):
@@ -289,11 +292,16 @@ def ResetWindowPosition(message):
 	# wPreference
 	i = wLiveVideo.winfo_geometry().split("+")
 	j = i[0].split("x")
-	wPreference.geometry("+%s+%s" % (i[1], str(int(j[1]) + y + 26)))
+	wPreference.geometry("+%s+%s" % (i[1], str(int(j[1]) + y + 29)))
 	wPreference.update()
 def ResetWindowSize(width, height):
 	wLiveVideo.geometry("%sx%s" % (width, height))
 	ResetWindowPosition("DOIT")
+def ChangeScrolledTextHeight(change):
+	if change == "INCREASE":
+		pLogger.config(height = 36)
+	if change == "DECREASE":
+		pLogger.config(height = 12)
 def PreferenceSettingDialogVisable():
 	if wPreference.state() == "withdrawn":
 		wPreference.update()
@@ -316,18 +324,18 @@ def OpenDirectory(location = "."):
 	os.system("explorer.exe %s" % target_path)
 
 # SDK's API
-def ACQSDK_Init(): # OK
+def ACQSDK_Init():
 	ACQSDK_SetLogPath()
 	hWnd = win32gui.FindWindow("TkTopLevel", wLiveVideo_title)
 	ret = objACQSDK_CSDevice.ACQSDK_Init(hWnd)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_UnInit(): # OK
+def ACQSDK_UnInit():
 	ret = objACQSDK_CSDevice.ACQSDK_UnInit()
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_OnUpdateLiveWnd(): # OK
+def ACQSDK_OnUpdateLiveWnd():
 	ret = objACQSDK_CSDevice.ACQSDK_OnUpdateLiveWnd()
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_QueryDeviceInfo(): # OK
+def ACQSDK_QueryDeviceInfo():
 	pDeviceInfo = objACQSDK_ASDeviceInfor
 	ret = objACQSDK_CSDevice.ACQSDK_QueryDeviceInfo(pDeviceInfo)
 	CheckResult(sys._getframe().f_code.co_name, ret)
@@ -353,31 +361,33 @@ def ACQSDK_SetHPWorkMode(): # Not implemented
 	Logger("<%r>" % lWorkMode)
 	ret = objACQSDK_CSDevice.ACQSDK_SetHPWorkMode(lWorkMode)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_StartPlay(): # OK
+def ACQSDK_StartPlay():
 	ret = objACQSDK_CSDevice.ACQSDK_StartPlay()
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_StopPlay(): # OK
+def ACQSDK_StopPlay():
 	ret = objACQSDK_CSDevice.ACQSDK_StopPlay()
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_StartRecord(): # OK
+def ACQSDK_StartRecord():
 	path = r"./%s.avi" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S')
 	ret = objACQSDK_CSDevice.ACQSDK_StartRecord(path)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_StopRecord(): # OK
+def ACQSDK_StopRecord():
 	ret = objACQSDK_CSDevice.ACQSDK_StopRecord()
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_Capture(): # OK
+def ACQSDK_Capture():
 	pImageUnit = objACQSDK_ASImageUnit
 	ret = objACQSDK_CSDevice.ACQSDK_Capture(pImageUnit)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 	if ret == 0:
 		img = pImageUnit.get_white_image()
 		Logger("\tImageUnit: %r" % img)
-		save_image_ret = pImageUnit.save_image(r"./%s" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S'), img)
+		img_file = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S')
+		save_image_ret = pImageUnit.save_image(r"./%s" % img_file, img)
 		CheckResult("ACQSDK_Capture -> Save image", save_image_ret)
+		Logger("\t%s.jpg" % img_file)
 		CheckResult("ACQSDK_Capture -> Free image", pImageUnit.free_image(img))
 		CheckResult("ACQSDK_Capture -> Free unit", pImageUnit.free_unit())
-def ACQSDK_GetImageData(): # OK
+def ACQSDK_GetImageData():
 	pImageUnit = objACQSDK_ASImageUnit
 	ret = objACQSDK_CSDevice.ACQSDK_GetImageData(pImageUnit)
 	CheckResult(sys._getframe().f_code.co_name, ret)
@@ -387,7 +397,7 @@ def ACQSDK_GetImageData(): # OK
 		CheckResult("ACQSDK_GetImageData -> Save image", pImageUnit.save_image(r"./%s" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S'), img))
 		CheckResult("ACQSDK_GetImageData -> Free image", pImageUnit.free_image(img))
 		CheckResult("ACQSDK_GetImageData -> Free unit", pImageUnit.free_unit())
-def ACQSDK_SetLogPath(): # OK
+def ACQSDK_SetLogPath():
 	path = SetLogPath.get()
 	Logger("<%r>" % path)
 	ret  = objACQSDK_CSDevice.ACQSDK_SetLogPath(path)
@@ -406,14 +416,14 @@ def ACQSDK_GetFirmwareVersion(): # Not Implemented
 	length = 10
 	ret = objACQSDK_CSDevice.ACQSDK_GetFirmwareVersion(length)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_UpgradeFirmware(): # OK
+def ACQSDK_UpgradeFirmware():
 	pFullPathName = askopenfilename()
 	ret = objACQSDK_CSDevice.ACQSDK_UpgradeFirmware(pFullPathName)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_AbortUpgrade(): # OK
+def ACQSDK_AbortUpgrade():
 	ret = objACQSDK_CSDevice.ACQSDK_AbortUpgrade()
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_UploadFile(): # OK
+def ACQSDK_UploadFile():
 	pFileName = askopenfilename()
 	ret = objACQSDK_CSDevice.ACQSDK_UploadFile(pFileName)
 	CheckResult(sys._getframe().f_code.co_name, ret)
@@ -428,12 +438,12 @@ def ACQSDK_DownloadFile(): # Not Implemented
 	pFileName = askdirectory()
 	ret = objACQSDK_CSDevice.ACQSDK_DownloadFile(fileID, pFileName)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_EnableAutoPowerOn(): # OK
+def ACQSDK_EnableAutoPowerOn():
 	bEnable = int(EnableAutoPowerOn.get())
 	Logger("<%r>" % bEnable)
 	ret = objACQSDK_CSDevice.ACQSDK_EnableAutoPowerOn(bEnable)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetBrightness(): # OK
+def ACQSDK_GetBrightness():
 	ret = objACQSDK_CSDevice.ACQSDK_GetBrightness()
 	CheckResult(sys._getframe().f_code.co_name, ret[0])
 	Logger("\t%s" % str(ret))
@@ -442,12 +452,12 @@ def ACQSDK_GetBrightness(): # OK
 		Logger("\tMaximum brightness: %r" % ret[2])
 		Logger("\tMinimum brightness: %r" % ret[3])
 		Logger("\tDefault brightness: %r" % ret[4])
-def ACQSDK_SetBrightness(): # OK
+def ACQSDK_SetBrightness():
 	brightness = int(SetBrightness.get())
 	Logger("<%r>" % brightness)
 	ret = objACQSDK_CSDevice.ACQSDK_SetBrightness(brightness)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetContrast(): # OK
+def ACQSDK_GetContrast():
 	ret = objACQSDK_CSDevice.ACQSDK_GetContrast()
 	CheckResult(sys._getframe().f_code.co_name, ret[0])
 	Logger("\t%s" % str(ret))
@@ -456,53 +466,54 @@ def ACQSDK_GetContrast(): # OK
 		Logger("\tMaximum contrast: %r" % ret[2])
 		Logger("\tMinimum contrast: %r" % ret[3])
 		Logger("\tDefault contrast: %r" % ret[4])
-def ACQSDK_SetContrast(): # OK
+def ACQSDK_SetContrast():
 	contrast = int(SetContrast.get())
 	Logger("<%r>" % contrast)
 	ret = objACQSDK_CSDevice.ACQSDK_SetContrast(contrast)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetPowerlineFrequency(): # OK
+def ACQSDK_SetPowerlineFrequency():
 	frequency = int(SetPowerlineFrequency.get())
 	Logger("<%r>" % frequency)
 	ret = objACQSDK_CSDevice.ACQSDK_SetPowerlineFrequency(frequency)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetPowerlineFrequency(): # OK
+def ACQSDK_GetPowerlineFrequency():
 	ret = objACQSDK_CSDevice.ACQSDK_GetPowerlineFrequency()
 	CheckResult(sys._getframe().f_code.co_name, ret[0])
 	Logger("\t%s" % str(ret))
 	if ret[0] == 0:
 		Logger("\tCurrent frequency: %r" % ret[1])
 		Logger("\tDefault frequency: %r" % ret[2])
-def ACQSDK_EnableAutoPowerOff(): # OK
+def ACQSDK_EnableAutoPowerOff():
 	bEnable = int(EnableAutoPowerOff.get())
+	Logger("<%r>" % bEnable)
 	ret = objACQSDK_CSDevice.ACQSDK_EnableAutoPowerOff(bEnable)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetAutoPowerOffTime(): # OK
+def ACQSDK_SetAutoPowerOffTime():
 	secondsCount = int(SetAutoPowerOffTime.get())
 	Logger("<%r>" % secondsCount)
 	ret = objACQSDK_CSDevice.ACQSDK_SetAutoPowerOffTime(secondsCount)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_EnableStandBy(): # OK
+def ACQSDK_EnableStandBy():
 	bEnable = int(EnableStandBy.get())
 	Logger("<%r>" % bEnable)
 	ret = objACQSDK_CSDevice.ACQSDK_EnableStandBy(bEnable)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetStandByTime(): # OK
+def ACQSDK_SetStandByTime():
 	secondsCount = int(SetStandByTime.get())
 	Logger("<%r>" % secondsCount)
 	ret = objACQSDK_CSDevice.ACQSDK_SetStandByTime(secondsCount)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetSystemTime(): # OK
+def ACQSDK_SetSystemTime():
 	secondsCount = int(SetSystemTime.get())
 	Logger("<%r>" % secondsCount)
 	ret = objACQSDK_CSDevice.ACQSDK_SetSystemTime(secondsCount)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetMirrorFlag(): # OK
+def ACQSDK_SetMirrorFlag():
 	bEnable = int(SetMirrorFlag.get())
 	Logger("<%r>" % bEnable)
 	ret = objACQSDK_CSDevice.ACQSDK_SetMirrorFlag(bEnable)
 	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetRotationFlag(): # Need to check on 0.1.0.3
+def ACQSDK_SetRotationFlag():
 	rotation = int(SetRotationFlag.get())
 	Logger("<%r>" % rotation)
 	ret = objACQSDK_CSDevice.ACQSDK_SetRotationFlag(rotation)
@@ -538,9 +549,13 @@ def CheckResult(api, ret):
 	else:
 		Logger("%s -> %r" % (api, ret))
 def Logger(strLine):
+	if not os.path.isfile("./" + LoggerOutput): open("./" + LoggerOutput, "w").close()
 	strLine = "%s\n" % str(strLine)
 	pLogger.insert(END, strLine)
 	pLogger.yview(END)
+	f = open("./" + LoggerOutput, "a+")
+	f.write(strLine)
+	f.close()
 def CLEANHistory(): pLogger.delete('1.0', END)
 
 # Temporary buttons
@@ -630,7 +645,8 @@ ACQSDK_ASImageUnit_ProgID   = "ACQSDK.ASImageUnit.1"
 ACQSDK_ASDeviceInfor_ProgID = "ACQSDK.ASDeviceInfor.1"
 
 # Location
-ACQSDK_DLL = "C:\\Program Files (x86)\\Common Files\\Trophy\Acquisition\\AcqSdk\\ACQSDK.DLL"
+ACQSDK_DLL   = "C:\\Program Files (x86)\\Common Files\\Trophy\Acquisition\\AcqSdk\\ACQSDK.DLL"
+LoggerOutput = "Logger.out.log"
 
 # Create COM objects and Event
 objACQSDK_CSDevice      = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
