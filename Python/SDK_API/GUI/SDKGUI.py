@@ -292,7 +292,7 @@ def ResetWindowPosition(message):
 	# wPreference
 	i = wLiveVideo.winfo_geometry().split("+")
 	j = i[0].split("x")
-	wPreference.geometry("+%s+%s" % (i[1], str(int(j[1]) + y + 29)))
+	wPreference.geometry("+%s+%s" % (i[1], str(int(j[1]) + y + 28)))
 	wPreference.update()
 def ResetWindowSize(width, height):
 	wLiveVideo.geometry("%sx%s" % (width, height))
