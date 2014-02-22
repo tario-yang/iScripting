@@ -567,7 +567,7 @@ def CLEANHistory(): pLogger.delete('1.0', END)
 # Temporary buttons
 def TMP_Func1(): ResetDefaultParameter()
 def TMP_Func2():
-	class WorkflowTesting():
+	class WorkflowTesting(threading.Thread):
 		def __init__(self):
 			threading.Thread.__init__(self)
 		def run(self):
