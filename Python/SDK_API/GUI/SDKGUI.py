@@ -7,9 +7,8 @@
 """
 
 try:
-	import os, sys, datetime, time
+	import os, sys, datetime, time, threading
 	import win32com.client, win32gui, win32api
-	import pythoncom
 	from Tkinter import *
 	from ScrolledText import ScrolledText
 	from tkFileDialog import *
@@ -417,9 +416,15 @@ def ACQSDK_GetFirmwareVersion(): # Not Implemented
 	ret = objACQSDK_CSDevice.ACQSDK_GetFirmwareVersion(length)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_UpgradeFirmware():
-	pFullPathName = askopenfilename()
-	ret = objACQSDK_CSDevice.ACQSDK_UpgradeFirmware(pFullPathName)
-	CheckResult(sys._getframe().f_code.co_name, ret)
+	class FWUpgrade(threading.Thread):
+		def __init__(self):
+			threading.Thread.__init__(self)
+		def run(self):
+			self.pFullPathName = askopenfilename()
+			self.ret = objACQSDK_CSDevice.ACQSDK_UpgradeFirmware(self.pFullPathName)
+			CheckResult("Firmware Upgrade Thread", self.ret)
+	instance = FWUpgrade()
+	instance.start()
 def ACQSDK_AbortUpgrade():
 	ret = objACQSDK_CSDevice.ACQSDK_AbortUpgrade()
 	CheckResult(sys._getframe().f_code.co_name, ret)
@@ -519,6 +524,7 @@ def ACQSDK_SetRotationFlag():
 	ret = objACQSDK_CSDevice.ACQSDK_SetRotationFlag(rotation)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 
+
 # Class needed by Callback
 class SDKEvents():
 	def OnHPEvents(self, Callback):
@@ -560,7 +566,22 @@ def CLEANHistory(): pLogger.delete('1.0', END)
 
 # Temporary buttons
 def TMP_Func1(): ResetDefaultParameter()
-def TMP_Func2(): pass
+def TMP_Func2():
+	class WorkflowTesting():
+		def __init__(self):
+			threading.Thread.__init__(self)
+		def run(self):
+			ACQSDK_Init()
+			ACQSDK_StartPlay()
+			time.sleep(5)
+			ACQSDK_Capture()
+			ACQSDK_StartRecord()
+			time.sleep(5)
+			ACQSDK_StopRecord()
+			ACQSDK_StopPlay()
+			ACQSDK_UnInit()
+	instance = WorkflowTesting()
+	instance.start()
 
 # >>Body<<
 
