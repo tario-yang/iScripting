@@ -336,8 +336,8 @@ def ACQSDK_OnUpdateLiveWnd():
 	ret = objACQSDK_CSDevice.ACQSDK_OnUpdateLiveWnd()
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_QueryDeviceInfo():
-	pDeviceInfo = objACQSDK_ASDeviceInfor
-	ret = objACQSDK_CSDevice.ACQSDK_QueryDeviceInfo(pDeviceInfo)
+	pDeviceInfo = win32com.client.Dispatch(ACQSDK_ASDeviceInfor_ProgID)
+	ret         = objACQSDK_CSDevice.ACQSDK_QueryDeviceInfo(pDeviceInfo)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 	if ret == 0:
 		try:
@@ -356,6 +356,7 @@ def ACQSDK_QueryDeviceInfo():
 			Logger("\tMode Type is %r" % model_type)
 		Logger("\tSerial Number is %r" % pDeviceInfo.get_sn())
 		Logger("\tFirmware Version is %r" % pDeviceInfo.get_fw_version())
+	del pDeviceInfo
 def ACQSDK_SetHPWorkMode(): # Not implemented
 	lWorkMode = int(SetHPWorkMode.get())
 	Logger("<%r>" % lWorkMode)
@@ -375,8 +376,8 @@ def ACQSDK_StopRecord():
 	ret = objACQSDK_CSDevice.ACQSDK_StopRecord()
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_Capture():
-	pImageUnit = objACQSDK_ASImageUnit
-	ret = objACQSDK_CSDevice.ACQSDK_Capture(pImageUnit)
+	pImageUnit = win32com.client.Dispatch(ACQSDK_ASImageUnit_ProgID)
+	ret        = objACQSDK_CSDevice.ACQSDK_Capture(pImageUnit)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 	if ret == 0:
 		img = pImageUnit.get_white_image()
@@ -387,8 +388,9 @@ def ACQSDK_Capture():
 		Logger("\t%s.jpg" % img_file)
 		CheckResult("ACQSDK_Capture -> Free image", pImageUnit.free_image(img))
 		CheckResult("ACQSDK_Capture -> Free unit", pImageUnit.free_unit())
+	del pImageUnit
 def ACQSDK_GetImageData():
-	pImageUnit = objACQSDK_ASImageUnit
+	pImageUnit = win32com.client.Dispatch(ACQSDK_ASImageUnit_ProgID)
 	ret = objACQSDK_CSDevice.ACQSDK_GetImageData(pImageUnit)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 	if ret == 0:
@@ -397,6 +399,7 @@ def ACQSDK_GetImageData():
 		CheckResult("ACQSDK_GetImageData -> Save image", pImageUnit.save_image(r"./%s" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S'), img))
 		CheckResult("ACQSDK_GetImageData -> Free image", pImageUnit.free_image(img))
 		CheckResult("ACQSDK_GetImageData -> Free unit", pImageUnit.free_unit())
+	del pImageUnit
 def ACQSDK_SetLogPath():
 	path = SetLogPath.get()
 	Logger("<%r>" % path)
@@ -575,15 +578,18 @@ def TMP_Func2():
 		def __init__(self):
 			threading.Thread.__init__(self)
 		def run(self):
-			ACQSDK_Init()
-			ACQSDK_StartPlay()
-			time.sleep(5)
-			ACQSDK_Capture()
-			ACQSDK_StartRecord()
-			time.sleep(5)
-			ACQSDK_StopRecord()
-			ACQSDK_StopPlay()
-			ACQSDK_UnInit()
+			for i in range(100):
+				Logger("<Reliablity Testing>: #%d" % i)
+				ACQSDK_Init()
+				ACQSDK_StartPlay()
+				time.sleep(5)
+				ACQSDK_Capture()
+				ACQSDK_StartRecord()
+				time.sleep(5)
+				ACQSDK_StopRecord()
+				ACQSDK_StopPlay()
+				ACQSDK_UnInit()
+				time.sleep(3)
 	instance = WorkflowTesting()
 	instance.start()
 
@@ -673,10 +679,8 @@ ACQSDK_ASDeviceInfor_ProgID = "ACQSDK.ASDeviceInfor.1"
 ACQSDK_DLL   = "C:\\Program Files (x86)\\Common Files\\Trophy\Acquisition\\AcqSdk\\ACQSDK.DLL"
 LoggerOutput = "Logger.out.log"
 
-# Create COM objects and Event
+# Create COM object and Event
 objACQSDK_CSDevice      = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
-objACQSDK_ASImageUnit   = win32com.client          .Dispatch(ACQSDK_ASImageUnit_ProgID)
-objACQSDK_ASDeviceInfor = win32com.client          .Dispatch(ACQSDK_ASDeviceInfor_ProgID)
 
 #	Generate GUI elements for three window
 GenerateGUI()
