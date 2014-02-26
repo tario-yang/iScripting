@@ -9,6 +9,7 @@
 try:
 	import os, sys, datetime, time, threading
 	import win32com.client, win32gui, win32api
+	import pythoncom
 	from Tkinter import *
 	from ScrolledText import ScrolledText
 	from tkFileDialog import *
@@ -416,15 +417,18 @@ def ACQSDK_GetFirmwareVersion(): # Not Implemented
 	ret = objACQSDK_CSDevice.ACQSDK_GetFirmwareVersion(length)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_UpgradeFirmware():
-	self.pFullPathName = askopenfilename()
-	class FWUpgrade(threading.Thread):
-		def __init__(self):
-			threading.Thread.__init__(self)
-		def run(self):
-			self.ret = objACQSDK_CSDevice.ACQSDK_UpgradeFirmware(self.pFullPathName)
-			CheckResult("Firmware Upgrade Thread", self.ret)
-	instance = FWUpgrade()
-	instance.start()
+	pFullPathName = askopenfilename()
+	if pFullPathName != "":
+		class FWUpgrade(threading.Thread):
+			def __init__(self):
+				threading.Thread.__init__(self)
+			def run(self):
+				self.ret = objACQSDK_CSDevice.ACQSDK_UpgradeFirmware(pFullPathName)
+				CheckResult("Firmware Upgrade Thread", self.ret)
+		instance = FWUpgrade()
+		instance.start()
+	elif pFullPathName == "":
+		Logger("ACQSDK_UpgradeFirmware -> No File is selected.")
 def ACQSDK_AbortUpgrade():
 	ret = objACQSDK_CSDevice.ACQSDK_AbortUpgrade()
 	CheckResult(sys._getframe().f_code.co_name, ret)
