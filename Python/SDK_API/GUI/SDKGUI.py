@@ -7,7 +7,7 @@
 """
 
 try:
-	import os, sys, datetime, time, threading
+	import os, sys, time, threading
 	import win32com.client, win32gui, win32api
 	import pythoncom
 	from Tkinter import *
@@ -17,8 +17,7 @@ except:
 	print "Error occurs when importing required modules."
 	sys.exit(1)
 else:
-	if win32gui.FindWindow("TkTopLevel","SDK Testing: Live Video") != 0:
-		sys.exit(1)
+	if win32gui.FindWindow("TkTopLevel","SDK Testing: Live Video") != 0: sys.exit(1)
 
 # Generate GUI
 def GenerateGUI():
@@ -248,7 +247,7 @@ def ResetDefaultParameter():
 	SetRotationFlag      .delete(0, END)
 
 	# Input: Default value
-	SetSystemTime        .insert(0, "0")
+	SetSystemTime        .insert(0, str(int(time.time())))
 	SetLogPath           .insert(0, "./")
 	SetHPWorkMode        .insert(0, "1")
 	SetSerialNumber      .insert(0, "ABCD1234")
@@ -531,7 +530,6 @@ def ACQSDK_SetRotationFlag():
 	ret = objACQSDK_CSDevice.ACQSDK_SetRotationFlag(rotation)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 
-
 # Class needed by Callback
 class SDKEvents():
 	def OnHPEvents(self, Callback):
@@ -573,7 +571,7 @@ def CLEANHistory(): pLogger.delete('1.0', END)
 
 # Temporary buttons
 def TMP_Func1(): ResetDefaultParameter()
-def TMP_Func2():
+def TMP_Func2(cmd = "START"):
 	class WorkflowTesting(threading.Thread):
 		def __init__(self):
 			threading.Thread.__init__(self)
@@ -589,9 +587,13 @@ def TMP_Func2():
 				ACQSDK_StopRecord()
 				ACQSDK_StopPlay()
 				ACQSDK_UnInit()
-				time.sleep(3)
-	instance = WorkflowTesting()
-	instance.start()
+				time.sleep(5)
+	if cmd == "START":
+		instance = WorkflowTesting()
+		instance.start()
+	elif cmd == "STOP":
+		instance.stop()
+		instance.join()
 
 # >>Body<<
 
@@ -680,7 +682,7 @@ ACQSDK_DLL   = "C:\\Program Files (x86)\\Common Files\\Trophy\Acquisition\\AcqSd
 LoggerOutput = "Logger.out.log"
 
 # Create COM object and Event
-objACQSDK_CSDevice      = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
+objACQSDK_CSDevice = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
 
 #	Generate GUI elements for three window
 GenerateGUI()
