@@ -195,8 +195,9 @@ def GenerateGUI():
 	Label( wPreference, text = "", bd = 3).grid(row = 5, column = 4, ipadx = 5, ipady = 2)
 	Label( wPreference, text = "", bd = 3).grid(row = 6, column = 4, ipadx = 5, ipady = 2)
 	Label( wPreference, text = "", bd = 3).grid(row = 7, column = 4, ipadx = 5, ipady = 2)
-	Button(wPreference, text = "RESET PARAMETER", wraplength = 70, bd = 2, width = 11, height = 3, command = TMP_Func1).grid(row = 2, column = 5, rowspan = 2)
-	Button(wPreference, text = "EXECUTION",       wraplength = 70, bd = 2, width = 11, height = 3, command = TMP_Func2).grid(row = 5, column = 5, rowspan = 2)
+	Button(wPreference, text = "RESET PARAMETER", wraplength = 70, width = 11, height = 3, command = TMP_Func1).grid(row = 2, column = 5, rowspan = 2)
+	Button(wPreference, text = "START",                            width = 11, height = 1, command = lambda: TMP_Func2("START")).grid(row = 5, column = 5)
+	Button(wPreference, text = "STOP",                             width = 11, height = 1, command = lambda: TMP_Func2("STOP")).grid(row = 6, column = 5)
 	Label( wPreference, text = "", bd = 3).grid(row = 1, column = 6, ipadx = 5, ipady = 2)
 	Label( wPreference, text = "", bd = 3).grid(row = 2, column = 6, ipadx = 5, ipady = 2)
 	Label( wPreference, text = "", bd = 3).grid(row = 3, column = 6, ipadx = 5, ipady = 2)
@@ -575,9 +576,11 @@ def TMP_Func2(cmd = "START"):
 	class WorkflowTesting(threading.Thread):
 		def __init__(self):
 			threading.Thread.__init__(self)
+			self.Tag     = True
+			self.Counter = 1
 		def run(self):
-			for i in range(100):
-				Logger("<Reliablity Testing>: #%d" % i)
+			while self.Tag:
+				Logger("<Reliablity Testing>: #%d" % self.Counter)
 				ACQSDK_Init()
 				ACQSDK_StartPlay()
 				time.sleep(5)
@@ -588,11 +591,15 @@ def TMP_Func2(cmd = "START"):
 				ACQSDK_StopPlay()
 				ACQSDK_UnInit()
 				time.sleep(5)
+				self.Counter += 1
+		def kill(self):
+			self.Tag = False
 	if cmd == "START":
+		global instance
 		instance = WorkflowTesting()
 		instance.start()
 	elif cmd == "STOP":
-		instance.stop()
+		instance.kill()
 		instance.join()
 
 # >>Body<<
