@@ -196,8 +196,8 @@ def GenerateGUI():
 	Label( wPreference, text = "", bd = 3).grid(row = 6, column = 4, ipadx = 5, ipady = 2)
 	Label( wPreference, text = "", bd = 3).grid(row = 7, column = 4, ipadx = 5, ipady = 2)
 	Button(wPreference, text = "RESET PARAMETER", wraplength = 70, width = 11, height = 3, command = TMP_Func1).grid(row = 2, column = 5, rowspan = 2)
-	Button(wPreference, text = "START",                            width = 11, height = 1, command = lambda: TMP_Func2("START")).grid(row = 5, column = 5)
-	Button(wPreference, text = "STOP",                             width = 11, height = 1, command = lambda: TMP_Func2("STOP")).grid(row = 6, column = 5)
+	Button(wPreference, text = "START",                            width = 11, height = 1, command = TMP_Func2).grid(row = 5, column = 5)
+	Button(wPreference, text = "STOP",                             width = 11, height = 1, command = TMP_Func3).grid(row = 6, column = 5)
 	Label( wPreference, text = "", bd = 3).grid(row = 1, column = 6, ipadx = 5, ipady = 2)
 	Label( wPreference, text = "", bd = 3).grid(row = 2, column = 6, ipadx = 5, ipady = 2)
 	Label( wPreference, text = "", bd = 3).grid(row = 3, column = 6, ipadx = 5, ipady = 2)
@@ -572,7 +572,7 @@ def CLEANHistory(): pLogger.delete('1.0', END)
 
 # Temporary buttons
 def TMP_Func1(): ResetDefaultParameter()
-def TMP_Func2(cmd = "START"):
+def TMP_Func2():
 	class WorkflowTesting(threading.Thread):
 		def __init__(self):
 			threading.Thread.__init__(self)
@@ -594,13 +594,12 @@ def TMP_Func2(cmd = "START"):
 				self.Counter += 1
 		def kill(self):
 			self.Tag = False
-	if cmd == "START":
-		global instance
-		instance = WorkflowTesting()
-		instance.start()
-	elif cmd == "STOP":
-		instance.kill()
-		instance.join()
+	global instance
+	instance = WorkflowTesting()
+	instance.start()
+def TMP_Func3():
+	instance.stop()
+	instance.join()
 
 # >>Body<<
 
