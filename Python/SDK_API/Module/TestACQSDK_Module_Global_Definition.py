@@ -1,8 +1,8 @@
 # Import required modules
 try:
-	import os, os.path, sys, time, datetime
-	import win32com.client, win32gui, win32con
-	from win32con import *
+	import os, os.path, sys, time
+	from Tkinter import *
+	import win32com.clien
 except ImportError:
 	GDEF.Logger("Info -> %r" % sys._getframe().f_code.co_filename)
 	GDEF.Logger("Error -> One or more required modules are missing!")
@@ -33,12 +33,6 @@ ACQSDK_ParameterValueTag             = "value"
 ACQSDK_OutputDir                     = r"../Output"
 ACQSDK_ExecutionLogger               = "ACQSDK_Execution.csv"
 ACQSDK_ExecutionReport               = "ACQSDK_TestReport.xml"
-
-# definition: Live Video Window
-TestACQSDK_LiveVideo_Window_Class    = "TestACQSDK"
-TestACQSDK_LiveVideo_Window_Title    = "TestACQSDK: Live Video Display"
-TestACQSDK_LiveVideo_Window_Position = (1,1)
-TestACQSDK_LiveVideo_Window_Size     = (640,480)
 
 # definition: dictionary, "acq_sdk/SDK Document/SDKDef.h"
 Device_Type = {
@@ -121,8 +115,7 @@ Callback_MsgType = {
 # definition: functions and classes
 try:
 	# Function to return Output Header. The header is a timestamp.
-	def Output_Header():
-		return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H-%M-%S')
+	def Output_Header(): return time.strftime("%Y-%m-%d-%H-%M-%S",time.localtime())
 
 	# Logger related functions
 	# 	Function to initiate execution log file
@@ -188,42 +181,6 @@ try:
 	# Function of Creating COM Event
 	def CreateCOMObjectEvent(ProgID, Event): return win32com.client.DispatchEvents(ProgID,Event)
 
-	# Class of Callback ===> When using multi-thread, this can be invloked to test whether callback works or not.
-	class ACQSDK_Callback():
-		def OnHPEvents(self, objSDKCallbackInfo):
-			return objSDKCallbackInfo.get_event_id()
-
-	# Functions of Window object
-	def WndProc(hWnd, msg, wParam, lParam):
-		if msg == WM_PAINT:
-			hdc,ps = win32gui.BeginPaint(hWnd)
-			rect = win32gui.GetClientRect(hWnd)
-			win32gui.EndPaint(hWnd,ps)
-		if msg == WM_DESTROY:
-			win32gui.PostQuitMessage(0)
-		return win32gui.DefWindowProc(hWnd, msg, wParam, lParam)
-	def WindowObjectCreate():
-		objWin = win32gui.WNDCLASS()
-		objWin.hbrBackground = COLOR_BTNFACE
-		objWin.hCursor = win32gui.LoadCursor(0, IDC_ARROW)
-		objWin.hIcon = win32gui.LoadIcon(0, IDI_APPLICATION)
-		objWin.lpszClassName = TestACQSDK_LiveVideo_Window_Class
-		objWin.lpfnWndProc = WndProc
-		reg_objWin = win32gui.RegisterClass(objWin)
-		hWnd = win32gui.CreateWindow(
-				reg_objWin,
-				TestACQSDK_LiveVideo_Window_Title,
-				WS_OVERLAPPEDWINDOW,
-				TestACQSDK_LiveVideo_Window_Position[0],
-				TestACQSDK_LiveVideo_Window_Position[1],
-				TestACQSDK_LiveVideo_Window_Size[0],
-				TestACQSDK_LiveVideo_Window_Size[1],
-				0, 0, 0, None)
-		win32gui.ShowWindow(hWnd, SW_SHOWNORMAL)
-		time.sleep(1)
-		win32gui.UpdateWindow(hWnd)
-		win32gui.PumpMessages()
-	def WindowObjectKill(hWnd): win32gui.PostMessage(hWnd, win32con.WM_CLOSE, 0, 0)
 except:
 	Logger(r"Error -> Defined function/class includes error/mistake.")
 	sys.exit(1)
