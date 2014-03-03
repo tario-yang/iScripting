@@ -108,7 +108,8 @@ def GenerateControlPanel():
 	Button(wControlPanel, text = "Increase Height (+1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("INCREASE")).grid(row = 20, column = 1)
 	Button(wControlPanel, text = "Decrease Height (-1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("DECREASE")).grid(row = 20, column = 2)
 	global pLogger
-	pLogger = ScrolledText(wControlPanel, bd = 3, width = 53, height = 16)
+	pLogger = ScrolledText(wControlPanel, bd = 3, width = 37, height = 16, font = "Courier")
+	wControlPanel_info = WindowState(wControlPanel)
 	pLogger.grid(row = 21, column = 0, columnspan = 3)
 
 	#	Button: Clean
