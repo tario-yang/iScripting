@@ -7,8 +7,8 @@
 """
 
 try:
-	import os, sys, time, threading
-	import win32com.client, win32gui, win32api
+	import os, sys, time, threading, thread
+	import win32com.client, win32api
 	import pythoncom
 	from Tkinter import *
 	from ScrolledText import ScrolledText
@@ -16,8 +16,6 @@ try:
 except:
 	print "Error occurs when importing required modules."
 	sys.exit(1)
-else:
-	if win32gui.FindWindow("TkTopLevel","SDK Testing: Live Video") != 0: sys.exit(1)
 
 # Generate GUI
 def GenerateGUI():
@@ -28,12 +26,17 @@ def GenerateGUI():
 	wLiveVideo    = Tk()	# Display Live Window
 	wPreference   = Tk()	# Preference Setting dialog
 
+	# Handler of the wLiveVideo
+	global hWnd
+	hWnd = wLiveVideo.winfo_id()
+
 	# GUI Configuration
 	GenerateControlPanel()
 	GenerateLiveVideo()
 	GeneratePreference()
 
 	# Bind customized event
+	wControlPanel.bind("<F11>", lambda x: KillProcess())
 	wControlPanel.bind("<F12>", lambda x: OpenDirectory())
 
 	# Trace window's event: DELETE
@@ -105,7 +108,7 @@ def GenerateControlPanel():
 	Button(wControlPanel, text = "Increase Height (+1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("INCREASE")).grid(row = 20, column = 1)
 	Button(wControlPanel, text = "Decrease Height (-1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("DECREASE")).grid(row = 20, column = 2)
 	global pLogger
-	pLogger = ScrolledText(wControlPanel, bd = 3, width = 61, height = 16)
+	pLogger = ScrolledText(wControlPanel, bd = 3, width = 53, height = 16)
 	pLogger.grid(row = 21, column = 0, columnspan = 3)
 
 	#	Button: Clean
@@ -124,7 +127,6 @@ def GenerateLiveVideo():
 	wLiveVideo_title = "SDK Testing: Live Video"
 	wLiveVideo.geometry("%sx%s" % (LiveVideo_Width, LiveVideo_Height))
 	wLiveVideo.title("SDK Testing: Live Video")
-	#wLiveVideo.resizable(width = False, height = False) # Comment out this line to allow to change the window's size
 	wLiveVideo.withdraw()
 def GeneratePreference():
 	#	Preference Setting
@@ -250,14 +252,7 @@ def ResetDefaultParameter():
 	SetRotationFlag      .insert(0, "0")
 
 # Windows' events
-def WindowState(objWin):
-	status  = objWin.winfo_geometry().split("+")
-	size    = status[0].split("x")
-	width   = int(size[0])
-	height  = int(size[1])
-	x       = int(status[1])
-	y       = int(status[2])
-	return (width, height, x, y)
+def WindowState(objWin): return (objWin.winfo_width(), objWin.winfo_height(), objWin.winfo_x(), objWin.winfo_y())
 def ResetWindowPosition(message):
 	if message == "origin":
 		# wControlPanel
@@ -316,11 +311,11 @@ def OpenDirectory(location = "."):
 		os.system("explorer.exe %s" % location)
 	else:
 		return
+def KillProcess(process = "python.exe"): os.system("TASKKILL /F /IM %s" % process)
 
 # SDK's API
 def ACQSDK_Init():
 	ACQSDK_SetLogPath()
-	hWnd = win32gui.FindWindow("TkTopLevel", wLiveVideo_title)
 	ret = objACQSDK_CSDevice.ACQSDK_Init(hWnd)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 	Initiated = True
@@ -364,7 +359,7 @@ def ACQSDK_StopPlay():
 	ret = objACQSDK_CSDevice.ACQSDK_StopPlay()
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_StartRecord():
-	path = r"./%s.avi" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S')
+	path = r"./%s.avi" % time.strftime('%Y-%m-%d-%H-%M-%S')
 	ret = objACQSDK_CSDevice.ACQSDK_StartRecord(path)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_StopRecord():
@@ -377,7 +372,7 @@ def ACQSDK_Capture():
 	if ret == 0:
 		img = pImageUnit.get_white_image()
 		Logger("\tImageUnit: %r" % img)
-		img_file = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S')
+		img_file = time.strftime('%Y-%m-%d-%H-%M-%S')
 		save_image_ret = pImageUnit.save_image(r"./%s" % img_file, img)
 		CheckResult("ACQSDK_Capture -> Save image", save_image_ret)
 		Logger("\t%s.jpg" % img_file)
@@ -391,7 +386,7 @@ def ACQSDK_GetImageData():
 	if ret == 0:
 		img = pImageUnit.get_white_image()
 		Logger("\tImageUnit: %r" % img)
-		CheckResult("ACQSDK_GetImageData -> Save image", pImageUnit.save_image(r"./%s" % datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S'), img))
+		CheckResult("ACQSDK_GetImageData -> Save image", pImageUnit.save_image(r"./%s" % time.strftime('%Y-%m-%d-%H-%M-%S'), img))
 		CheckResult("ACQSDK_GetImageData -> Free image", pImageUnit.free_image(img))
 		CheckResult("ACQSDK_GetImageData -> Free unit", pImageUnit.free_unit())
 	del pImageUnit
@@ -542,6 +537,35 @@ class SDKEvents():
 		if EventID == "0X200005": ACQSDK_GetImageData()
 		if EventID == "0X200003": Logger("\t -> %r" %objSDKCallbackInfo.get_fw_upgrade_percent())
 
+# Class for Workflow
+class WorkflowTesting():
+	def __init__(self):
+		self.Tag = True
+		self.thread_s_one = None
+		self.thread_s_two = None
+	def START(self):
+		while True:
+			if self.Tag == True:
+				if self.thread_s_one is None or self.thread_s_one.isAlive() == False:
+					self.thread_s_one = threading.Thread(target = self.Scenario_One, args = (1,1))
+					self.thread_s_one.setDaemon(True)
+					self.thread_s_one.start()
+				if self.thread_s_two is None or self.thread_s_two.isAlive() == False:
+					self.thread_s_two = threading.Thread(target = self.Scenario_Two, args = (1,1))
+					self.thread_s_two.setDaemon(True)
+					self.thread_s_two.start()
+			elif self.Tag == False:
+				break
+		ACQSDK_StopPlay()
+		ACQSDK_UnInit()
+	def Scenario_One(self, num, delay):
+		ACQSDK_Capture()
+		time.sleep(1)
+	def Scenario_Two(self, num, delay):
+		ACQSDK_StartRecord()
+		time.sleep(1)
+		ACQSDK_StopRecord()
+
 # Functions for Logger box
 def CheckResult(api, ret):
 	if ret != 0 and ret != 1:
@@ -568,32 +592,15 @@ def CLEANHistory(): pLogger.delete('1.0', END)
 # Temporary buttons
 def TMP_Func1(): ResetDefaultParameter()
 def TMP_Func2():
-	class WorkflowTesting(threading.Thread):
-		def __init__(self):
-			threading.Thread.__init__(self)
-			self.Counter = 1
-			TASKPOOL = [
-					"ACQSDK_Init()",
-					"ACQSDK_StartPlay()",
-					"time.sleep(5)",
-					"ACQSDK_Capture()",
-					"ACQSDK_StartRecord()",
-					"time.sleep(5)",
-					"ACQSDK_StopRecord()",
-					"ACQSDK_StopPlay()",
-					"ACQSDK_UnInit()",
-					"time.sleep(5)",
-			]
-		def run(self):
-			while len(TASKPOOL) != 0 :
-				print "XX"
-				Logger("<Reliablity Testing>: #%d" % self.Counter)
-				for item in TASKPOOL: eval(item)
-				self.Counter += 1
+	ACQSDK_Init()
+	time.sleep(1)
+	ACQSDK_StartPlay()
+	time.sleep(1)
+	global instance
 	instance = WorkflowTesting()
-	instance.start()
+	instance.START()
 def TMP_Func3():
-	TASKPOOL = []
+	instance.Tag = False
 
 # >>Body<<
 
@@ -678,8 +685,8 @@ ACQSDK_ASImageUnit_ProgID   = "ACQSDK.ASImageUnit.1"
 ACQSDK_ASDeviceInfor_ProgID = "ACQSDK.ASDeviceInfor.1"
 
 # Location
-ACQSDK_DLL_Dir = "C:\\Program Files (x86)\\Common Files\\Trophy\Acquisition\\AcqSdk"
-ACQSDK_DLL     = ACQSDK_DLL_Dir + "\\ACQSDK.DLL"
+ACQSDK_DLL_Dir = "C:\\Program Files (x86)\\Common Files\\Trophy\\Acquisition\\AcqSdk\\"
+ACQSDK_DLL     = ACQSDK_DLL_Dir + "ACQSDK.DLL"
 LoggerOutput   = "Logger.out.log"
 
 # Flag of Init :: If Init is not executed, EXITAPP function will not execute UnInit.
@@ -688,16 +695,13 @@ Initiated = False
 # Create COM object and Event
 objACQSDK_CSDevice = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
 
-#	Generate GUI elements for three window
+# Generate GUI elements for three window
 LiveVideo_Width  = "640"
 LiveVideo_Height = "480"
 GenerateGUI()
 
 # Event after window has displayed for some time
 wControlPanel.after(1000, lambda: ResetWindowPosition("origin"))
-
-# Workflow Testing's pool:
-TASKPOOL = []
 
 # Wait for message
 mainloop()
