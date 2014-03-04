@@ -108,7 +108,7 @@ def GenerateControlPanel():
 	Button(wControlPanel, text = "Increase Height (+1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("INCREASE")).grid(row = 20, column = 1)
 	Button(wControlPanel, text = "Decrease Height (-1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("DECREASE")).grid(row = 20, column = 2)
 	global pLogger
-	pLogger = ScrolledText(wControlPanel, bd = 3, width = 37, height = 16, font = "Courier")
+	pLogger = ScrolledText(wControlPanel, bd = 3, width = 52, height = 16, font = ("Courier", 9))
 	wControlPanel_info = WindowState(wControlPanel)
 	pLogger.grid(row = 21, column = 0, columnspan = 3)
 
@@ -271,7 +271,7 @@ def ResetWindowPosition(message):
 		y      = status[3]
 
 	# wLiveVideo
-	x = width + x + 7
+	x = width + x + 8
 	wLiveVideo.geometry("+%s+%s" % (str(x), str(y)))
 	wLiveVideo.update()
 	# Check status of wLiveVideo
@@ -690,16 +690,19 @@ ACQSDK_DLL_Dir = "C:\\Program Files (x86)\\Common Files\\Trophy\\Acquisition\\Ac
 ACQSDK_DLL     = ACQSDK_DLL_Dir + "ACQSDK.DLL"
 LoggerOutput   = "Logger.out.log"
 
-# Flag of Init :: If Init is not executed, EXITAPP function will not execute UnInit.
-Initiated = False
-
-# Create COM object and Event
-objACQSDK_CSDevice = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
-
 # Generate GUI elements for three window
 LiveVideo_Width  = "640"
 LiveVideo_Height = "480"
 GenerateGUI()
+
+# Flag of Init :: If Init is not executed, EXITAPP function will not execute UnInit.
+Initiated = False
+
+# Create COM object and Event
+try:
+	objACQSDK_CSDevice = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
+except:
+	print "Fail to create COM object."
 
 # Event after window has displayed for some time
 wControlPanel.after(1000, lambda: ResetWindowPosition("origin"))
