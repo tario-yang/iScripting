@@ -85,13 +85,15 @@ def GenerateControlPanel():
 	Button(wControlPanel, text = "Set Power Off Time", bd = 3, width = 20, height = 1, command = ACQSDK_SetAutoPowerOffTime)  .grid(row = 11, column = 2)
 
 	#	Button Set 4
-	Label(wControlPanel,  text = "Mirror & Rotation")                                                                                  .grid(row = 12, column = 0, columnspan = 2)
-	Button(wControlPanel, text = "Set Mirror Flag",    bd = 3, width = 20, height = 1, command = ACQSDK_SetMirrorFlag)                 .grid(row = 13, column = 0)
-	Button(wControlPanel, text = "Set Rotation Flag",  bd = 3, width = 20, height = 1, command = ACQSDK_SetRotationFlag)               .grid(row = 14, column = 0)
+	Label(wControlPanel,  text = "Mirror & Rotation")                                                                                              .grid(row = 12, column = 0, columnspan = 2)
+	Button(wControlPanel, text = "Set Mirror Flag",       bd = 3, width = 20, height = 1, command = ACQSDK_SetMirrorFlag)                          .grid(row = 13, column = 0)
+	Button(wControlPanel, text = "Set Rotation Flag",     bd = 3, width = 20, height = 1, command = ACQSDK_SetRotationFlag)                        .grid(row = 14, column = 0)
 	#		The following two buttons are added for Rotation APIs
-	Button(wControlPanel, text = "Set to 640*480",     bd = 3, width = 20, height = 1, command = lambda: ResetLiveVideoWindowSize("640", "480")).grid(row = 13, column = 1)
-	Button(wControlPanel, text = "Set to 480*640",     bd = 3, width = 20, height = 1, command = lambda: ResetLiveVideoWindowSize("480", "640")).grid(row = 14, column = 1)
-	Button(wControlPanel, text = "Update LiveVideo",   bd = 3, width = 20, height = 1, command = ACQSDK_OnUpdateLiveWnd)               .grid(row = 13, column = 2)
+	Button(wControlPanel, text = "Set to 640*480",        bd = 3, width = 20, height = 1, command = lambda: ResetLiveVideoWindowSize("640", "480")).grid(row = 13, column = 1)
+	Button(wControlPanel, text = "Set to 480*640",        bd = 3, width = 20, height = 1, command = lambda: ResetLiveVideoWindowSize("480", "640")).grid(row = 14, column = 1)
+	#		Refresh Window and set window size
+	Button(wControlPanel, text = "Refresh LiveVideo",     bd = 3, width = 20, height = 1, command = ACQSDK_OnUpdateLiveWnd)                        .grid(row = 13, column = 2)
+	Button(wControlPanel, text = "Update LiveVideo Size", bd = 3, width = 20, height = 1, command = ChangeLiveVideoSize)                           .grid(row = 14, column = 2)
 
 	#	Button Set 5
 	Label(wControlPanel,  text = "Factory")                                                                               .grid(row = 15, column = 0, columnspan = 2)
@@ -108,7 +110,7 @@ def GenerateControlPanel():
 	Button(wControlPanel, text = "Increase Height (+1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("INCREASE")).grid(row = 20, column = 1)
 	Button(wControlPanel, text = "Decrease Height (-1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("DECREASE")).grid(row = 20, column = 2)
 	global pLogger
-	pLogger = ScrolledText(wControlPanel, bd = 3, width = 52, height = 16, font = ("Courier", 9))
+	pLogger = ScrolledText(wControlPanel, bd = 3, width = 52, height = 16, font = ("Arial", 9))
 	wControlPanel_info = WindowState(wControlPanel)
 	pLogger.grid(row = 21, column = 0, columnspan = 3)
 
@@ -200,9 +202,9 @@ def GeneratePreference():
 
 	#	Right Part: Buttons
 	for i in xrange(1,8): eval("Label(wPreference, bd = 3).grid(row = " + str(i) + ", column = 4, ipadx = 5, ipady = 2)")
-	Button(wPreference, text = "RESET PARAMETER", width = 21, height = 3, command = TMP_Func1).grid(row = 2, column = 5, rowspan = 2)
-	Button(wPreference, text = "START WORKFLOW",  width = 21, height = 1, command = TMP_Func2).grid(row = 5, column = 5)
-	Button(wPreference, text = "STOP WORKFLOW",   width = 21, height = 1, command = TMP_Func3).grid(row = 6, column = 5)
+	Button(wPreference, text = "RESET PARAMETER", width = 18, height = 3, command = TMP_Func1).grid(row = 2, column = 5, rowspan = 2)
+	Button(wPreference, text = "START WORKFLOW",  width = 18, height = 1, command = TMP_Func2).grid(row = 5, column = 5)
+	Button(wPreference, text = "STOP WORKFLOW",   width = 18, height = 1, command = TMP_Func3).grid(row = 6, column = 5)
 	for i in xrange(1,8): eval("Label(wPreference, bd = 3).grid(row = " + str(i) + ", column = 6, ipadx = 5, ipady = 2)")
 
 	#	Bottom
@@ -271,8 +273,8 @@ def ResetWindowPosition(message):
 		y      = status[3]
 
 	# wLiveVideo
-	x = width + x + 8
-	wLiveVideo.geometry("+%s+%s" % (str(x), str(y)))
+	x = width + x + 6
+	wLiveVideo.geometry("+%d+%d" % (x, y))
 	wLiveVideo.update()
 	# Check status of wLiveVideo
 	if wLiveVideo.state() == "withdrawn": wLiveVideo.deiconify()
@@ -280,11 +282,18 @@ def ResetWindowPosition(message):
 	# wPreference
 	i = WindowState(wLiveVideo)
 	j = WindowState(wPreference)
-	wPreference.geometry("%sx%s+%s+%s" % (LiveVideo_Width, str(j[1]), str(x), str(int(i[1]) + y + 28)))
+	wPreference.geometry("+%d+%d" % (x, i[1] + y + 28))
 	wPreference.update()
 def ResetLiveVideoWindowSize(width, height):
 	wLiveVideo.geometry("%sx%s" % (width, height))
 	ResetWindowPosition("DOIT")
+def ChangeLiveVideoSize():
+	status = WindowState(wLiveVideo)
+	if status[0] != 640:
+		wLiveVideo.geometry("%dx%d" % (status[0], status[0]*0.75))
+		ResetWindowPosition("Other")
+	else:
+		pass
 def ChangeScrolledTextHeight(change):
 	status = pLogger["height"]
 	if change == "INCREASE":
@@ -372,13 +381,12 @@ def ACQSDK_Capture():
 	CheckResult(sys._getframe().f_code.co_name, ret)
 	if ret == 0:
 		img = pImageUnit.get_white_image()
-		Logger("\tImageUnit: %r" % img)
+		Logger(">> ImageUnit: %r" % img)
 		img_file = time.strftime('%Y-%m-%d-%H-%M-%S')
 		save_image_ret = pImageUnit.save_image(r"./%s" % img_file, img)
 		CheckResult("ACQSDK_Capture -> Save image", save_image_ret)
-		Logger("\t%s.jpg" % img_file)
 		CheckResult("ACQSDK_Capture -> Free image", pImageUnit.free_image(img))
-		CheckResult("ACQSDK_Capture -> Free unit", pImageUnit.free_unit())
+		CheckResult("ACQSDK_Capture -> Free unit",  pImageUnit.free_unit())
 	del pImageUnit
 def ACQSDK_GetImageData():
 	pImageUnit = win32com.client.Dispatch(ACQSDK_ASImageUnit_ProgID)
@@ -386,10 +394,10 @@ def ACQSDK_GetImageData():
 	CheckResult(sys._getframe().f_code.co_name, ret)
 	if ret == 0:
 		img = pImageUnit.get_white_image()
-		Logger("\tImageUnit: %r" % img)
+		Logger(">> ImageUnit: %r" % img)
 		CheckResult("ACQSDK_GetImageData -> Save image", pImageUnit.save_image(r"./%s" % time.strftime('%Y-%m-%d-%H-%M-%S'), img))
 		CheckResult("ACQSDK_GetImageData -> Free image", pImageUnit.free_image(img))
-		CheckResult("ACQSDK_GetImageData -> Free unit", pImageUnit.free_unit())
+		CheckResult("ACQSDK_GetImageData -> Free unit",  pImageUnit.free_unit())
 	del pImageUnit
 def ACQSDK_SetLogPath():
 	path = SetLogPath.get()
@@ -592,16 +600,8 @@ def CLEANHistory(): pLogger.delete('1.0', END)
 
 # Temporary buttons
 def TMP_Func1(): ResetDefaultParameter()
-def TMP_Func2():
-	ACQSDK_Init()
-	time.sleep(1)
-	ACQSDK_StartPlay()
-	time.sleep(1)
-	global instance
-	instance = WorkflowTesting()
-	instance.START()
-def TMP_Func3():
-	instance.Tag = False
+def TMP_Func2(): pass
+def TMP_Func3(): pass
 
 # >>Body<<
 
