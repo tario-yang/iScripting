@@ -7,7 +7,7 @@
 """
 
 try:
-	import os, sys, time, threading, thread
+	import os, sys, time, threading
 	import win32com.client, win32api
 	import pythoncom
 	from Tkinter import *
@@ -110,8 +110,7 @@ def GenerateControlPanel():
 	Button(wControlPanel, text = "Increase Height (+1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("INCREASE")).grid(row = 20, column = 1)
 	Button(wControlPanel, text = "Decrease Height (-1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("DECREASE")).grid(row = 20, column = 2)
 	global pLogger
-	pLogger = ScrolledText(wControlPanel, bd = 3, width = 52, height = 16, font = ("Arial", 9))
-	wControlPanel_info = WindowState(wControlPanel)
+	pLogger = ScrolledText(wControlPanel, bd = 3, width = 60, height = 16, font = ("Arial", 9))
 	pLogger.grid(row = 21, column = 0, columnspan = 3)
 
 	#	Button: Clean
@@ -203,8 +202,7 @@ def GeneratePreference():
 	#	Right Part: Buttons
 	for i in xrange(1,8): eval("Label(wPreference, bd = 3).grid(row = " + str(i) + ", column = 4, ipadx = 5, ipady = 2)")
 	Button(wPreference, text = "RESET PARAMETER", width = 18, height = 3, command = TMP_Func1).grid(row = 2, column = 5, rowspan = 2)
-	Button(wPreference, text = "START WORKFLOW",  width = 18, height = 1, command = TMP_Func2).grid(row = 5, column = 5)
-	Button(wPreference, text = "STOP WORKFLOW",   width = 18, height = 1, command = TMP_Func3).grid(row = 6, column = 5)
+	Button(wPreference, text = "TEMPORARY",       width = 18, height = 3, command = TMP_Func2).grid(row = 5, column = 5, rowspan = 2)
 	for i in xrange(1,8): eval("Label(wPreference, bd = 3).grid(row = " + str(i) + ", column = 6, ipadx = 5, ipady = 2)")
 
 	#	Bottom
@@ -600,8 +598,11 @@ def CLEANHistory(): pLogger.delete('1.0', END)
 
 # Temporary buttons
 def TMP_Func1(): ResetDefaultParameter()
-def TMP_Func2(): pass
-def TMP_Func3(): pass
+def TMP_Func2():
+	ACQSDK_Init()
+	ACQSDK_SetSystemTime()
+	ACQSDK_StartPlay()
+
 
 # >>Body<<
 
@@ -686,8 +687,12 @@ ACQSDK_ASImageUnit_ProgID   = "ACQSDK.ASImageUnit.1"
 ACQSDK_ASDeviceInfor_ProgID = "ACQSDK.ASDeviceInfor.1"
 
 # Location
-ACQSDK_DLL_Dir = "C:\\Program Files (x86)\\Common Files\\Trophy\\Acquisition\\AcqSdk\\"
-ACQSDK_DLL     = ACQSDK_DLL_Dir + "ACQSDK.DLL"
+try:
+	ACQSDK_DLL_Dir = os.environ.get("CommonProgramFiles(x86)") + "\\Trophy\\Acquisition\\AcqSdk\\"
+except:
+	ACQSDK_DLL_Dir = os.environ.get("CommonProgramFiles") + "\\Trophy\\Acquisition\\AcqSdk\\"
+finally:
+	ACQSDK_DLL     = ACQSDK_DLL_Dir + "ACQSDK.DLL"
 LoggerOutput   = "Logger.out.log"
 
 # Generate GUI elements for three window
