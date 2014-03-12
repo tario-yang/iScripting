@@ -8,8 +8,8 @@
 
 try:
 	import os, sys, time, threading
-	import win32com.client, win32api
-	import pythoncom
+	import win32com.client, pythoncom
+	import win32api
 	from Tkinter import *
 	from ScrolledText import ScrolledText
 	from tkFileDialog import *
@@ -38,12 +38,24 @@ def GenerateGUI():
 	# Bind customized event
 	wControlPanel.bind("<F11>", lambda x: KillProcess())
 	wControlPanel.bind("<F12>", lambda x: OpenDirectory())
+	wPreference.bind('<Key>', MonitorKey)
 
 	# Trace window's event: DELETE
 	wControlPanel.protocol("WM_DELETE_WINDOW", EXITAPP)
 	wLiveVideo   .protocol("WM_DELETE_WINDOW", lambda: 0) # No response when trying to close Live Video's window
 	wPreference  .protocol("WM_DELETE_WINDOW", PreferenceSettingDialogVisable) # Map the close event to PreferenceSettingDialogVisable
 def GenerateControlPanel():
+	#	Add Menu
+	MenuBar = Menu(wControlPanel)
+	#		File
+	FileMenu = Menu(MenuBar, tearoff = 0)
+	FileMenu.add_separator()
+	FileMenu.add_command(label = "Exit", command = EXITAPP)
+	MenuBar.add_cascade(label = "File", menu = FileMenu)
+	#		Help
+	MenuBar.add_command(label = "About")
+	wControlPanel.config(menu = MenuBar)
+
 	#	Panel
 	wControlPanel.geometry("+0+0")
 	wControlPanel.title("SDK Testing: Control Panel")
@@ -320,6 +332,7 @@ def OpenDirectory(location = "."):
 	else:
 		return
 def KillProcess(process = "python.exe"): os.system("TASKKILL /F /IM %s" % process)
+def MonitorKey(event): print event.char
 
 # SDK's API
 def ACQSDK_Init():
@@ -374,37 +387,52 @@ def ACQSDK_StopRecord():
 	ret = objACQSDK_CSDevice.ACQSDK_StopRecord()
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_Capture():
-	pImageUnit = win32com.client.Dispatch(ACQSDK_ASImageUnit_ProgID)
-	ret        = objACQSDK_CSDevice.ACQSDK_Capture(pImageUnit)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-	if ret == 0:
-		img = pImageUnit.get_white_image()
-		Logger(">> ImageUnit: %r" % img)
-		img_file = time.strftime('%Y-%m-%d-%H-%M-%S')
-		save_image_ret = pImageUnit.save_image(r"./%s" % img_file, img)
-		CheckResult("ACQSDK_Capture -> Save image", save_image_ret)
-		CheckResult("ACQSDK_Capture -> Free image", pImageUnit.free_image(img))
-		CheckResult("ACQSDK_Capture -> Free unit",  pImageUnit.free_unit())
-	del pImageUnit
+	class SWCapture(threading.Thread):
+		def __init__(self):
+			threading.Thread.__init__(self)
+		def run(self):
+			self.pImageUnit = win32com.client.Dispatch(ACQSDK_ASImageUnit_ProgID)
+			self.ret        = objACQSDK_CSDevice.ACQSDK_Capture(pImageUnit)
+			CheckResult(sys._getframe().f_code.co_name, self.ret)
+			if self.ret == 0:
+				self.img = self.pImageUnit.get_white_image()
+				Logger(">> ImageUnit: %r" % self.img)
+				self.img_file = time.strftime('%Y-%m-%d-%H-%M-%S')
+				self.save_image_ret = self.pImageUnit.save_image(r"./%s" % self.img_file, self.img)
+				CheckResult("ACQSDK_Capture -> Save image", self.save_image_ret)
+				CheckResult("ACQSDK_Capture -> Free image", self.pImageUnit.free_image(self.img))
+				CheckResult("ACQSDK_Capture -> Free unit",  self.pImageUnit.free_unit())
+			del self.pImageUnit
+	instance = SWCapture()
+	instance.setDaemon(True)
+	instance.start()
 def ACQSDK_GetImageData():
-	pImageUnit = win32com.client.Dispatch(ACQSDK_ASImageUnit_ProgID)
-	ret = objACQSDK_CSDevice.ACQSDK_GetImageData(pImageUnit)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-	if ret == 0:
-		img = pImageUnit.get_white_image()
-		Logger(">> ImageUnit: %r" % img)
-		CheckResult("ACQSDK_GetImageData -> Save image", pImageUnit.save_image(r"./%s" % time.strftime('%Y-%m-%d-%H-%M-%S'), img))
-		CheckResult("ACQSDK_GetImageData -> Free image", pImageUnit.free_image(img))
-		CheckResult("ACQSDK_GetImageData -> Free unit",  pImageUnit.free_unit())
-	del pImageUnit
+	class HWCapture(threading.Thread):
+		def __init__(self):
+			threading.Thread.__init__(self)
+		def run(self):
+			self.pImageUnit = win32com.client.Dispatch(ACQSDK_ASImageUnit_ProgID)
+			self.ret        = objACQSDK_CSDevice.ACQSDK_GetImageData(pImageUnit)
+			CheckResult(sys._getframe().f_code.co_name, ret)
+			if self.ret == 0:
+				self.img = self.pImageUnit.get_white_image()
+				Logger(">> ImageUnit: %r" % self.img)
+				self.img_file = time.strftime('%Y-%m-%d-%H-%M-%S')
+				self.save_image_ret = self.pImageUnit.save_image(r"./%s" % self.img_file, self.img)
+				CheckResult("ACQSDK_Capture -> Save image", self.save_image_ret)
+				CheckResult("ACQSDK_Capture -> Free image", self.pImageUnit.free_image(self.img))
+				CheckResult("ACQSDK_Capture -> Free unit",  self.pImageUnit.free_unit())
+			del self.pImageUnit
+	instance = HWCapture()
+	instance.setDaemon(True)
+	instance.start()
 def ACQSDK_SetLogPath():
 	path = SetLogPath.get()
 	Logger("<%r>" % path)
 	ret  = objACQSDK_CSDevice.ACQSDK_SetLogPath(path)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_GetSerialNumber(): # Not Implemented
-	length = 8
-	ret    = objACQSDK_CSDevice.ACQSDK_GetSerialNumber(length)
+	ret = objACQSDK_CSDevice.ACQSDK_GetSerialNumber()
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_SetSerialNumber(): # Not Implemented
 	pSn = SetSerialNumber.get()
@@ -413,8 +441,7 @@ def ACQSDK_SetSerialNumber(): # Not Implemented
 	ret = objACQSDK_CSDevice.ACQSDK_SetSerialNumber(pSn, len)
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_GetFirmwareVersion(): # Not Implemented
-	length = 10
-	ret = objACQSDK_CSDevice.ACQSDK_GetFirmwareVersion(length)
+	ret = objACQSDK_CSDevice.ACQSDK_GetFirmwareVersion()
 	CheckResult(sys._getframe().f_code.co_name, ret)
 def ACQSDK_UpgradeFirmware():
 	pFullPathName = askopenfilename()
@@ -517,11 +544,13 @@ def ACQSDK_SetSystemTime():
 	Logger("<%r>" % secondsCount)
 	ret = objACQSDK_CSDevice.ACQSDK_SetSystemTime(secondsCount)
 	CheckResult(sys._getframe().f_code.co_name, ret)
+def ACQSDK_GetMirrorFlag(): pass # Not Implemented
 def ACQSDK_SetMirrorFlag():
 	bEnable = int(SetMirrorFlag.get())
 	Logger("<%r>" % bEnable)
 	ret = objACQSDK_CSDevice.ACQSDK_SetMirrorFlag(bEnable)
 	CheckResult(sys._getframe().f_code.co_name, ret)
+def ACQSDK_GetRotationFlag(): pass # Not Implemented
 def ACQSDK_SetRotationFlag():
 	rotation = int(SetRotationFlag.get())
 	Logger("<%r>" % rotation)
@@ -543,35 +572,6 @@ class SDKEvents():
 			Logger("\t%s -> %s" % (EventID, EventID_Value))
 		if EventID == "0X200005": ACQSDK_GetImageData()
 		if EventID == "0X200003": Logger("\t -> %r" %objSDKCallbackInfo.get_fw_upgrade_percent())
-
-# Class for Workflow
-class WorkflowTesting():
-	def __init__(self):
-		self.Tag = True
-		self.thread_s_one = None
-		self.thread_s_two = None
-	def START(self):
-		while True:
-			if self.Tag == True:
-				if self.thread_s_one is None or self.thread_s_one.isAlive() == False:
-					self.thread_s_one = threading.Thread(target = self.Scenario_One, args = (1,1))
-					self.thread_s_one.setDaemon(True)
-					self.thread_s_one.start()
-				if self.thread_s_two is None or self.thread_s_two.isAlive() == False:
-					self.thread_s_two = threading.Thread(target = self.Scenario_Two, args = (1,1))
-					self.thread_s_two.setDaemon(True)
-					self.thread_s_two.start()
-			elif self.Tag == False:
-				break
-		ACQSDK_StopPlay()
-		ACQSDK_UnInit()
-	def Scenario_One(self, num, delay):
-		ACQSDK_Capture()
-		time.sleep(1)
-	def Scenario_Two(self, num, delay):
-		ACQSDK_StartRecord()
-		time.sleep(1)
-		ACQSDK_StopRecord()
 
 # Functions for Logger box
 def CheckResult(api, ret):
@@ -599,10 +599,16 @@ def CLEANHistory(): pLogger.delete('1.0', END)
 # Temporary buttons
 def TMP_Func1(): ResetDefaultParameter()
 def TMP_Func2():
-	ACQSDK_Init()
-	ACQSDK_SetSystemTime()
-	ACQSDK_StartPlay()
-
+	class LongTimeCapture(threading.Thread):
+		def __init__(self):
+			threading.Thread.__init__(self)
+		def run(self):
+			while xFlag == True:
+				ACQSDK_Capture()
+				time.sleep(2)
+	instance = LongTimeCapture()
+	instance.setDaemon(True)
+	instance.start()
 
 # >>Body<<
 
@@ -699,6 +705,10 @@ LoggerOutput   = "Logger.out.log"
 LiveVideo_Width  = "640"
 LiveVideo_Height = "480"
 GenerateGUI()
+
+# Flag for thread
+global xFlag
+xFlag = True
 
 # Flag of Init :: If Init is not executed, EXITAPP function will not execute UnInit.
 Initiated = False
