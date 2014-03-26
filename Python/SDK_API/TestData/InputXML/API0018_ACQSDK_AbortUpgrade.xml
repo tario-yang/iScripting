@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase type="API">
+
+ <Teststep index="Abort Upgrade Firmware Process">
+  <Parameter name="APIName" value="API0018_ACQSDK_AbortUpgrade"></Parameter>
+   <Parameter name="path" value="D:\ACQTest\Firmware\CS1200-UVC-0.0.2.4.zip"></Parameter> 
+  <Parameter name="Return" value="0"></Parameter>
+ </Teststep>
+
+</Testcase>
+

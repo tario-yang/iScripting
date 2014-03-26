@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase type="API">
+ <Teststep index="Set Contrast With 1">
+  <Parameter name="APIName" value="API0025_ACQSDK_SetContrast"></Parameter>
+  <Parameter name="contrast" value="1"></Parameter>
+  <Parameter name="Return" value="0"></Parameter>
+ </Teststep>
+ <Teststep index="Set Contrast With 3">
+  <Parameter name="APIName" value="API0025_ACQSDK_SetContrast"></Parameter>
+  <Parameter name="contrast" value="3"></Parameter>
+  <Parameter name="Return" value="0"></Parameter>
+ </Teststep>
+ <Teststep index="Set Contrast With 7">
+  <Parameter name="APIName" value="API0025_ACQSDK_SetContrast"></Parameter>
+  <Parameter name="contrast" value="7"></Parameter>
+  <Parameter name="Return" value="0"></Parameter>
+ </Teststep>
+</Testcase>
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase type="API">
+
+ <Teststep index="Set Mirror Flag With 2">
+  <Parameter name="APIName" value="API0033_ACQSDK_SetMirrorFlag"></Parameter>
+  <Parameter name="setmirrorflag" value="2"></Parameter>
+  <Parameter name="Return" value="983045"></Parameter>
+ </Teststep>
+
+ <Teststep index="Set Mirror Flag With -1">
+  <Parameter name="APIName" value="API0033_ACQSDK_SetMirrorFlag"></Parameter>
+  <Parameter name="setmirrorflag" value="-1"></Parameter>
+  <Parameter name="Return" value="983045"></Parameter>
+ </Teststep>
+
+</Testcase>
+

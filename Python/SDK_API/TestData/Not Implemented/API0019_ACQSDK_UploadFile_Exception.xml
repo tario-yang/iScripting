@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase type="API">
+
+ <Teststep index="Upload Read Only File ">
+  <Parameter name="APIName" value="API0019_ACQSDK_UploadFile"></Parameter>
+  <Parameter name="pFileName" value="@ReadOnly"></Parameter>        <!-- File Read Only -->   
+  <Parameter name="Return" value="NZ"></Parameter>
+ </Teststep>
+
+ <Teststep index="Upload Empty File ">
+  <Parameter name="APIName" value="API0019_ACQSDK_UploadFile"></Parameter>
+  <Parameter name="pFileName" value="Empty File"></Parameter>       
+  <Parameter name="Return" value="NZ"></Parameter>
+ </Teststep>
+
+</Testcase>
+
+

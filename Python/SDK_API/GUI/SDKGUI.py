@@ -1,30 +1,34 @@
 """
-	GUI: Quick Checking on SDK's API
+    GUI: Quick Checking on SDK's API
 
-	History:
-		2014-2-18	0.1		First version
+    History:
+        2014-02-18	0.1		First version
 							Notes: Some APIs are not ready.
+		2014-03-26	0.2		Update new APIs
 """
 
+import os, sys, time, threading
+import win32com.client, win32api, pythoncom
+from Tkinter import *
+from ScrolledText import ScrolledText
+from tkFileDialog import *
+from tkMessageBox import *
 try:
-	import os, sys, time, threading
-	import win32com.client, pythoncom
-	import win32api
-	from Tkinter import *
-	from ScrolledText import ScrolledText
-	from tkFileDialog import *
+	sys.path.append(r'../Module')
+	import TestACQSDK_Module_Global_Definition as GD
+	import TestACQSDK_Module_Wrapper as SDKAPI
 except:
-	print "Error occurs when importing required modules."
-	sys.exit(1)
+	print "Expected module files are not imported successfully."
+	#sys.exit(1)
 
 # Generate GUI
 def GenerateGUI():
 	# Create Tkinter windows
 	# GUI : Workflow
-	global wControlPanel, wLiveVideo, wPreference
+	global wControlPanel, wLiveVideo, wLogger
 	wControlPanel = Tk()	# List buttons
 	wLiveVideo    = Tk()	# Display Live Window
-	wPreference   = Tk()	# Preference Setting dialog
+	wLogger       = Tk()    # Logger Window
 
 	# Handler of the wLiveVideo
 	global hWnd
@@ -33,195 +37,228 @@ def GenerateGUI():
 	# GUI Configuration
 	GenerateControlPanel()
 	GenerateLiveVideo()
-	GeneratePreference()
+	GenerateLogger()
 
 	# Bind customized event
 	wControlPanel.bind("<F11>", lambda x: KillProcess())
+	wLiveVideo   .bind("<F11>", lambda x: KillProcess())
+	wLogger      .bind("<F11>", lambda x: KillProcess())
 	wControlPanel.bind("<F12>", lambda x: OpenDirectory())
-	wPreference.bind('<Key>', MonitorKey)
 
 	# Trace window's event: DELETE
 	wControlPanel.protocol("WM_DELETE_WINDOW", EXITAPP)
 	wLiveVideo   .protocol("WM_DELETE_WINDOW", lambda: 0) # No response when trying to close Live Video's window
-	wPreference  .protocol("WM_DELETE_WINDOW", PreferenceSettingDialogVisable) # Map the close event to PreferenceSettingDialogVisable
+	wLogger      .protocol("WM_DELETE_WINDOW", lambda: 0) # No response when trying to close Logger's window
 def GenerateControlPanel():
-	#	Add Menu
-	MenuBar = Menu(wControlPanel)
-	#		File
-	FileMenu = Menu(MenuBar, tearoff = 0)
-	FileMenu.add_separator()
-	FileMenu.add_command(label = "Exit", command = EXITAPP)
-	MenuBar.add_cascade(label = "File", menu = FileMenu)
-	#		Help
-	MenuBar.add_command(label = "About")
-	wControlPanel.config(menu = MenuBar)
-
 	#	Panel
-	wControlPanel.geometry("+0+0")
+	wControlPanel.geometry("+5+5")
 	wControlPanel.title("SDK Testing: Control Panel")
 	wControlPanel.resizable(width = False, height = False)
 
-	#	Button Set 1, basic APIs
-	Label(wControlPanel,  text = "Basic")                                                                            .grid(row = 0,  column = 0, columnspan = 2)
-	Button(wControlPanel, text = "Init",               bd = 3, width = 20, height = 1, command = ACQSDK_Init).        grid(row = 1,  column = 0)
-	Button(wControlPanel, text = "UnInit",             bd = 3, width = 20, height = 1, command = ACQSDK_UnInit)      .grid(row = 2,  column = 0)
-	Button(wControlPanel, text = "Start Play",         bd = 3, width = 20, height = 1, command = ACQSDK_StartPlay)   .grid(row = 1,  column = 1)
-	Button(wControlPanel, text = "Stop Play",          bd = 3, width = 20, height = 1, command = ACQSDK_StopPlay)    .grid(row = 2,  column = 1)
-	Button(wControlPanel, text = "Start Record",       bd = 3, width = 20, height = 1, command = ACQSDK_StartRecord) .grid(row = 1,  column = 2)
-	Button(wControlPanel, text = "Stop Record",        bd = 3, width = 20, height = 1, command = ACQSDK_StopRecord)  .grid(row = 2,  column = 2)
-	Button(wControlPanel, text = "Capture",            bd = 3, width = 20, height = 1, command = ACQSDK_Capture)     .grid(row = 3,  column = 1)
-	Button(wControlPanel, text = "Get Image Data",     bd = 3, width = 20, height = 1, command = ACQSDK_GetImageData).grid(row = 3,  column = 2)
+	#	Add Menu
+	MenuBar = Menu(wControlPanel)
+	#		Operation
+	FileOperation = Menu(MenuBar, tearoff = 0)
+	MenuBar.add_cascade(label = "File", menu = FileOperation)
+	FileOperation.add_checkbutton(label = "Display Operation History Window", command = DisplayOperationHistoryWindow)
+	FileOperation.add_command(label = "Reset Parameter to Default Value", command = ResetDefaultParameter)
+	FileOperation.add_separator()
+	FileOperation.add_command(label = "Exit", command = EXITAPP)
+	#		Help
+	HelpMenu = Menu(MenuBar, tearoff = 0)
+	MenuBar.add_cascade(label = "About", menu = HelpMenu)
+	HelpMenu.add_command(label = "ACQSDK.DLL -> Version", command = lambda: showinfo("", "ACQSDK.DLL -> %s" % ACQSDKDLL_FileVersion()))
+	#	Display Menu
+	wControlPanel.config(menu = MenuBar)
 
-	#	The other APIs
-	# Label(wControlPanel,  text = "Extention").grid(row = 4, column = 0)
+	#	GUI Definition: Property
+	ButtonWidth = 22
+	EntryWidth = 25
 
-	#	Buttons Set 2
-	Label(wControlPanel,  text = "Query & Upgrade")                                                                       .grid(row = 5, column = 0, columnspan = 2)
-	Button(wControlPanel, text = "Query Device Info", bd = 3, width = 20, height = 1, command = ACQSDK_QueryDeviceInfo)   .grid(row = 6, column = 0)
-	Button(wControlPanel, text = "Upgrade FW",        bd = 3, width = 20, height = 1, command = ACQSDK_UpgradeFirmware)   .grid(row = 6, column = 1)
-	Button(wControlPanel, text = "Abort Upgrade",     bd = 3, width = 20, height = 1, command = ACQSDK_AbortUpgrade)      .grid(row = 6, column = 2)
+	#	Group: Basic
+	BasicFrameRow = 0
+	BasicFrame = LabelFrame(wControlPanel, text = "Basic Function", width = 400, padx = 3, pady = 3)
+	BasicFrame.grid(row = BasicFrameRow, column = 0, columnspan = 3)
+	Button(BasicFrame, text = "Set Log Path",   width = ButtonWidth, command = ACQSDK_SetLogPath)  .grid(row = BasicFrameRow,      column = 0)
+	global LogPathInput
+	LogPathInput = Entry(BasicFrame, bd = 2, width = EntryWidth*2)
+	LogPathInput                                                                                   .grid(row = BasicFrameRow,      column = 1, columnspan = 2)
+	Button(BasicFrame, text = "Init",           width = ButtonWidth, command = ACQSDK_Init)        .grid(row = BasicFrameRow + 1,  column = 1)
+	Button(BasicFrame, text = "UnInit",         width = ButtonWidth, command = ACQSDK_UnInit)      .grid(row = BasicFrameRow + 1,  column = 2)
+	Button(BasicFrame, text = "Start Play",     width = ButtonWidth, command = ACQSDK_StartPlay)   .grid(row = BasicFrameRow + 2,  column = 1)
+	Button(BasicFrame, text = "Stop Play",      width = ButtonWidth, command = ACQSDK_StopPlay)    .grid(row = BasicFrameRow + 2,  column = 2)
+	Button(BasicFrame, text = "Capture",        width = ButtonWidth, command = ACQSDK_Capture)     .grid(row = BasicFrameRow + 3,  column = 1)
+	Button(BasicFrame, text = "Get Image Data", width = ButtonWidth, command = ACQSDK_GetImageData).grid(row = BasicFrameRow + 3,  column = 2)
+	Button(BasicFrame, text = "Start Record",   width = ButtonWidth, command = ACQSDK_StartRecord) .grid(row = BasicFrameRow + 4,  column = 1)
+	Button(BasicFrame, text = "Stop Record",    width = ButtonWidth, command = ACQSDK_StopRecord)  .grid(row = BasicFrameRow + 4,  column = 2)
 
-	#	Button Set 3
-	Label(wControlPanel,  text = "HP Configuration")                                                                          .grid(row = 7,  column = 0, columnspan = 2)
-	Button(wControlPanel, text = "Get Brightness",     bd = 3, width = 20, height = 1, command = ACQSDK_GetBrightness)        .grid(row = 8,  column = 0)
-	Button(wControlPanel, text = "Set Brightness",     bd = 3, width = 20, height = 1, command = ACQSDK_SetBrightness)        .grid(row = 9,  column = 0)
-	Button(wControlPanel, text = "Get Contrast",       bd = 3, width = 20, height = 1, command = ACQSDK_GetContrast)          .grid(row = 10, column = 0)
-	Button(wControlPanel, text = "Set Contrast",       bd = 3, width = 20, height = 1, command = ACQSDK_SetContrast)          .grid(row = 11, column = 0)
-	Button(wControlPanel, text = "Get Frequency",      bd = 3, width = 20, height = 1, command = ACQSDK_GetPowerlineFrequency).grid(row = 8,  column = 1)
-	Button(wControlPanel, text = "Set Frequency",      bd = 3, width = 20, height = 1, command = ACQSDK_SetPowerlineFrequency).grid(row = 9,  column = 1)
-	Button(wControlPanel, text = "Auto Power On",      bd = 3, width = 20, height = 1, command = ACQSDK_EnableAutoPowerOn)    .grid(row = 10, column = 1)
-	Button(wControlPanel, text = "Auto Power Off",     bd = 3, width = 20, height = 1, command = ACQSDK_EnableAutoPowerOff)   .grid(row = 11, column = 1)
-	Button(wControlPanel, text = "Enable StandBy",     bd = 3, width = 20, height = 1, command = ACQSDK_EnableStandBy)        .grid(row = 8,  column = 2)
-	Button(wControlPanel, text = "Set StandBy Time",   bd = 3, width = 20, height = 1, command = ACQSDK_SetStandByTime)       .grid(row = 9,  column = 2)
-	Button(wControlPanel, text = "Set System Time",    bd = 3, width = 20, height = 1, command = ACQSDK_SetSystemTime)        .grid(row = 10, column = 2)
-	Button(wControlPanel, text = "Set Power Off Time", bd = 3, width = 20, height = 1, command = ACQSDK_SetAutoPowerOffTime)  .grid(row = 11, column = 2)
+	#	Group: Query Info
+	QueryFrameRow = 10
+	QueryFrame = LabelFrame(wControlPanel,  text = "Information Query", padx = 3, pady = 3)
+	QueryFrame.grid(row = QueryFrameRow, column = 0, columnspan = 3)
+	Button(QueryFrame, text = "Query Device",      width = ButtonWidth, command = ACQSDK_QueryDeviceInfo)   .grid(row = QueryFrameRow, column = 0)
+	Button(QueryFrame, text = "Query SDK Version", width = ButtonWidth, command = ACQSDK_GetSDKVersion)     .grid(row = QueryFrameRow, column = 1)
+	Button(QueryFrame, text = "Query FW Version",  width = ButtonWidth, command = ACQSDK_GetFirmwareVersion).grid(row = QueryFrameRow, column = 2)
 
-	#	Button Set 4
-	Label(wControlPanel,  text = "Mirror & Rotation")                                                                                              .grid(row = 12, column = 0, columnspan = 2)
-	Button(wControlPanel, text = "Set Mirror Flag",       bd = 3, width = 20, height = 1, command = ACQSDK_SetMirrorFlag)                          .grid(row = 13, column = 0)
-	Button(wControlPanel, text = "Set Rotation Flag",     bd = 3, width = 20, height = 1, command = ACQSDK_SetRotationFlag)                        .grid(row = 14, column = 0)
+	#	Group: Firmware Upgrade
+	FirmwareUpgradeFrameRow = 20
+	FirmwareUpgradeFrame = LabelFrame(wControlPanel,  text = "Firmware Upgrade", padx = 3, pady = 3)
+	FirmwareUpgradeFrame.grid(row = FirmwareUpgradeFrameRow, column = 0, columnspan = 3)
+	Button(FirmwareUpgradeFrame, text = "Abort Upgrade", width = ButtonWidth, command = ACQSDK_AbortUpgrade)   .grid(row = FirmwareUpgradeFrameRow, column = 0)
+	Button(FirmwareUpgradeFrame, text = "Upgrade FW",    width = ButtonWidth, command = ACQSDK_UpgradeFirmware).grid(row = FirmwareUpgradeFrameRow, column = 1)
+	Placeholder = Button(FirmwareUpgradeFrame, text = "FW Upgrade Test",   width = ButtonWidth)
+	Placeholder.grid(row = FirmwareUpgradeFrameRow, column = 2)
+	Placeholder.config(state = "disabled")
+
+	#	Group: Mirror and Rotation
+	MirrorRotationFrameRow = 30
+	MirrorRotationFrame = LabelFrame(wControlPanel,  text = "Mirror & Rotation", padx = 3, pady = 3)
+	MirrorRotationFrame.grid(row = MirrorRotationFrameRow, column = 0, columnspan = 3)
+	Label(MirrorRotationFrame, text = "Fetch Setting").grid(row = MirrorRotationFrameRow, column = 0)
+	Label(MirrorRotationFrame, text = "Apply Setting").grid(row = MirrorRotationFrameRow, column = 1)
+	Label(MirrorRotationFrame, text = " <- Value")    .grid(row = MirrorRotationFrameRow, column = 2)
+	Button(MirrorRotationFrame, text = "Get Mirror Flag", width = ButtonWidth, anchor = W, command = ACQSDK_GetMirrorFlag)    .grid(row = MirrorRotationFrameRow + 1, column = 0)
+	Button(MirrorRotationFrame, text = "Set Mirror Flag", width = ButtonWidth, anchor = W, command = ACQSDK_SetMirrorFlag)    .grid(row = MirrorRotationFrameRow + 1, column = 1)
+	global MirrorInput
+	MirrorInput = Entry(MirrorRotationFrame, bd = 2, width = EntryWidth)
+	MirrorInput                                                                                                               .grid(row = MirrorRotationFrameRow + 1, column = 2)
+	Button(MirrorRotationFrame, text = "Get Rotation Flag", width = ButtonWidth, anchor = W, command = ACQSDK_GetRotationFlag).grid(row = MirrorRotationFrameRow + 2, column = 0)
+	Button(MirrorRotationFrame, text = "Set Rotation Flag", width = ButtonWidth, anchor = W, command = ACQSDK_SetRotationFlag).grid(row = MirrorRotationFrameRow + 2, column = 1)
+	global RotationInput
+	RotationInput = Entry(MirrorRotationFrame, bd = 2, width = EntryWidth)
+	RotationInput                                                                                                             .grid(row = MirrorRotationFrameRow + 2, column = 2)
 	#		The following two buttons are added for Rotation APIs
-	Button(wControlPanel, text = "Set to 640*480",        bd = 3, width = 20, height = 1, command = lambda: ResetLiveVideoWindowSize("640", "480")).grid(row = 13, column = 1)
-	Button(wControlPanel, text = "Set to 480*640",        bd = 3, width = 20, height = 1, command = lambda: ResetLiveVideoWindowSize("480", "640")).grid(row = 14, column = 1)
+	Button(MirrorRotationFrame, text = "Set to 640*480", width = ButtonWidth, command = lambda: ResetLiveVideoWindowSize(640, 480)).grid(row = MirrorRotationFrameRow + 3,  column = 1)
+	Button(MirrorRotationFrame, text = "Set to 480*640", width = ButtonWidth, command = lambda: ResetLiveVideoWindowSize(480, 640)).grid(row = MirrorRotationFrameRow + 3,  column = 2)
 	#		Refresh Window and set window size
-	Button(wControlPanel, text = "Refresh LiveVideo",     bd = 3, width = 20, height = 1, command = ACQSDK_OnUpdateLiveWnd)                        .grid(row = 13, column = 2)
-	Button(wControlPanel, text = "Update LiveVideo Size", bd = 3, width = 20, height = 1, command = ChangeLiveVideoSize)                           .grid(row = 14, column = 2)
+	Button(MirrorRotationFrame, text = "Update LiveVideo Size", width = ButtonWidth, command = ChangeLiveVideoSize)   .grid(row = MirrorRotationFrameRow + 4, column = 1)
+	Button(MirrorRotationFrame, text = "Refresh LiveVideo Window",     width = ButtonWidth, command = ACQSDK_OnUpdateLiveWnd).grid(row = MirrorRotationFrameRow + 4, column = 2)
 
-	#	Button Set 5
-	Label(wControlPanel,  text = "Factory")                                                                               .grid(row = 15, column = 0, columnspan = 2)
-	Button(wControlPanel, text = "Get FW Version",    bd = 3, width = 20, height = 1, command = ACQSDK_GetFirmwareVersion).grid(row = 16, column = 0)
-	Button(wControlPanel, text = "Get Serial Number", bd = 3, width = 20, height = 1, command = ACQSDK_GetSerialNumber)   .grid(row = 16, column = 1)
-	Button(wControlPanel, text = "Set Serial Number", bd = 3, width = 20, height = 1, command = ACQSDK_SetSerialNumber)   .grid(row = 17, column = 1)
-	Button(wControlPanel, text = "Set HP Work Mode",  bd = 3, width = 20, height = 1, command = ACQSDK_SetHPWorkMode)     .grid(row = 17, column = 0)
-	Button(wControlPanel, text = "Upload File",       bd = 3, width = 20, height = 1, command = ACQSDK_UploadFile)        .grid(row = 16, column = 2)
-	Button(wControlPanel, text = "Download File",     bd = 3, width = 20, height = 1, command = ACQSDK_DownloadFile)      .grid(row = 17, column = 2)
-
-	#	Logger
-	Label(wControlPanel,  text = "")                 .grid(row = 18, column = 1)
-	Label(wControlPanel,  text = "Operation History").grid(row = 19, column = 1)
-	Button(wControlPanel, text = "Increase Height (+1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("INCREASE")).grid(row = 20, column = 1)
-	Button(wControlPanel, text = "Decrease Height (-1)", bd = 3, width = 20, height = 1, command = lambda: ChangeScrolledTextHeight("DECREASE")).grid(row = 20, column = 2)
-	global pLogger
-	pLogger = ScrolledText(wControlPanel, bd = 3, width = 60, height = 16, font = ("Arial", 9))
-	pLogger.grid(row = 21, column = 0, columnspan = 3)
-
-	#	Button: Clean
-	Button(wControlPanel, text = "Clean",  bd = 3, width = 20, height = 1, command = CLEANHistory).grid(row = 22, column = 0)
-
-	#	Button: Exit this script
-	Button(wControlPanel, text = "Exit",   bd = 3, width = 20, height = 1, command = EXITAPP)     .grid(row = 22, column = 1)
-
-	#	Button: Control whether Preference Setting Dialog is Visable
-	global pPSDV
-	pPSDV = Button(wControlPanel, text = "Config >>", bd = 3, width = 20, height = 1, command = PreferenceSettingDialogVisable)
-	pPSDV.grid(row = 22, column = 2)
-def GenerateLiveVideo():
-	#	Live Video
-	global wLiveVideo_title
-	wLiveVideo_title = "SDK Testing: Live Video"
-	wLiveVideo.geometry("%sx%s" % (LiveVideo_Width, LiveVideo_Height))
-	wLiveVideo.title("SDK Testing: Live Video")
-	wLiveVideo.withdraw()
-def GeneratePreference():
-	#	Preference Setting
-	wPreference.title("Preference Setting")
-	wPreference.resizable(width = False, height = False)
-	wPreference.withdraw()
-
-	#	Prefix of each API
-	pFileVersion = Label(wPreference, bd = 3, text = "ACQSDK.DLL -> %s" % DLL_FileVersion())
-	pFileVersion.grid(row = 0, sticky = W+S+N, columnspan = 7)
-	pFileVersion.bind("<Button-1>", lambda x: OpenDirectory(ACQSDK_DLL_Dir))
-
-	#	Left Part: Label
-	Label(wPreference, bd = 3, text = "Set System Time")  .grid(row = 1, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "Set Log Path")     .grid(row = 2, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "HP Work Mode")     .grid(row = 3, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "Set Serial Number").grid(row = 4, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "Set Brightness")   .grid(row = 5, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "Set Contrast")     .grid(row = 6, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "Set Frequency")    .grid(row = 7, column = 0, sticky = E+S+N, ipadx = 11, ipady = 2)
-
-	#	Input: text box
-	global SetSystemTime, SetLogPath, SetHPWorkMode, SetSerialNumber, SetBrightness, SetContrast, SetPowerlineFrequency
-	SetSystemTime         = Entry(wPreference, bd = 3, width = 18)
-	SetLogPath            = Entry(wPreference, bd = 3, width = 18)
-	SetHPWorkMode         = Entry(wPreference, bd = 3, width = 18)
-	SetSerialNumber       = Entry(wPreference, bd = 3, width = 18)
-	SetBrightness         = Entry(wPreference, bd = 3, width = 18)
-	SetContrast           = Entry(wPreference, bd = 3, width = 18)
-	SetPowerlineFrequency = Entry(wPreference, bd = 3, width = 18)
-
-	#	Input: Grid Properties
-	SetSystemTime.        grid(row = 1, column = 1)
-	SetLogPath           .grid(row = 2, column = 1)
-	SetHPWorkMode        .grid(row = 3, column = 1)
-	SetSerialNumber      .grid(row = 4, column = 1)
-	SetBrightness        .grid(row = 5, column = 1)
-	SetContrast          .grid(row = 6, column = 1)
-	SetPowerlineFrequency.grid(row = 7, column = 1)
-
-	#	Center Part: Label
-	Label(wPreference, bd = 3, text = "Auto PowerOn")      .grid(row = 1, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "Auto Power Off")    .grid(row = 2, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "Set Power Off Time").grid(row = 3, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "Enable StandBy")    .grid(row = 4, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "Set StandBy Time")  .grid(row = 5, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "Set Mirror Flag")   .grid(row = 6, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-	Label(wPreference, bd = 3, text = "Set Rotation Flag") .grid(row = 7, column = 2, sticky = E+S+N, ipadx = 11, ipady = 2)
-
-	#	Input
-	global EnableAutoPowerOn, EnableAutoPowerOff, SetAutoPowerOffTime, EnableStandBy, SetStandByTime, SetMirrorFlag, SetRotationFlag
-	EnableAutoPowerOn   = Entry(wPreference, bd = 3, width = 18)
-	EnableAutoPowerOff  = Entry(wPreference, bd = 3, width = 18)
-	SetAutoPowerOffTime = Entry(wPreference, bd = 3, width = 18)
-	EnableStandBy       = Entry(wPreference, bd = 3, width = 18)
-	SetStandByTime      = Entry(wPreference, bd = 3, width = 18)
-	SetMirrorFlag       = Entry(wPreference, bd = 3, width = 18)
-	SetRotationFlag     = Entry(wPreference, bd = 3, width = 18)
-
-	#	Input: Grid Properties
-	EnableAutoPowerOn  .grid(row = 1, column = 3)
-	EnableAutoPowerOff .grid(row = 2, column = 3)
-	SetAutoPowerOffTime.grid(row = 3, column = 3)
-	EnableStandBy      .grid(row = 4, column = 3)
-	SetStandByTime     .grid(row = 5, column = 3)
-	SetMirrorFlag      .grid(row = 6, column = 3)
-	SetRotationFlag    .grid(row = 7, column = 3)
-
+	#	Group: Handpiece Common Configuration
+	CommonConfigurationFrameRow = 40
+	CommonConfigurationFrame = LabelFrame(wControlPanel,  text = "HP Configuration", padx = 3, pady = 3)
+	CommonConfigurationFrame.grid(row = CommonConfigurationFrameRow, column = 0, columnspan = 3)
+	Label(CommonConfigurationFrame, text = "Fetch Setting").grid(row = CommonConfigurationFrameRow, column = 0)
+	Label(CommonConfigurationFrame, text = "Apply Setting").grid(row = CommonConfigurationFrameRow, column = 1)
+	Label(CommonConfigurationFrame, text = " <- Value")    .grid(row = CommonConfigurationFrameRow, column = 2)
+	Button(CommonConfigurationFrame, text = "Get Brightness",          width = ButtonWidth, anchor = W, command = ACQSDK_GetBrightness        ).grid(row = CommonConfigurationFrameRow + 1, column = 0, padx = 3)
+	Button(CommonConfigurationFrame, text = "Set Brightness",          width = ButtonWidth, anchor = W, command = ACQSDK_SetBrightness        ).grid(row = CommonConfigurationFrameRow + 1, column = 1, padx = 3)
+	Button(CommonConfigurationFrame, text = "Get Contrast",            width = ButtonWidth, anchor = W, command = ACQSDK_GetContrast          ).grid(row = CommonConfigurationFrameRow + 2, column = 0, padx = 3)
+	Button(CommonConfigurationFrame, text = "Set Contrast",            width = ButtonWidth, anchor = W, command = ACQSDK_SetContrast          ).grid(row = CommonConfigurationFrameRow + 2, column = 1, padx = 3)
+	Button(CommonConfigurationFrame, text = "Get Frequency",           width = ButtonWidth, anchor = W, command = ACQSDK_GetPowerlineFrequency).grid(row = CommonConfigurationFrameRow + 3, column = 0, padx = 3)
+	Button(CommonConfigurationFrame, text = "Set Frequency",           width = ButtonWidth, anchor = W, command = ACQSDK_SetPowerlineFrequency).grid(row = CommonConfigurationFrameRow + 3, column = 1, padx = 3)
+	Button(CommonConfigurationFrame, text = "Get Sleep Status",        width = ButtonWidth, anchor = W, command = ACQSDK_GetEnableSleep       ).grid(row = CommonConfigurationFrameRow + 4, column = 0, padx = 3)
+	Button(CommonConfigurationFrame, text = "Set Sleep",               width = ButtonWidth, anchor = W, command = ACQSDK_SetEnableSleep       ).grid(row = CommonConfigurationFrameRow + 4, column = 1, padx = 3)
+	Button(CommonConfigurationFrame, text = "Get Sleep Time",          width = ButtonWidth, anchor = W, command = ACQSDK_GetSleepTime         ).grid(row = CommonConfigurationFrameRow + 5, column = 0, padx = 3)
+	Button(CommonConfigurationFrame, text = "Set Sleep Time",          width = ButtonWidth, anchor = W, command = ACQSDK_SetSleepTime         ).grid(row = CommonConfigurationFrameRow + 5, column = 1, padx = 3)
+	Button(CommonConfigurationFrame, text = "Get AutoPowerOn Status",  width = ButtonWidth, anchor = W, command = ACQSDK_GetEnableAutoPowerOn ).grid(row = CommonConfigurationFrameRow + 6, column = 0, padx = 3)
+	Button(CommonConfigurationFrame, text = "Set AutoPowerOn",         width = ButtonWidth, anchor = W, command = ACQSDK_EnableAutoPowerOn    ).grid(row = CommonConfigurationFrameRow + 6, column = 1, padx = 3)
+	Button(CommonConfigurationFrame, text = "Get AutoPowerOff Status", width = ButtonWidth, anchor = W, command = ACQSDK_GetEnableAutoPowerOff).grid(row = CommonConfigurationFrameRow + 7, column = 0, padx = 3)
+	Button(CommonConfigurationFrame, text = "Set AutoPowerOff",        width = ButtonWidth, anchor = W, command = ACQSDK_EnableAutoPowerOff   ).grid(row = CommonConfigurationFrameRow + 7, column = 1, padx = 3)
+	Button(CommonConfigurationFrame, text = "Get AutoPowerOff Time",   width = ButtonWidth, anchor = W, command = ACQSDK_GetAutoPowerOffTime  ).grid(row = CommonConfigurationFrameRow + 8, column = 0, padx = 3)
+	Button(CommonConfigurationFrame, text = "Set AutoPowerOff Time",   width = ButtonWidth, anchor = W, command = ACQSDK_SetAutoPowerOffTime  ).grid(row = CommonConfigurationFrameRow + 8, column = 1, padx = 3)
+	#		Inputbox
+	global BrightnessInput, ContrastInput, FrequencyInput, SetSleepInput, SleepTimeInput, SetAutoPowerOnInput, SetAutoPowerOffInput, AutoPowerOffTimeInput
+	BrightnessInput       = Entry(CommonConfigurationFrame, bd = 2, width = EntryWidth)
+	ContrastInput         = Entry(CommonConfigurationFrame, bd = 2, width = EntryWidth)
+	FrequencyInput        = Entry(CommonConfigurationFrame, bd = 2, width = EntryWidth)
+	SetSleepInput         = Entry(CommonConfigurationFrame, bd = 2, width = EntryWidth)
+	SleepTimeInput        = Entry(CommonConfigurationFrame, bd = 2, width = EntryWidth)
+	SetAutoPowerOnInput   = Entry(CommonConfigurationFrame, bd = 2, width = EntryWidth)
+	SetAutoPowerOffInput  = Entry(CommonConfigurationFrame, bd = 2, width = EntryWidth)
+	AutoPowerOffTimeInput = Entry(CommonConfigurationFrame, bd = 2, width = EntryWidth)
+	BrightnessInput      .grid(row = CommonConfigurationFrameRow + 1, column = 2)
+	ContrastInput        .grid(row = CommonConfigurationFrameRow + 2, column = 2)
+	FrequencyInput       .grid(row = CommonConfigurationFrameRow + 3, column = 2)
+	SetSleepInput        .grid(row = CommonConfigurationFrameRow + 4, column = 2)
+	SleepTimeInput       .grid(row = CommonConfigurationFrameRow + 5, column = 2)
+	SetAutoPowerOnInput  .grid(row = CommonConfigurationFrameRow + 6, column = 2)
+	SetAutoPowerOffInput .grid(row = CommonConfigurationFrameRow + 7, column = 2)
+	AutoPowerOffTimeInput.grid(row = CommonConfigurationFrameRow + 8, column = 2)
+	#		Reset All Parameters
 	ResetDefaultParameter()
 
-	#	Right Part: Buttons
-	for i in xrange(1,8): eval("Label(wPreference, bd = 3).grid(row = " + str(i) + ", column = 4, ipadx = 5, ipady = 2)")
-	Button(wPreference, text = "RESET PARAMETER", width = 18, height = 3, command = TMP_Func1).grid(row = 2, column = 5, rowspan = 2)
-	Button(wPreference, text = "TEMPORARY",       width = 18, height = 3, command = TMP_Func2).grid(row = 5, column = 5, rowspan = 2)
-	for i in xrange(1,8): eval("Label(wPreference, bd = 3).grid(row = " + str(i) + ", column = 6, ipadx = 5, ipady = 2)")
+	#	Label: Display label
+	AuthorLabelRow = 100
+	Label(wControlPanel, text = InfoLabel).grid(row = AuthorLabelRow, column = 0, columnspan = 3, sticky = E+N+S)
 
-	#	Bottom
-	Label(wPreference, bd = 3, text = "Test Application of UVC Camera SDK, built by ActivePython 2.7 (x86)").grid(row = 8, columnspan = 7, sticky = E+S+N)
+	#	Set Window Property
+	wControlPanel.update()
+def GenerateLiveVideo():
+	#	Live Video
+	wLiveVideo.geometry("%sx%s" % (LiveVideo_Width, LiveVideo_Height))
+	wLiveVideo.title("SDK Testing: Live Video")
+	wLiveVideo.update()
+	wLiveVideo.withdraw()
+def GenerateLogger():
+	#	Logger
+	wLogger.title("Operation History")
+	wLogger.geometry("850x700")
+	global pLogger
+	pLogger = ScrolledText(wLogger, width = 50, height = 30, font = ("Courier New", 10), bg = "grey")
+	pLogger.pack(fill = BOTH, expand = 1)
+	wLogger.update()
+	wLogger.withdraw()
 
-# Check DLL's File Version
-def DLL_FileVersion():
+# Windows' events
+def WindowState(objWin): return (objWin.winfo_width(), objWin.winfo_height(), objWin.winfo_x(), objWin.winfo_y())
+def ResetWindowPosition():
+	# wControlPanel
+	#status = WindowState(wControlPanel)
+	#wControlPanel.geometry("+%d+%d" % (5, (wControlPanel.winfo_screenheight() - status[1])/2))
+	#	Check status of wControlPanel
+	#if wControlPanel.state() == "withdrawn": wControlPanel.deiconify()
+	wControlPanel.geometry("+5+5")
+
+	# wLiveVideo
+	status = WindowState(wLiveVideo)
+	wLiveVideo.geometry("+%d+%d" % ((wLiveVideo.winfo_screenwidth() - status[0])/2, (wLiveVideo.winfo_screenheight() - status[1])/2))
+	wLiveVideo.update()
+	#	Check status of wLiveVideo
+	if wLiveVideo.state() == "withdrawn": wLiveVideo.deiconify()
+
+	# wLogger
+	status = WindowState(wLogger)
+	x = (wLogger.winfo_screenwidth() - status[0] - 20)
+	wLogger.geometry("+%d+%d" % (x, 0))
+def ResetLiveVideoWindowSize(width, height):
+	wLiveVideo.geometry("%dx%d" % (width, height))
+	wLiveVideo.update()
+	ResetWindowPosition()
+def ChangeLiveVideoSize():
+	status = WindowState(wLiveVideo)
+	if status[0] != 640:
+		wLiveVideo.geometry("%dx%d" % (status[0], status[0]*0.75))
+		wLiveVideo.update()
+def DisplayOperationHistoryWindow():
+	global DisplayOperationHistoryWindowFlag
+	DisplayOperationHistoryWindowFlag = not DisplayOperationHistoryWindowFlag
+	if DisplayOperationHistoryWindowFlag == True: wLogger.deiconify()
+	elif DisplayOperationHistoryWindowFlag == False: wLogger.withdraw()
+def EXITAPP():
+	if Initiated == True: objACQSDK_CSDevice.ACQSDK_UnInit()
+	wControlPanel.quit()
+
+# Functions for Logger box
+def CheckResult(ret):
+	print "Result Received -> %r" % (str(ret)) # For Debug
+	Logger("%s" % str(ret))
+def Logger(strLine):
+	global OperationHistoryWindowLineFlag
+	if not os.path.isfile("./" + LoggerOutput): open("./" + LoggerOutput, "w").close()
+	if OperationHistoryWindowLineFlag > OperationHistoryWindowLineMax:
+		CLEANHistory()
+		OperationHistoryWindowLineFlag = 0
+	strLine = "%s\n" % str(strLine)
+	pLogger.insert(END, strLine)
+	pLogger.yview(END)
+	OperationHistoryWindowLineFlag += 1
+	with open("./" + LoggerOutput, "a+") as f: f.write(strLine)
+def CLEANHistory(): pLogger.delete('1.0', END)
+
+
+# Customized events
+def ACQSDKDLL_FileVersion():
 	try:
 		DLL_VerInfo = win32api.GetFileVersionInfo(ACQSDK_DLL, "\\")
 		ms = DLL_VerInfo['FileVersionMS']
@@ -229,101 +266,32 @@ def DLL_FileVersion():
 		return "%s.%s.%s.%s" % (win32api.HIWORD(ms),win32api.LOWORD(ms),win32api.HIWORD(ls),win32api.LOWORD(ls))
 	except:
 		return "NOT FOUND"
-
-# Parameter value: Reset
 def ResetDefaultParameter():
 	# Clean
-	SetSystemTime        .delete(0, END)
-	SetLogPath           .delete(0, END)
-	SetHPWorkMode        .delete(0, END)
-	SetSerialNumber      .delete(0, END)
-	SetBrightness        .delete(0, END)
-	SetContrast          .delete(0, END)
-	SetPowerlineFrequency.delete(0, END)
-	EnableAutoPowerOn    .delete(0, END)
-	EnableAutoPowerOff   .delete(0, END)
-	SetAutoPowerOffTime  .delete(0, END)
-	EnableStandBy        .delete(0, END)
-	SetStandByTime       .delete(0, END)
-	SetMirrorFlag        .delete(0, END)
-	SetRotationFlag      .delete(0, END)
+	LogPathInput         .delete(0, END)
+	MirrorInput          .delete(0, END)
+	RotationInput        .delete(0, END)
+	BrightnessInput      .delete(0, END)
+	ContrastInput        .delete(0, END)
+	FrequencyInput       .delete(0, END)
+	SetSleepInput        .delete(0, END)
+	SleepTimeInput       .delete(0, END)
+	SetAutoPowerOnInput  .delete(0, END)
+	SetAutoPowerOffInput .delete(0, END)
+	AutoPowerOffTimeInput.delete(0, END)
 
 	# Input: Default value
-	SetSystemTime        .insert(0, str(int(time.time())))
-	SetLogPath           .insert(0, "./")
-	SetHPWorkMode        .insert(0, "1")
-	SetSerialNumber      .insert(0, "ABCD1234")
-	SetBrightness        .insert(0, "4")
-	SetContrast          .insert(0, "4")
-	SetPowerlineFrequency.insert(0, "50")
-	EnableAutoPowerOn    .insert(0, "1")
-	EnableAutoPowerOff   .insert(0, "1")
-	SetAutoPowerOffTime  .insert(0, "3600")
-	EnableStandBy        .insert(0, "1")
-	SetStandByTime       .insert(0, "60")
-	SetMirrorFlag        .insert(0, "1")
-	SetRotationFlag      .insert(0, "0")
-
-# Windows' events
-def WindowState(objWin): return (objWin.winfo_width(), objWin.winfo_height(), objWin.winfo_x(), objWin.winfo_y())
-def ResetWindowPosition(message):
-	if message == "origin":
-		# wControlPanel
-		status = WindowState(wControlPanel)
-		width  = status[0]
-		height = status[1]
-		x      = 0
-		y      = 0
-	else:
-		# wControlPanel
-		status = WindowState(wControlPanel)
-		width  = status[0]
-		height = status[1]
-		x      = status[2]
-		y      = status[3]
-
-	# wLiveVideo
-	x = width + x + 6
-	wLiveVideo.geometry("+%d+%d" % (x, y))
-	wLiveVideo.update()
-	# Check status of wLiveVideo
-	if wLiveVideo.state() == "withdrawn": wLiveVideo.deiconify()
-
-	# wPreference
-	i = WindowState(wLiveVideo)
-	j = WindowState(wPreference)
-	wPreference.geometry("+%d+%d" % (x, i[1] + y + 28))
-	wPreference.update()
-def ResetLiveVideoWindowSize(width, height):
-	wLiveVideo.geometry("%sx%s" % (width, height))
-	ResetWindowPosition("DOIT")
-def ChangeLiveVideoSize():
-	status = WindowState(wLiveVideo)
-	if status[0] != 640:
-		wLiveVideo.geometry("%dx%d" % (status[0], status[0]*0.75))
-		ResetWindowPosition("Other")
-	else:
-		pass
-def ChangeScrolledTextHeight(change):
-	status = pLogger["height"]
-	if change == "INCREASE":
-		pLogger.config(height = status + 1)
-	if change == "DECREASE":
-		pLogger.config(height = status - 1)
-def PreferenceSettingDialogVisable():
-	if wPreference.state() == "withdrawn":
-		wPreference.update()
-		wPreference.deiconify()
-		pPSDV.config(text = "Config <<")
-	elif wPreference.state() == "normal":
-		wPreference.update()
-		wPreference.withdraw()
-		pPSDV.config(text = "Config >>")
-def EXITAPP():
-	if Initiated == True: objACQSDK_CSDevice.ACQSDK_UnInit()
-	wControlPanel.quit()
-
-# Customized events
+	LogPathInput         .insert(0, "./")
+	MirrorInput          .insert(0, "1")
+	RotationInput        .insert(0, "90")
+	BrightnessInput      .insert(0, "4")
+	ContrastInput        .insert(0, "4")
+	FrequencyInput       .insert(0, "50")
+	SetSleepInput        .insert(0, "0")
+	SleepTimeInput       .insert(0, "60")
+	SetAutoPowerOnInput  .insert(0, "0")
+	SetAutoPowerOffInput .insert(0, "0")
+	AutoPowerOffTimeInput.insert(0, "7200")
 def OpenDirectory(location = "."):
 	if location == ".":
 		os.system("explorer.exe %s" % ".")
@@ -335,114 +303,214 @@ def KillProcess(process = "python.exe"): os.system("TASKKILL /F /IM %s" % proces
 def MonitorKey(event): print event.char
 
 # SDK's API
+# ===================================================== API =====================================================
+# Basic Function
 def ACQSDK_Init():
-	ACQSDK_SetLogPath()
-	ret = objACQSDK_CSDevice.ACQSDK_Init(hWnd)
-	CheckResult(sys._getframe().f_code.co_name, ret)
+	ret = SDKAPI.ACQSDK_Init(objACQSDK_CSDevice, hWnd)
+	CheckResult(ret)
 	Initiated = True
 def ACQSDK_UnInit():
-	ret = objACQSDK_CSDevice.ACQSDK_UnInit()
-	CheckResult(sys._getframe().f_code.co_name, ret)
+	ret = SDKAPI.ACQSDK_UnInit(objACQSDK_CSDevice)
+	CheckResult(ret)
 def ACQSDK_OnUpdateLiveWnd():
-	ret = objACQSDK_CSDevice.ACQSDK_OnUpdateLiveWnd()
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_QueryDeviceInfo():
-	pDeviceInfo = win32com.client.Dispatch(ACQSDK_ASDeviceInfor_ProgID)
-	ret         = objACQSDK_CSDevice.ACQSDK_QueryDeviceInfo(pDeviceInfo)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-	if ret == 0:
-		try:
-			index1 = str(hex(pDeviceInfo.get_device_type())).upper()
-			device_type = Device_Type[index1]
-		except:
-			device_type = index1
-		finally:
-			Logger("\tDevice Type is %r" % device_type)
-		try:
-			index2 = str(hex(pDeviceInfo.get_mode_type())).upper()
-			model_type = Model_Type[index2]
-		except:
-			model_type = index2
-		finally:
-			Logger("\tMode Type is %r" % model_type)
-		Logger("\tSerial Number is %r" % pDeviceInfo.get_sn())
-		Logger("\tFirmware Version is %r" % pDeviceInfo.get_fw_version())
-	del pDeviceInfo
-def ACQSDK_SetHPWorkMode(): # Not implemented
-	lWorkMode = int(SetHPWorkMode.get())
-	Logger("<%r>" % lWorkMode)
-	ret = objACQSDK_CSDevice.ACQSDK_SetHPWorkMode(lWorkMode)
-	CheckResult(sys._getframe().f_code.co_name, ret)
+	ret = SDKAPI.ACQSDK_OnUpdateLiveWnd(objACQSDK_CSDevice)
+	CheckResult(ret)
 def ACQSDK_StartPlay():
-	ret = objACQSDK_CSDevice.ACQSDK_StartPlay()
-	CheckResult(sys._getframe().f_code.co_name, ret)
+	ret = SDKAPI.ACQSDK_StartPlay(objACQSDK_CSDevice)
+	CheckResult(ret)
 def ACQSDK_StopPlay():
-	ret = objACQSDK_CSDevice.ACQSDK_StopPlay()
-	CheckResult(sys._getframe().f_code.co_name, ret)
+	ret = SDKAPI.ACQSDK_StopPlay(objACQSDK_CSDevice)
+	CheckResult(ret)
 def ACQSDK_StartRecord():
 	path = r"./%s.avi" % time.strftime('%Y-%m-%d-%H-%M-%S')
-	ret = objACQSDK_CSDevice.ACQSDK_StartRecord(path)
-	CheckResult(sys._getframe().f_code.co_name, ret)
+	ret = SDKAPI.ACQSDK_StartRecord(objACQSDK_CSDevice, path)
+	CheckResult(ret)
 def ACQSDK_StopRecord():
-	ret = objACQSDK_CSDevice.ACQSDK_StopRecord()
-	CheckResult(sys._getframe().f_code.co_name, ret)
+	ret = SDKAPI.ACQSDK_StopRecord(objACQSDK_CSDevice)
+	CheckResult(ret)
 def ACQSDK_Capture():
 	class SWCapture(threading.Thread):
-		def __init__(self):
-			threading.Thread.__init__(self)
+		def __init__(self): threading.Thread.__init__(self)
 		def run(self):
-			self.pImageUnit = win32com.client.Dispatch(ACQSDK_ASImageUnit_ProgID)
-			self.ret        = objACQSDK_CSDevice.ACQSDK_Capture(pImageUnit)
-			CheckResult(sys._getframe().f_code.co_name, self.ret)
-			if self.ret == 0:
+			self.pImageUnit = win32com.client.Dispatch(GD.ACQSDK_ASImageUnit_ProgID)
+			self.ret        = SDKAPI.ACQSDK_Capture(objACQSDK_CSDevice, self.pImageUnit)
+			CheckResult(self.ret)
+			if self.ret[1] == 0:
 				self.img = self.pImageUnit.get_white_image()
-				Logger(">> ImageUnit: %r" % self.img)
+				Logger(" >> ACQSDK_Capture -> get_white_image: %r" % self.img)
 				self.img_file = time.strftime('%Y-%m-%d-%H-%M-%S')
 				self.save_image_ret = self.pImageUnit.save_image(r"./%s" % self.img_file, self.img)
-				CheckResult("ACQSDK_Capture -> Save image", self.save_image_ret)
-				CheckResult("ACQSDK_Capture -> Free image", self.pImageUnit.free_image(self.img))
-				CheckResult("ACQSDK_Capture -> Free unit",  self.pImageUnit.free_unit())
+				Logger(" >> ACQSDK_Capture -> save_image:\t%r" % self.save_image_ret, )
+				Logger(" >> ACQSDK_Capture -> free_image:\t%r" % self.pImageUnit.free_image(self.img))
+				Logger(" >> ACQSDK_Capture -> free_unit:\t%r"  % self.pImageUnit.free_unit())
 			del self.pImageUnit
 	instance = SWCapture()
 	instance.setDaemon(True)
 	instance.start()
 def ACQSDK_GetImageData():
 	class HWCapture(threading.Thread):
-		def __init__(self):
-			threading.Thread.__init__(self)
+		def __init__(self): threading.Thread.__init__(self)
 		def run(self):
-			self.pImageUnit = win32com.client.Dispatch(ACQSDK_ASImageUnit_ProgID)
-			self.ret        = objACQSDK_CSDevice.ACQSDK_GetImageData(pImageUnit)
-			CheckResult(sys._getframe().f_code.co_name, ret)
-			if self.ret == 0:
+			self.pImageUnit = win32com.client.Dispatch(GD.ACQSDK_ASImageUnit_ProgID)
+			self.ret        = SDKAPI.ACQSDK_GetImageData(objACQSDK_CSDevice, self.pImageUnit)
+			CheckResult(self.ret)
+			if self.ret[1] == 0:
 				self.img = self.pImageUnit.get_white_image()
-				Logger(">> ImageUnit: %r" % self.img)
+				Logger(" >> ACQSDK_GetImageData -> get_white_image: %r" % self.img)
 				self.img_file = time.strftime('%Y-%m-%d-%H-%M-%S')
 				self.save_image_ret = self.pImageUnit.save_image(r"./%s" % self.img_file, self.img)
-				CheckResult("ACQSDK_Capture -> Save image", self.save_image_ret)
-				CheckResult("ACQSDK_Capture -> Free image", self.pImageUnit.free_image(self.img))
-				CheckResult("ACQSDK_Capture -> Free unit",  self.pImageUnit.free_unit())
+				Logger(" >> ACQSDK_GetImageData -> save_image:\t%r" % self.save_image_ret, )
+				Logger(" >> ACQSDK_GetImageData -> free_image:\t%r" % self.pImageUnit.free_image(self.img))
+				Logger(" >> ACQSDK_GetImageData -> free_unit:\t%r"  % self.pImageUnit.free_unit())
 			del self.pImageUnit
 	instance = HWCapture()
 	instance.setDaemon(True)
 	instance.start()
 def ACQSDK_SetLogPath():
-	path = SetLogPath.get()
-	Logger("<%r>" % path)
-	ret  = objACQSDK_CSDevice.ACQSDK_SetLogPath(path)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetSerialNumber(): # Not Implemented
-	ret = objACQSDK_CSDevice.ACQSDK_GetSerialNumber()
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetSerialNumber(): # Not Implemented
-	pSn = SetSerialNumber.get()
-	Logger("<%r>" % pSn)
-	length = 8
-	ret = objACQSDK_CSDevice.ACQSDK_SetSerialNumber(pSn, len)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetFirmwareVersion(): # Not Implemented
-	ret = objACQSDK_CSDevice.ACQSDK_GetFirmwareVersion()
-	CheckResult(sys._getframe().f_code.co_name, ret)
+	path = str(LogPathInput.get())
+	Logger("Received Parameter -> %r" % path)
+	ret  = SDKAPI.ACQSDK_SetLogPath(objACQSDK_CSDevice, path)
+	CheckResult(ret)
+
+# Mirror & Rotation
+def ACQSDK_SetMirrorFlag():
+	bEnable = int(MirrorInput.get())
+	Logger("Received Parameter -> %r" % bEnable)
+	ret = SDKAPI.ACQSDK_SetMirrorFlag(objACQSDK_CSDevice, bEnable)
+	CheckResult(ret)
+def ACQSDK_GetMirrorFlag():
+	ret = SDKAPI.ACQSDK_GetMirrorFlag(objACQSDK_CSDevice)
+	CheckResult(ret)
+def ACQSDK_SetRotationFlag():
+	rotation = int(RotationInput.get())
+	Logger("Received Parameter -> %r" % rotation)
+	ret = SDKAPI.ACQSDK_SetRotationFlag(objACQSDK_CSDevice, rotation)
+	CheckResult(ret)
+def ACQSDK_GetRotationFlag():
+	ret = SDKAPI.ACQSDK_GetRotationFlag(objACQSDK_CSDevice)
+	CheckResult(ret)
+
+# Query
+def ACQSDK_QueryDeviceInfo():
+	pDeviceInfo = win32com.client.Dispatch(GD.ACQSDK_ASDeviceInfor_ProgID)
+	ret         = SDKAPI.ACQSDK_QueryDeviceInfo(objACQSDK_CSDevice, pDeviceInfo)
+	CheckResult(ret)
+	if ret[1] == 0:
+		try:
+			index1 = str(hex(pDeviceInfo.get_device_type())).upper()
+			device_type = GD.Device_Type[index1]
+		except:
+			device_type = index1
+		finally:
+			Logger(" >> ACQSDK_QueryDeviceInfo -> get_device_type: (%r, %r)" % (index1, device_type))
+		try:
+			index2 = str(hex(pDeviceInfo.get_mode_type())).upper()
+			model_type = GD.Model_Type[index2]
+		except:
+			model_type = index2
+		finally:
+			Logger(" >> ACQSDK_QueryDeviceInfo -> get_mode_type: (%r, %r)" % (index2, model_type))
+		Logger(" >> ACQSDK_QueryDeviceInfo -> get_sn: %r" % pDeviceInfo.get_sn())
+		Logger(" >> ACQSDK_QueryDeviceInfo -> get_fw_version: %r" % pDeviceInfo.get_fw_version())
+	del pDeviceInfo
+def ACQSDK_GetFirmwareVersion():
+	ret = SDKAPI.ACQSDK_GetFirmwareVersion(objACQSDK_CSDevice)
+	CheckResult(ret)
+def ACQSDK_GetSDKVersion():
+	ret = SDKAPI.ACQSDK_GetSDKVersion(objACQSDK_CSDevice)
+	CheckResult(ret)
+
+# Configuration
+# >> Brightness
+def ACQSDK_GetBrightness():
+	ret = SDKAPI.ACQSDK_GetBrightness(objACQSDK_CSDevice)
+	CheckResult(ret)
+	if ret[1][0] == 0:
+		Logger("\tCurrent brightness: %r" % ret[1][1])
+		Logger("\tMaximum brightness: %r" % ret[1][2])
+		Logger("\tMinimum brightness: %r" % ret[1][3])
+		Logger("\tDefault brightness: %r" % ret[1][4])
+def ACQSDK_SetBrightness():
+	brightness = int(BrightnessInput.get())
+	Logger("Received Parameter -> %r" % brightness)
+	ret = SDKAPI.ACQSDK_SetBrightness(objACQSDK_CSDevice, brightness)
+	CheckResult(ret)
+
+# >> Contrast
+def ACQSDK_GetContrast():
+	ret = SDKAPI.ACQSDK_GetContrast(objACQSDK_CSDevice)
+	CheckResult(ret)
+	if ret[1][0] == 0:
+		Logger("\tCurrent contrast: %r" % ret[1][1])
+		Logger("\tMaximum contrast: %r" % ret[1][2])
+		Logger("\tMinimum contrast: %r" % ret[1][3])
+		Logger("\tDefault contrast: %r" % ret[1][4])
+def ACQSDK_SetContrast():
+	contrast = int(ContrastInput.get())
+	Logger("Received Parameter -> %r" % contrast)
+	ret = SDKAPI.ACQSDK_SetContrast(objACQSDK_CSDevice, contrast)
+	CheckResult(ret)
+
+# >> Powerline Frequency
+def ACQSDK_GetPowerlineFrequency():
+	ret = SDKAPI.ACQSDK_GetPowerlineFrequency(objACQSDK_CSDevice)
+	CheckResult(ret)
+	if ret[1][0] == 0:
+		Logger("\tCurrent frequency: %r" % ret[1][1])
+		Logger("\tDefault frequency: %r" % ret[1][2])
+def ACQSDK_SetPowerlineFrequency():
+	frequency = int(FrequencyInput.get())
+	Logger("Received Parameter -> %r" % frequency)
+	ret = SDKAPI.ACQSDK_SetPowerlineFrequency(objACQSDK_CSDevice, frequency)
+	CheckResult(ret)
+
+# >> Sleep
+def ACQSDK_SetEnableSleep():
+	bEnable = int(SetSleepInput.get())
+	Logger("Received Parameter -> %r" % bEnable)
+	ret = SDKAPI.ACQSDK_SetEnableSleep(objACQSDK_CSDevice, bEnable)
+	CheckResult(ret)
+def ACQSDK_GetEnableSleep():
+	ret = SDKAPI.ACQSDK_GetEnableSleep(objACQSDK_CSDevice)
+	CheckResult(ret)
+def ACQSDK_GetSleepTime():
+	ret = SDKAPI.ACQSDK_GetSleepTime(objACQSDK_CSDevice)
+	CheckResult(ret)
+def ACQSDK_SetSleepTime():
+	seconds = int(SleepTimeInput.get())
+	Logger("Received Parameter -> %r" % seconds)
+	ret = SDKAPI.ACQSDK_SetSleepTime(objACQSDK_CSDevice, seconds)
+	CheckResult(ret)
+
+# >> Auto Power On
+def ACQSDK_EnableAutoPowerOn():
+	bEnable = int(SetAutoPowerOnInput.get())
+	Logger("Received Parameter -> %r" % bEnable)
+	ret = SDKAPI.ACQSDK_EnableAutoPowerOn(objACQSDK_CSDevice, bEnable)
+	CheckResult(ret)
+def ACQSDK_GetEnableAutoPowerOn():
+	ret = SDKAPI.ACQSDK_GetEnableAutoPowerOn(objACQSDK_CSDevice)
+	CheckResult(ret)
+
+# >> Auto Power Off
+def ACQSDK_EnableAutoPowerOff():
+	bEnable = int(SetAutoPowerOffInput.get())
+	Logger("Received Parameter -> %r" % bEnable)
+	ret = SDKAPI.ACQSDK_EnableAutoPowerOff(objACQSDK_CSDevice, bEnable)
+	CheckResult(ret)
+def ACQSDK_GetEnableAutoPowerOff():
+	ret = SDKAPI.ACQSDK_GetEnableAutoPowerOff(objACQSDK_CSDevice)
+	CheckResult(ret)
+def ACQSDK_GetAutoPowerOffTime():
+	ret = SDKAPI.ACQSDK_GetAutoPowerOffTime(objACQSDK_CSDevice)
+	CheckResult(ret)
+def ACQSDK_SetAutoPowerOffTime():
+	secondsCount = int(AutoPowerOffTimeInput.get())
+	Logger("Received Parameter -> %r" % secondsCount)
+	ret = SDKAPI.ACQSDK_SetAutoPowerOffTime(objACQSDK_CSDevice, secondsCount)
+	CheckResult(ret)
+
+# Firmware
 def ACQSDK_UpgradeFirmware():
 	pFullPathName = askopenfilename()
 	if pFullPathName != "":
@@ -450,248 +518,35 @@ def ACQSDK_UpgradeFirmware():
 			def __init__(self):
 				threading.Thread.__init__(self)
 			def run(self):
-				self.ret = objACQSDK_CSDevice.ACQSDK_UpgradeFirmware(pFullPathName)
+				self.ret = SDKAPI.ACQSDK_UpgradeFirmware(objACQSDK_CSDevice, pFullPathName)
 				CheckResult("Firmware Upgrade Thread", self.ret)
 		instance = FWUpgrade()
 		instance.start()
 	elif pFullPathName == "":
 		Logger("ACQSDK_UpgradeFirmware -> No File is selected.")
 def ACQSDK_AbortUpgrade():
-	ret = objACQSDK_CSDevice.ACQSDK_AbortUpgrade()
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_UploadFile():
-	pFileName = askopenfilename()
-	ret = objACQSDK_CSDevice.ACQSDK_UploadFile(pFileName)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_DownloadFile(): # Not Implemented
-	# FW_DOWNLOAD_FILE_ID = {
-	# "E_FW_FILE_ID_VERSION"          : 0, # /etc/fs.ver
-	# "E_FW_FILE_ID_CALIBRATION_FILE" : 1, # /etc/fs.ver
-	# "E_FW_FILE_ID_FW_LOG"           : 2, # /opt/deng.jpg
-	# "E_FW_FILE_ID_COUNT"            : 3, # DON'T use this
-	# }
-	fileID = 0
-	pFileName = askdirectory()
-	ret = objACQSDK_CSDevice.ACQSDK_DownloadFile(fileID, pFileName)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_EnableAutoPowerOn():
-	bEnable = int(EnableAutoPowerOn.get())
-	Logger("<%r>" % bEnable)
-	ret = objACQSDK_CSDevice.ACQSDK_EnableAutoPowerOn(bEnable)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetBrightness():
-	ret = objACQSDK_CSDevice.ACQSDK_GetBrightness()
-	CheckResult(sys._getframe().f_code.co_name, ret[0])
-	Logger("\t%s" % str(ret))
-	if ret[0] == 0:
-		Logger("\tCurrent brightness: %r" % ret[1])
-		Logger("\tMaximum brightness: %r" % ret[2])
-		Logger("\tMinimum brightness: %r" % ret[3])
-		Logger("\tDefault brightness: %r" % ret[4])
-def ACQSDK_SetBrightness():
-	brightness = int(SetBrightness.get())
-	Logger("<%r>" % brightness)
-	ret = objACQSDK_CSDevice.ACQSDK_SetBrightness(brightness)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetContrast():
-	ret = objACQSDK_CSDevice.ACQSDK_GetContrast()
-	CheckResult(sys._getframe().f_code.co_name, ret[0])
-	Logger("\t%s" % str(ret))
-	if ret[0] == 0:
-		Logger("\tCurrent contrast: %r" % ret[1])
-		Logger("\tMaximum contrast: %r" % ret[2])
-		Logger("\tMinimum contrast: %r" % ret[3])
-		Logger("\tDefault contrast: %r" % ret[4])
-def ACQSDK_SetContrast():
-	contrast = int(SetContrast.get())
-	Logger("<%r>" % contrast)
-	ret = objACQSDK_CSDevice.ACQSDK_SetContrast(contrast)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetPowerlineFrequency():
-	frequency = int(SetPowerlineFrequency.get())
-	Logger("<%r>" % frequency)
-	ret = objACQSDK_CSDevice.ACQSDK_SetPowerlineFrequency(frequency)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetPowerlineFrequency():
-	ret = objACQSDK_CSDevice.ACQSDK_GetPowerlineFrequency()
-	CheckResult(sys._getframe().f_code.co_name, ret[0])
-	Logger("\t%s" % str(ret))
-	if ret[0] == 0:
-		Logger("\tCurrent frequency: %r" % ret[1])
-		Logger("\tDefault frequency: %r" % ret[2])
-def ACQSDK_EnableAutoPowerOff():
-	bEnable = int(EnableAutoPowerOff.get())
-	Logger("<%r>" % bEnable)
-	ret = objACQSDK_CSDevice.ACQSDK_EnableAutoPowerOff(bEnable)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetAutoPowerOffTime():
-	secondsCount = int(SetAutoPowerOffTime.get())
-	Logger("<%r>" % secondsCount)
-	ret = objACQSDK_CSDevice.ACQSDK_SetAutoPowerOffTime(secondsCount)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_EnableStandBy():
-	bEnable = int(EnableStandBy.get())
-	Logger("<%r>" % bEnable)
-	ret = objACQSDK_CSDevice.ACQSDK_EnableStandBy(bEnable)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetStandByTime():
-	secondsCount = int(SetStandByTime.get())
-	Logger("<%r>" % secondsCount)
-	ret = objACQSDK_CSDevice.ACQSDK_SetStandByTime(secondsCount)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_SetSystemTime():
-	secondsCount = int(SetSystemTime.get())
-	Logger("<%r>" % secondsCount)
-	ret = objACQSDK_CSDevice.ACQSDK_SetSystemTime(secondsCount)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetMirrorFlag(): pass # Not Implemented
-def ACQSDK_SetMirrorFlag():
-	bEnable = int(SetMirrorFlag.get())
-	Logger("<%r>" % bEnable)
-	ret = objACQSDK_CSDevice.ACQSDK_SetMirrorFlag(bEnable)
-	CheckResult(sys._getframe().f_code.co_name, ret)
-def ACQSDK_GetRotationFlag(): pass # Not Implemented
-def ACQSDK_SetRotationFlag():
-	rotation = int(SetRotationFlag.get())
-	Logger("<%r>" % rotation)
-	ret = objACQSDK_CSDevice.ACQSDK_SetRotationFlag(rotation)
-	CheckResult(sys._getframe().f_code.co_name, ret)
+	ret = SDKAPI.ACQSDK_AbortUpgrade(objACQSDK_CSDevice)
+	CheckResult(ret)
 
-# Class needed by Callback
+# ===================================================== API =====================================================
+
+# Callback Class -> CSDevice
 class SDKEvents():
 	def OnHPEvents(self, Callback):
 		i = Callback.QueryInterface(pythoncom.IID_IDispatch)
 		objSDKCallbackInfo = win32com.client.Dispatch(i)
-		EventID = str(hex(objSDKCallbackInfo.get_event_id())).upper()
-		Logger(" * Callback -> %s" % EventID)
+		self.EventID = str(hex(objSDKCallbackInfo.get_event_id())).upper()
+		self.EventState = " * Callback -> %s" % self.EventID
 		try:
-			EventID_Value = Callback_MsgType[EventID]
+			self.EventID_Value = GD.Callback_MsgType[self.EventID]
 		except:
-			EventID_Value = "NOT DEFINED"
+			self.EventID_Value = "NOT DEFINED"
 		finally:
-			Logger("\t%s -> %s" % (EventID, EventID_Value))
-		if EventID == "0X200005": ACQSDK_GetImageData()
-		if EventID == "0X200003": Logger("\t -> %r" %objSDKCallbackInfo.get_fw_upgrade_percent())
-
-# Functions for Logger box
-def CheckResult(api, ret):
-	if ret != 0 and ret != 1:
-		ret = str(hex(ret)).upper()
-		Logger("%s -> %r" % (api, ret))
-		try:
-			retValue = OPERATOR_ERROR[ret]
-		except:
-			retValue = "NOT DEFINED"
-		finally:
-			Logger("\t%s -> %s" % (ret, retValue))
-	else:
-		Logger("%s -> %r" % (api, ret))
-def Logger(strLine):
-	if not os.path.isfile("./" + LoggerOutput): open("./" + LoggerOutput, "w").close()
-	strLine = "%s\n" % str(strLine)
-	pLogger.insert(END, strLine)
-	pLogger.yview(END)
-	f = open("./" + LoggerOutput, "a+")
-	f.write(strLine)
-	f.close()
-def CLEANHistory(): pLogger.delete('1.0', END)
-
-# Temporary buttons
-def TMP_Func1(): ResetDefaultParameter()
-def TMP_Func2():
-	class LongTimeCapture(threading.Thread):
-		def __init__(self):
-			threading.Thread.__init__(self)
-		def run(self):
-			while xFlag == True:
-				ACQSDK_Capture()
-				time.sleep(2)
-	instance = LongTimeCapture()
-	instance.setDaemon(True)
-	instance.start()
+			Logger("\t%s -> %s" % (self.EventState, self.EventID_Value))
+		if self.EventID == "0X200005": ACQSDK_GetImageData()
+		if self.EventID == "0X200003": Logger("\t -> %r" % objSDKCallbackInfo.get_fw_upgrade_percent())
 
 # >>Body<<
-
-# definition: dictionary, "acq_sdk/SDK Document/SDKDef.h"
-Device_Type = {
-	"0X20001" : "DEV_1500",
-	"0X20002" : "DEV_1600",
-	"0X20003" : "DEV_1200",
-	"0X20004" : "DEV_1650",
-	"0X20005" : "DEV_UVC",
-	"0X20006" : "DEV_UNDEFINED",
-}
-Model_Type = {
-	"0X30001" : "MODEL_WIRED_DOCK",
-	"0X30002" : "MODEL_WIRELESS_ONE",
-	"0X30003" : "MODEL_WIRELESS_MANY",
-	"0X30004" : "MODEL_DIRECT_WIRED_ONE",
-	"0X30005" : "MODEL_UNDEFINED",
-}
-OPERATOR_ERROR = {
-	"0XF0001" : "DEVICE_CONNECTION_FALSE",
-	"0XF0002" : "DEVICE_CREATED_FAIL",
-	"0XF0003" : "HOST_SERVICE_IP_INVALID",
-	"0XF0004" : "HOST_SERVICE_CONNECT_FAILED" ,
-	"0XF0005" : "UVC_INIT_INPUT_PARAM_ERR" ,
-	"0XF0006" : "UVC_INIT_NO_DEVICE" ,
-	"0XF0007" : "UVC_INIT_DEVICE_CMT_ERR",
-	"0XF0008" : "UVC_INIT_QUERY_CALLBACK_INTERFACE_FAIL",
-	"0XF0009" : "UVC_INIT_CREATE_CALLBACK_INSTANCE_FAIL",
-	"0XF000A" : "UVC_INIT_BIND_FILTER_FAIL",
-	"0XF000B" : "UVC_INIT_HID_DEVICE_INIT_FAIL",
-	"0XF000C" : "UVC_GET_DEVICE_INFOR_BUFF_ERROR",
-	"0XF000D" : "LOG_PATH_SET_ERR" ,
-	"0XF000E" : "ACQSDK_SENDER_FAIL" ,
-	"0XF000F" : "ACQSDK_SENDER_TIMEOUT",
-	"0XF0010" : "CAPTURE_INPUT_PARAM_VALUE_ERR",
-	"0XF0011" : "CAPTURE_INPUT_PARAM_TYPE_ERR",
-	"0XF0012" : "CAPTURE_SAFE_CREATE_NULL",
-	"0XF0013" : "CAPTURE_SAFE_ACCESS_ERR",
-	"0XF0014" : "CAPTURE_INPUT_DATA_BUFFER_NO_ENOUGH",
-	"0XF0015" : "CAPTURE_MEMORY_NOT_ENOUGH_TO_NEW",
-	"0XF0016" : "CAPTURE_TIME_OUT_WITH_NO_DATA",
-	"0XF0017" : "CAPTURE_SEND_EXTERNAL_FAILED",
-	"0XF0018" : "CAPUTRE_FREE_TYPE_ERR",
-	"0XF0019" : "RECORD_INPUT_FILE_PATH_ERR",
-	"0XF001A" : "RECORD_STARTING_WHILE_DEVICE_REMOVE",
-	"0XF001B" : "ACQSDK_ERROR_UPDATE_FAILED",
-	"0XF001C" : "ACQSDK_ERROR_UPLOADED_FAILED",
-	"0XF001D" : "ACQSDK_ERROR_DOWNLOADED_FAILED",
-}
-Callback_MsgType = {
-	"0X200001" : "DEVICE_USB_PLUG_OUT",
-	"0X200002" : "DEVICE_USB_PLUG_IN",
-	"0X200003" : "FW_UPGRADE_PERCENT_STATE",
-	"0X200004" : "HP_BUTTON_CAPTURE_DOWN",
-	"0X200005" : "HP_BUTTON_CAPTURE_UP",
-	"0X200006" : "HP_BUTTON_RECORD_DOWN",
-	"0X200007" : "HP_BUTTON_RECORD_UP",
-	"0X200008" : "HP_BUTTON_UP_DOWN",
-	"0X200009" : "HP_BUTTON_UP_UP",
-	"0X20000A" : "HP_BUTTON_DOWN_DOWN",
-	"0X20000B" : "HP_BUTTON_DOWN_UP",
-	"0X20000C" : "HP_POWER_BUTTON_DOWN",
-	"0X20000D" : "HP_POWER_BUTTON_UP",
-	"0X20000E" : "HP_BUTTON_MODE_SWICH_DOWN",
-	"0X20000F" : "HP_BUTTON_MODE_SWICH_UP",
-	"0X200010" : "HP_POWER_OFF",
-	"0X200011" : "HP_POWER_ON",
-	"0X200012" : "HP_TRASMIT_TO_PREVIEW",
-	"0X200013" : "HP_TRASMIT_IN_SLEEP",
-	"0X200014" : "HP_PLUG_IN_HOLDER",
-	"0X200015" : "HP_PLUG_OUT_HOLDER",
-	"0X200016" : "HP_FW_UPGRADING",
-	"0X200017" : "HP_FW_NORMAL",
-	"0X200018" : "EXPORT_IMAGE_DATA_FROM_HP",
-	"0X200019" : "MSG_TYPE_UNDEFINED",
-}
-
-# ProgID list
-ACQSDK_CSDevice_ProgID      = "ACQSDK.CSDevice.1"
-ACQSDK_ASImageUnit_ProgID   = "ACQSDK.ASImageUnit.1"
-ACQSDK_ASDeviceInfor_ProgID = "ACQSDK.ASDeviceInfor.1"
-
 # Location
 try:
 	ACQSDK_DLL_Dir = os.environ.get("CommonProgramFiles(x86)") + "\\Trophy\\Acquisition\\AcqSdk\\"
@@ -699,28 +554,34 @@ except:
 	ACQSDK_DLL_Dir = os.environ.get("CommonProgramFiles") + "\\Trophy\\Acquisition\\AcqSdk\\"
 finally:
 	ACQSDK_DLL     = ACQSDK_DLL_Dir + "ACQSDK.DLL"
-LoggerOutput   = "Logger.out.log"
+
+# Logger
+LoggerOutput = "Logger.out.log"
+
+# Flag of Init :: If Init is not executed, EXITAPP function will not execute UnInit.
+Initiated = False
+
+# Flag of Operation History Window
+#	Display
+DisplayOperationHistoryWindowFlag = False
+#	Line Number
+OperationHistoryWindowLineFlag = 0
+OperationHistoryWindowLineMax  = 2000
+
+# Information Label
+InfoLabel = "Test Application of UVC Camera SDK built by ActivePython 2.7 (x86)"
 
 # Generate GUI elements for three window
 LiveVideo_Width  = "640"
 LiveVideo_Height = "480"
 GenerateGUI()
 
-# Flag for thread
-global xFlag
-xFlag = True
-
-# Flag of Init :: If Init is not executed, EXITAPP function will not execute UnInit.
-Initiated = False
-
 # Create COM object and Event
-try:
-	objACQSDK_CSDevice = win32com.client.DispatchWithEvents(ACQSDK_CSDevice_ProgID, SDKEvents)
-except:
-	print "Fail to create COM object."
+try: objACQSDK_CSDevice = win32com.client.DispatchWithEvents(GD.ACQSDK_CSDevice_ProgID, SDKEvents)
+except: print "Fail to create COM object."
 
 # Event after window has displayed for some time
-wControlPanel.after(1000, lambda: ResetWindowPosition("origin"))
+wControlPanel.after(500, lambda: ResetWindowPosition())
 
 # Wait for message
 mainloop()

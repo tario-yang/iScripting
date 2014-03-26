@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\Debugging Tools for Windows (x86)\adplus.vbs" -crash -pn python.exe -o "C:\Users\admin\Desktop\UVC Project\SDK_API\GUI\Dump"

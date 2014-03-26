@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase type="API">
+ <Teststep index="Get Brightness">
+  <Parameter name="APIName" value="API0022_ACQSDK_GetBrightness"></Parameter>
+  <Parameter name="Return" value="0"></Parameter>
+ </Teststep>
+</Testcase>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TestCase type="API">
-	<Teststep index="API0001_ACQSDK_Init">
-		<Parameter name="APIName" value="API0001_ACQSDK_Init"></Parameter>
-		<Parameter name="Return" value="0"></Parameter>
-	</Teststep>
-</TestCase>

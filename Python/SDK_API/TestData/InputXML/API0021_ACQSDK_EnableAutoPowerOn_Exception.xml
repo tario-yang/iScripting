@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase type="API">
+ <Teststep index="Enable AutoPower On With 2">
+  <Parameter name="APIName" value="API0021_ACQSDK_EnableAutoPowerOn"></Parameter>
+  <Parameter name="enableautopoweron" value="2"></Parameter>
+  <Parameter name="Return" value="983045"></Parameter>
+  </Teststep>
+ <Teststep index="Enable AutoPower On with -1">
+  <Parameter name="APIName" value="API0021_ACQSDK_EnableAutoPowerOn"></Parameter>
+  <Parameter name="enableautopoweron" value="-1"></Parameter>
+  <Parameter name="Return" value="983045"></Parameter>
+ </Teststep>
+</Testcase>
