@@ -464,9 +464,13 @@ def ACQSDK_MFG_SetXU(index, value):
 # Exception #1
 def ExceptionNotInitiated():
 	# Create ACQSDK COM object
-	objACQSDK_CSDevice = win32com.client.Dispatch(GD.ACQSDK_CSDevice_ProgID)
-	pImageUnit         = win32com.client.Dispatch(GD.ACQSDK_ASImageUnit_ProgID)
-	pDeviceInfo        = win32com.client.Dispatch(GD.ACQSDK_ASDeviceInfor_ProgID)
+	try:
+		objACQSDK_CSDevice = win32com.client.Dispatch(GD.ACQSDK_CSDevice_ProgID)
+		objImageUnit       = win32com.client.Dispatch(GD.ACQSDK_ASImageUnit_ProgID)
+		objDeviceInfo      = win32com.client.Dispatch(GD.ACQSDK_ASDeviceInfor_ProgID)
+	except:
+		GD.Logger("Error -> Fail to create COM object.")
+		sys.exit(1)
 
 	# Precondition
 	SDKAPI.ACQSDK_UnInit(objACQSDK_CSDevice)
@@ -479,13 +483,13 @@ def ExceptionNotInitiated():
 	print "ACQSDK_StopPlay -> %r" %              SDKAPI.ACQSDK_StopPlay(objACQSDK_CSDevice)
 	print "ACQSDK_StartRecord -> %r" %           SDKAPI.ACQSDK_StartRecord(objACQSDK_CSDevice, os.environ.get("tmp") + "\\temp.avi")
 	print "ACQSDK_StopRecord -> %r" %            SDKAPI.ACQSDK_StopRecord(objACQSDK_CSDevice)
-	print "ACQSDK_Capture -> %r" %               SDKAPI.ACQSDK_Capture(objACQSDK_CSDevice, pImageUnit)
-	print "ACQSDK_GetImageData -> %r" %          SDKAPI.ACQSDK_GetImageData(objACQSDK_CSDevice, pImageUnit)
+	print "ACQSDK_Capture -> %r" %               SDKAPI.ACQSDK_Capture(objACQSDK_CSDevice, objImageUnit)
+	print "ACQSDK_GetImageData -> %r" %          SDKAPI.ACQSDK_GetImageData(objACQSDK_CSDevice, objImageUnit)
 	print "ACQSDK_SetMirrorFlag -> %r" %         SDKAPI.ACQSDK_SetMirrorFlag(objACQSDK_CSDevice, 1)
 	print "ACQSDK_GetMirrorFlag -> %r" %         SDKAPI.ACQSDK_GetMirrorFlag(objACQSDK_CSDevice)
 	print "ACQSDK_SetRotationFlag -> %r" %       SDKAPI.ACQSDK_SetRotationFlag(objACQSDK_CSDevice, 90)
 	print "ACQSDK_GetRotationFlag -> %r" %       SDKAPI.ACQSDK_GetRotationFlag(objACQSDK_CSDevice)
-	print "ACQSDK_QueryDeviceInfo -> %r" %       SDKAPI.ACQSDK_QueryDeviceInfo(objACQSDK_CSDevice, pDeviceInfo)
+	print "ACQSDK_QueryDeviceInfo -> %r" %       SDKAPI.ACQSDK_QueryDeviceInfo(objACQSDK_CSDevice, objDeviceInfo)
 	print "ACQSDK_GetFirmwareVersion -> %r" %    SDKAPI.ACQSDK_GetFirmwareVersion(objACQSDK_CSDevice)
 	print "ACQSDK_GetSDKVersion -> %r" %         SDKAPI.ACQSDK_GetSDKVersion(objACQSDK_CSDevice)
 	print "ACQSDK_GetBrightness -> %r" %         str(SDKAPI.ACQSDK_GetBrightness(objACQSDK_CSDevice))
@@ -507,8 +511,8 @@ def ExceptionNotInitiated():
 	print "ACQSDK_UpgradeFirmware -> %r" %       SDKAPI.ACQSDK_UpgradeFirmware(objACQSDK_CSDevice, r"../Data/firmware.zip")
 	print "ACQSDK_AbortUpgrade -> %r" %          SDKAPI.ACQSDK_AbortUpgrade(objACQSDK_CSDevice)
 	# print "ACQSDK_SetHPWorkMode -> %r" %       SDKAPI.ACQSDK_SetHPWorkMode
-	print "ACQSDK_GetSerialNumber -> %r" %       SDKAPI.ACQSDK_GetSerialNumber(objACQSDK_CSDevice)
-	print "ACQSDK_SetSerialNumber -> %r" %       SDKAPI.ACQSDK_SetSerialNumber(objACQSDK_CSDevice, "ABCD1234")
+	# print "ACQSDK_GetSerialNumber -> %r" %     SDKAPI.ACQSDK_GetSerialNumber
+	# print "ACQSDK_SetSerialNumber -> %r" %     SDKAPI.ACQSDK_SetSerialNumber
 	# print "ACQSDK_UploadFile -> %r" %          SDKAPI.ACQSDK_UploadFile
 	# print "ACQSDK_DownloadFile -> %r" %        SDKAPI.ACQSDK_DownloadFile
 	# print "ACQSDK_MFG_GetXU -> %r" %           SDKAPI.ACQSDK_MFG_GetXU
@@ -524,9 +528,11 @@ def ExceptionNotInitiated():
 # Exception #2
 def ExceptionInitiated():
 	# Create ACQSDK COM object
-	objACQSDK_CSDevice = win32com.client.Dispatch(GD.ACQSDK_CSDevice_ProgID)
-	pImageUnit         = win32com.client.Dispatch(GD.ACQSDK_ASImageUnit_ProgID)
-	pDeviceInfo        = win32com.client.Dispatch(GD.ACQSDK_ASDeviceInfor_ProgID)
+	try:
+		objACQSDK_CSDevice = win32com.client.Dispatch(GD.ACQSDK_CSDevice_ProgID)
+	except:
+		GD.Logger("Error -> Fail to create COM object.")
+		sys.exit(1)
 
 	# Precondition
 	SDKAPI.ACQSDK_UnInit(objACQSDK_CSDevice)
@@ -551,4 +557,5 @@ def ExceptionInitiated():
 
 # Check on local
 if __name__ == '__main__':
-	print sys._getframe().f_code.co_filename
+	ExceptionNotInitiated()
+	ExceptionInitiated()

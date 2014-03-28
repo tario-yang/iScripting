@@ -17,89 +17,89 @@ def Worker(api, para_list, expected_result):
 		if len(para_list) == 0: hWnd = root_id
 		else: hWnd = para_list[0]
 		ret = SDKAPI.ACQSDK_Init(objACQSDK_CSDevice, hWnd)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0002_ACQSDK_UnInit":
 		ret = SDKAPI.ACQSDK_UnInit(objACQSDK_CSDevice)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0003_ACQSDK_OnUpdateLiveWnd":
 		ret = SDKAPI.ACQSDK_OnUpdateLiveWnd(objACQSDK_CSDevice)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0004_ACQSDK_QueryDeviceInfo":
 		if len(para_list) == 0: pDeviceInfo = objDeviceInfo
 		else: pDeviceInfo = para_list[0]
 		ret = SDKAPI.ACQSDK_QueryDeviceInfo(objACQSDK_CSDevice, pDeviceInfo)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	# [Not Implemented] elif api == "API0005_ACQSDK_SetHPWorkMode":
 
 	elif api == "API0006_ACQSDK_StartPlay":
 		ret = SDKAPI.ACQSDK_StartPlay(objACQSDK_CSDevice)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0008_ACQSDK_StopPlay":
 		ret = SDKAPI.ACQSDK_StopPlay(objACQSDK_CSDevice)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0009_ACQSDK_StartRecord":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_StartRecord(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0010_ACQSDK_StopRecord":
 		ret = SDKAPI.ACQSDK_StopRecord(objACQSDK_CSDevice)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0011_ACQSDK_Capture":
 		if len(para_list) == 0: pImageUnit = objImageUnit
 		else: pImageUnit = para_list[0]
 		ret = SDKAPI.ACQSDK_Capture(objACQSDK_CSDevice, pImageUnit)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0012_ACQSDK_GetImageData":
 		if len(para_list) == 0: pImageUnit = objImageUnit
 		else: pImageUnit = para_list[0]
 		ret = SDKAPI.ACQSDK_GetImageData(objACQSDK_CSDevice, pImageUnit)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0013_ACQSDK_SetLogPath":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_SetLogPath(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0014_ACQSDK_GetSerialNumber":
 		ret = SDKAPI.ACQSDK_GetSerialNumber(objACQSDK_CSDevice)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if isinstance(ret[1], str) and len(ret[1]) >0: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0015_ACQSDK_SetSerialNumber":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_SetSerialNumber(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0016_ACQSDK_GetFirmwareVersion":
 		ret = SDKAPI.ACQSDK_GetFirmwareVersion(objACQSDK_CSDevice)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0017_ACQSDK_UpgradeFirmware":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_UpgradeFirmware(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0018_ACQSDK_AbortUpgrade":
@@ -114,7 +114,7 @@ def Worker(api, para_list, expected_result):
 		instance.start()
 		time.sleep(3)
 		ret = SDKAPI.ACQSDK_AbortUpgrade(objACQSDK_CSDevice)
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	# [Not Implemented] elif api == "API0019_ACQSDK_UploadFile":
@@ -124,64 +124,64 @@ def Worker(api, para_list, expected_result):
 	elif api == "API0021_ACQSDK_EnableAutoPowerOn":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_EnableAutoPowerOn(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0022_ACQSDK_GetBrightness":
 		ret = SDKAPI.ACQSDK_GetBrightness(objACQSDK_CSDevice)
-		if ret[1][0] == expected_result: return ("Passed", ret[1])
+		if str(ret[1][0]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0023_ACQSDK_SetBrightness":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_SetBrightness(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0024_ACQSDK_GetContrast":
 		ret = SDKAPI.ACQSDK_GetContrast(objACQSDK_CSDevice)
-		if ret[1][0] == expected_result: return ("Passed", ret[1])
+		if str(ret[1][0]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0025_ACQSDK_SetContrast":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_SetContrast(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0026_ACQSDK_SetPowerlineFrequency":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_SetPowerlineFrequency(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0027_ACQSDK_GetPowerlineFrequency":
 		ret = SDKAPI.ACQSDK_GetPowerlineFrequency(objACQSDK_CSDevice)
-		if ret[1][0] == expected_result: return ("Passed", ret[1])
+		if str(ret[1][0]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0028_ACQSDK_EnableAutoPowerOff":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_EnableAutoPowerOff(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0029_ACQSDK_SetAutoPowerOffTime":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_SetAutoPowerOffTime(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0030_ACQSDK_SetEnableSleep":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_SetEnableSleep(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0031_ACQSDK_SetSleepTime":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_SetSleepTime(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	# [Removed] elif api == "API0032_ACQSDK_SetSystemTime":
@@ -189,69 +189,56 @@ def Worker(api, para_list, expected_result):
 	elif api == "API0033_ACQSDK_SetMirrorFlag":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_SetMirrorFlag(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0034_ACQSDK_GetMirrorFlag":
 		ret = SDKAPI.ACQSDK_GetMirrorFlag(objACQSDK_CSDevice)
-		# if ret[1][0] == expected_result: return ("Passed", ret[1])
-		# else: return ("Failed", ret[1])
 		if isinstance(ret[1], int): return ("ManualCheck", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0035_ACQSDK_SetRotationFlag":
 		if len(para_list) == 0: return ("Failed", "No Parameter Inputted")
 		ret = SDKAPI.ACQSDK_SetRotationFlag(objACQSDK_CSDevice, para_list[0])
-		if ret[1] == expected_result: return ("Passed", ret[1])
+		if str(ret[1]) == expected_result: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0036_ACQSDK_GetRotationFlag":
 		ret = SDKAPI.ACQSDK_GetRotationFlag(objACQSDK_CSDevice)
-		# if ret[1][0] == expected_result: return ("Passed", ret[1])
-		# else: return ("Failed", ret[1])
 		if isinstance(ret[1], int): return ("ManualCheck", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0037_ACQSDK_GetSDKVersion":
 		ret = SDKAPI.ACQSDK_GetSDKVersion(objACQSDK_CSDevice)
-		# if ret[1][0] == expected_result: return ("Passed", ret[1])
-		# else: return ("Failed", ret[1])
 		if isinstance(ret[1], str) and len(ret[1]) >0: return ("Passed", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0038_ACQSDK_GetEnableAutoPowerOff":
 		ret = SDKAPI.ACQSDK_GetEnableAutoPowerOff(objACQSDK_CSDevice)
-		# if ret[1][0] == expected_result: return ("Passed", ret[1])
-		# else: return ("Failed", ret[1])
 		if isinstance(ret[1], int): return ("ManualCheck", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0039_ACQSDK_GetEnableAutoPowerOn":
 		ret = SDKAPI.ACQSDK_GetEnableAutoPowerOn(objACQSDK_CSDevice)
-		# if ret[1][0] == expected_result: return ("Passed", ret[1])
-		# else: return ("Failed", ret[1])
 		if isinstance(ret[1], int): return ("ManualCheck", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0040_ACQSDK_GetAutoPowerOffTime":
 		ret = SDKAPI.ACQSDK_GetAutoPowerOffTime(objACQSDK_CSDevice)
-		# if ret[1][0] == expected_result: return ("Passed", ret[1])
-		# else: return ("Failed", ret[1])
 		if isinstance(ret[1], int): return ("ManualCheck", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0041_ACQSDK_GetEnableSleep":
 		ret = SDKAPI.ACQSDK_GetEnableSleep(objACQSDK_CSDevice)
-		# if ret[1][0] == expected_result: return ("Passed", ret[1])
-		# else: return ("Failed", ret[1])
 		if isinstance(ret[1], int): return ("ManualCheck", ret[1])
 		else: return ("Failed", ret[1])
 
 	elif api == "API0042_ACQSDK_GetSleepTime":
 		ret = SDKAPI.ACQSDK_GetSleepTime(objACQSDK_CSDevice)
-		# if ret[1][0] == expected_result: return ("Passed", ret[1])
-		if isinstance(ret[1], int): return ("Passed", ret[1])
+		if isinstance(ret[1], int): return ("ManualCheck", ret[1])
 		else: return ("Failed", ret[1])
+	else:
+		return ("Inputted XML defines wrong API name", None)
 
 # Function to invoke pointed test case
 def DataParser(action, debug = 0):
@@ -301,6 +288,7 @@ def Action(action_list):
 # Start
 GD.InitExecLogger()
 GD.Logger("Info -> Start API Testing.")
+GD.Logger("Info -> ========================================================== >> Preparation")
 
 switch = "full"
 
@@ -310,16 +298,13 @@ switch = "full"
 if switch == "full":
 	GD.Logger("Info -> Enter Full Testing Mode, reading all XML files under %s." % GD.ACQSDK_TestCaseXML_APIDir)
 	location = GD.ACQSDK_TestCaseXML_APIDir
-	try:
-		datasource_list = os.listdir(location)
+	try:    datasource_list = os.listdir(location)
 	except:
-
 		GD.Logger("Error -> Exception happens when getting XML file list!")
 		sys.exit(1)
 	else:
 		#	List shall have content
 		if len(datasource_list) == 0:
-
 			GD.Logger("Error -> There is no XML file existed!")
 			sys.exit(1)
 		#	Remove non-XML file
@@ -336,12 +321,15 @@ try: os.mkdir(DIR)
 except:
 	GD.Logger("Error -> Fail to create directory to store test result(s)!")
 	sys.exit(1)
-else: GD.Logger("Info -> Directory for storing test result(s) is created.")
+else:
+	GD.Logger("Info -> Directory for storing test result(s) is created.")
+	GD.Logger("Info -> ========================================================== >> Test Output")
 
 # Parse data
 for datasource in datasource_list:
 	# Preparation
-	GD.Logger("Info -> %r" % datasource)
+	GD.Logger("")
+	GD.Logger("Info -> Input -> %r" % datasource)
 	#	Logger -> Result, init
 	LoggerResult = DIR + "/" + datasource.partition(".")[0] + "_Result.xml"
 	with open(LoggerResult, "w") as f:
@@ -359,10 +347,13 @@ for datasource in datasource_list:
 	except:
 		GD.Logger("Error -> Fail to create COM object.")
 		sys.exit(1)
-	else:
-		GD.Logger("Info -> COM object created, %r" % objACQSDK_CSDevice)
-		GD.Logger("Info -> COM object created, %r" % objImageUnit)
-		GD.Logger("Info -> COM object created, %r" % objDeviceInfo)
+	# else:
+	# 	GD.Logger("Info -> COM object created, %r" % objACQSDK_CSDevice)
+	# 	GD.Logger("Info -> COM object created, %r" % objImageUnit)
+	# 	GD.Logger("Info -> COM object created, %r" % objDeviceInfo)
+
+	#	if Not ACQSDK_Init, it needs to trigger an Init
+	if datasource.find("ACQSDK_Init") == -1: SDKAPI.ACQSDK_Init(objACQSDK_CSDevice, root_id)
 
 	#	Restore result
 	test_result = []
@@ -406,6 +397,7 @@ for datasource in datasource_list:
 				else: para_line = name_list.pop() + "=" + value_list.pop() + ";" + para_line
 			# Parameter List
 			action.append(para_line)
+			GD.Logger("Info -> Parameter -> %s" % str(action))
 
 			# Trigger the execution
 			test_result.append((action[0], Action(action)))
@@ -415,15 +407,17 @@ for datasource in datasource_list:
 			sys.exit(1)
 
 	# Check & Output Result
-	GD.Logger("Info -> Get Result: %r" % test_result)
+	GD.Logger("Info -> Get Result -> %r" % test_result)
+	result_collection = []
 	if len(test_result) > 0:
 		for i in test_result:
-			with open(LoggerResult, "a+") as f:
-				#f.write('\t<Teststep name="%s" value="%s_%s" />\n' % (i[0], i[1][0], str(i[1][1])))
-				f.write('\t<Teststep name="%s" value="%r" />\n' % (i[0], i[1]))
-			if i[1] is None: GD.Logger("Error -> Execution exception!")
-			elif i[1][0] == "Failed": break
+			with open(LoggerResult, "a+") as f: f.write('\t<Teststep name="%s" value="%s" />\n' % (i[0], str(i[1])))
+			if i[1] is None: result_collection.append(None)
+			else: result_collection.append(i[1][0])
 		with open(LoggerResult, "a+") as f: f.write('</TestCase>\n')
+		failednum = result_collection.count("Failed")
+		nonenum   = result_collection.count(None)
+
 	else:
 		GD.Logger("Error -> Exception occurs when fetching test result list, %r." % test_result)
 
@@ -436,5 +430,15 @@ for datasource in datasource_list:
 		gc.collect()
 	except:
 		GD.Logger("Error -> Fail to remove the created COM object.")
-	else:
-		GD.Logger("Info -> COM objects are removed.")
+	# else:
+	# 	GD.Logger("Info -> COM objects are removed.")
+
+# End
+GD.Logger("")
+GD.Logger("Info -> END")
+
+# Open file
+os.system("notepad.exe .\\Output\\ACQSDK_Execution.csv")
+
+# Close
+os.system("taskkill /f /im python.exe")

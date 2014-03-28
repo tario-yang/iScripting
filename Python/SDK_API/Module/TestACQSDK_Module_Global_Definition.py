@@ -7,15 +7,15 @@ import os, time
 
 # COM
 #	definition: ProgID of each CoClass
-ACQSDK_CSDevice_ProgID          = "ACQSDK.CSDevice.1"
-ACQSDK_ASImageUnit_ProgID       = "ACQSDK.ASImageUnit.1"
-ACQSDK_ASDeviceInfor_ProgID     = "ACQSDK.ASDeviceInfor.1"
+ACQSDK_CSDevice_ProgID      = "ACQSDK.CSDevice.1"
+ACQSDK_ASImageUnit_ProgID   = "ACQSDK.ASImageUnit.1"
+ACQSDK_ASDeviceInfor_ProgID = "ACQSDK.ASDeviceInfor.1"
 
 # XML
 # 	definition: Data source directory for XML files
-ACQSDK_TestCaseXML_APIDir       = r"../TestData/InputXML"
+ACQSDK_TestCaseXML_APIDir       = r"TestData/InputXML"
 # 	definition: Data source list
-ACQSDK_TestCaseXML_List         = r"../TestData/InputXML/ACQSDK_TestCaseXML_List.txt"
+ACQSDK_TestCaseXML_List         = r"TestData/InputXML/ACQSDK_TestCaseXML_List.txt"
 # 	definition: Keywords in XML
 ACQSDK_TestSummaryTag    = "index"
 ACQSDK_TestCase          = "APIName"
@@ -26,7 +26,7 @@ ACQSDK_ParameterNameTag  = "name"
 ACQSDK_ParameterValueTag = "value"
 
 # definition: Outputs: SDK's log file (ACQSDK_SetLogPath), execution's log.
-ACQSDK_OutputDir                = r"../Output"
+ACQSDK_OutputDir                = r"Output"
 ACQSDK_ExecutionLogger          = "ACQSDK_Execution.csv"
 
 # definition: dictionary, "acq_sdk/SDK Document/SDKDef.h"
