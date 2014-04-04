@@ -13,21 +13,21 @@ ACQSDK_ASDeviceInfor_ProgID = "ACQSDK.ASDeviceInfor.1"
 
 # XML
 # 	definition: Data source directory for XML files
-ACQSDK_TestCaseXML_APIDir       = r"TestData/InputXML"
+ACQSDK_TestCaseXML_APIDir = r"TestData/InputXML"
 # 	definition: Data source list
-ACQSDK_TestCaseXML_List         = r"TestData/InputXML/ACQSDK_TestCaseXML_List.txt"
+ACQSDK_TestCaseXML_List   = r"TestData/InputXML/ACQSDK_TestCaseXML_List.txt"
 # 	definition: Keywords in XML
-ACQSDK_TestSummaryTag    = "index"
-ACQSDK_TestCase          = "APIName"
-ACQSDK_ExpectedResult    = "Return"
-ACQSDK_TestStepTag       = "Teststep"
-ACQSDK_ParameterTag      = "Parameter"
-ACQSDK_ParameterNameTag  = "name"
-ACQSDK_ParameterValueTag = "value"
+ACQSDK_TestSummaryTag     = "index"
+ACQSDK_TestCase           = "APIName"
+ACQSDK_ExpectedResult     = "Return"
+ACQSDK_TestStepTag        = "Teststep"
+ACQSDK_ParameterTag       = "Parameter"
+ACQSDK_ParameterNameTag   = "name"
+ACQSDK_ParameterValueTag  = "value"
 
 # definition: Outputs: SDK's log file (ACQSDK_SetLogPath), execution's log.
-ACQSDK_OutputDir                = r"Output"
-ACQSDK_ExecutionLogger          = "ACQSDK_Execution.csv"
+ACQSDK_OutputDir         = r"Output"
+ACQSDK_ExecutionLogger   = "ACQSDK_Execution.csv"
 
 # definition: dictionary, "acq_sdk/SDK Document/SDKDef.h"
 Device_Type = {
@@ -36,14 +36,16 @@ Device_Type = {
 	"0X20003" : "DEV_1200",
 	"0X20004" : "DEV_1650",
 	"0X20005" : "DEV_UVC",
-	"0X20006" : "DEV_UNDEFINED", }
+	"0X20006" : "DEV_UNDEFINED",}
 Model_Type = {
 	"0X30001" : "MODEL_WIRED_DOCK",
 	"0X30002" : "MODEL_WIRELESS_ONE",
 	"0X30003" : "MODEL_WIRELESS_MANY",
 	"0X30004" : "MODEL_DIRECT_WIRED_ONE",
-	"0X30005" : "MODEL_UNDEFINED", }
+	"0X30005" : "MODEL_UNDEFINED",}
 OPERATOR_ERROR = {
+	"0X0"     : "OPERATOR_SUCCEEDED",
+	"0XF0000" : "OPERATOR_FAILED",
 	"0XF0001" : "DEVICE_CONNECTION_FALSE",
 	"0XF0002" : "DEVICE_CREATED_FAIL",
 	"0XF0003" : "HOST_SERVICE_IP_INVALID",
@@ -76,7 +78,7 @@ OPERATOR_ERROR = {
 	"0XF001E" : "ACQSDK_XU_GET_ERR",
 	"0XF001F" : "ACQSDK_ERROR_UPDATE_FAILED",
 	"0XF0020" : "ACQSDK_ERROR_UPLOADED_FAILED",
-	"0XF0021" : "ACQSDK_ERROR_DOWNLOADED_FAILED", }
+	"0XF0021" : "ACQSDK_ERROR_DOWNLOADED_FAILED",}
 Callback_MsgType = {
 	"0X200001" : "DEVICE_USB_PLUG_OUT",
 	"0X200002" : "DEVICE_USB_PLUG_IN",
@@ -95,14 +97,29 @@ Callback_MsgType = {
 	"0X20000F" : "HP_BUTTON_MODE_SWICH_UP",
 	"0X200010" : "HP_POWER_OFF",
 	"0X200011" : "HP_POWER_ON",
-	"0X200012" : "HP_TRASMIT_TO_PREVIEW",
-	"0X200013" : "HP_TRASMIT_IN_SLEEP",
-	"0X200014" : "HP_PLUG_IN_HOLDER",
-	"0X200015" : "HP_PLUG_OUT_HOLDER",
-	"0X200016" : "HP_FW_UPGRADING",
-	"0X200017" : "HP_FW_NORMAL",
+	#"0X200012" : "HP_TRASMIT_TO_PREVIEW", -> Removed from SDK 0.1.2.0
+	#"0X200013" : "HP_TRASMIT_IN_SLEEP",   -> Renamed to "HP_TRASMIT_REQ_SLEEP"
+	"0X200012" : "HP_TRASMIT_REQ_SLEEP",
+	"0X200013" : "HP_PLUG_IN_HOLDER",
+	"0X200014" : "HP_PLUG_OUT_HOLDER",
+	"0X200015" : "HP_FW_UPGRADING",
+	"0X200016" : "HP_FW_NORMAL",
+	"0X200017" : "HP_MOTION_DECTECTIVE", # -> Added from SDK 0.1.2.0
 	"0X200018" : "EXPORT_IMAGE_DATA_FROM_HP",
-	"0X200019" : "MSG_TYPE_UNDEFINED", }
+	"0X200019" : "MSG_TYPE_UNDEFINED",
+	"0X20001A" : "ERROR_MSG_CALLBACK",
+	"0X20001B" : "ERROR_DEVICE_PLUG_IN_IP_1200",
+	"0X20001C" : "ERROR_DEVICE_PLUG_IN_IP_1500",
+	"0X20001D" : "ERROR_DEVICE_PLUG_IN_IP_1600",
+	"0X20001E" : "ERROR_DEVICE_PLUG_IN_UVC_1200",
+	"0X20002F" : "ERROR_DEVICE_PLUG_IN_UVC_1500",}
+FW_DownloadFileID = {
+	"E_FW_FILE_ID_VERSION"           : 0,
+	"E_FW_FILE_ID_CALIBRATION_FILE"  : 1,
+	"E_FW_FILE_ID_FW_LOG"            : 2,
+	"E_FW_FILE_ID_LED_CURRENT_FILE"  : 3,
+	"E_FW_FILE_ID_DEFECT_TABLE_FILE" : 4,
+	"E_FW_FILE_ID_COUNT"             : 5,}
 
 # definition: functions and classes
 # 	Function to return Output Header. The header is a timestamp.
