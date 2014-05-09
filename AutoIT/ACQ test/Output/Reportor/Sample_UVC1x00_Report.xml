@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<General>
+	<Computer name="admin-PC" />
+	<OS name="WIN_7", type="X64" service_pack="" />
+	<CPU name="Intel(R) Core(TM) i5-2400 CPU @ 3.10GHz" core_number="4" logical_core_number="4" />
+	<Memory size="" />
+	<IP address="10.112.37.250" />
+	<User name="tester" />
+	<Role name="standard" />
+</General>
+<Reportor>
+	<Report action="Launch", result="Pass", comment="" />
+	<Report action="Capture, number: 10, interval: 2", result="Pass", comment="" />
+	<Report action="Record, duration: 10, number: 1, interval: 2", result="Fail", comment="error information" />
+</Reportor>

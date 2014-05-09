@@ -1,0 +1,6 @@
+launch
+capture, 1
+record, 10
+capture, 100
+captureinrecording, 10, 300
+done

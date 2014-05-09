@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<General>
+	<Computer name="admin-PC" />
+	<OS name="WIN_7", type="X64" service_pack="" />
+	<CPU name="Intel(R) Core(TM) i5-2400 CPU @ 3.10GHz" core_number="4" logical_core_number="4" />
+	<Memory size="" />
+	<IP address="10.112.37.250" />
+	<User name="tester" />
+	<Role name="standard" />
+</General>
+<Logger>
+	<Log timestamp="2014-01-01 13:00:00.999" type="Error" value="error description string" />
+	<Log timestamp="2014-01-01 13:00:00.999" type="Warn" value="warning description string" />
+	<Log timestamp="2014-01-01 13:00:00.999" type="Information" value="information description string" />
+</Logger>
