@@ -39,7 +39,7 @@ StdErrCode = {
 }
 
 
-#	Parse parameters
+#	Define / Parse parameters
 usage = 'usage: %prog -s SourceImage -d DestinationImage [-r Degree] [-m Mode]'
 version = '1.0'
 epilog = 'Definition of stderr is, ' + \
