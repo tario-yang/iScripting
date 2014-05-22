@@ -7,25 +7,44 @@ import os
 import sys
 from optparse import OptionParser
 import Image
-import hashlib
 
 
 def ImageCompare(options):
-
     x = Image.open(options.SOURCE)
     y = Image.open(options.DESTINATION)
     if options.ROTATION in ['90', '180', '270']:
         y = y.rotate(int(options.ROTATION), 0, 1)
-
     if options.MODE == 'SIZE':
         if x.size == y.size:
             sys.exit(StdErrCode['SUCCESS_SAME'])
     elif options.MODE == 'CONTENT':
-        x = hashlib.md5(str(x))
-        y = hashlib.md5(str(y))
-        if x.hexdigest().upper() == y.hexdigest().upper():
+        x = make_regalur_image(x)
+        y = make_regalur_image(y)
+        ret = calc_similar(x, y)
+        print ret
+        if ret >= 0.9:
             sys.exit(StdErrCode['SUCCESS_SAME'])
     sys.exit(StdErrCode['SUCCESS_DIFFERENT'])
+
+
+def hist_similar(lh, rh):
+    assert len(lh) == len(rh)
+    return sum(1 - (0 if l == r else float(abs(l - r)) / max(l, r)) for l, r in zip(lh, rh)) / len(lh)
+
+
+def calc_similar(li, ri):
+    return sum(hist_similar(l.histogram(), r.histogram()) for l, r in zip(split_image(li), split_image(ri))) / 16.0
+
+
+def split_image(img, part_size=(64, 64)):
+    w, h = img.size
+    pw, ph = part_size
+    assert w % pw == h % ph == 0
+    return [img.crop((i, j, i + pw, j + ph)).copy() for i in xrange(0, w, pw) for j in xrange(0, h, ph)]
+
+
+def make_regalur_image(img, size=(256, 256)):
+    return img.resize(size)
 
 
 StdErrCode = {
@@ -52,7 +71,7 @@ parser.add_option('-d', '--destination', dest='DESTINATION',
                   help='Destination image file')
 parser.add_option('-r', '--rotation', dest='ROTATION',
                   help='Rotate source image file by degrees before comparing. Value shall be 90 / 180 / 270.')
-parser.add_option('-m', '--mode', dest='MODE', default='SIZE',
+parser.add_option('-m', '--mode', dest='MODE', default='CONTENT',
                   help='Mode of comparation (SIZE or CONTENT). Default is %default.')
 
 
