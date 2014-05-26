@@ -13,7 +13,7 @@ def ImageCompare(options):
     x = Image.open(options.SOURCE)
     y = Image.open(options.DESTINATION)
     if options.ROTATION in ['90', '180', '270']:
-        y = y.rotate(int(options.ROTATION), 0, 1)
+        y = y.rotate((360 - int(options.ROTATION)), 0, 1)
     if options.MODE == 'SIZE':
         if x.size == y.size:
             sys.exit(StdErrCode['SUCCESS_SAME'])
