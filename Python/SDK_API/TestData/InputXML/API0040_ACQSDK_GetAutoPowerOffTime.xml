@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Testcase type="API">
-
- <Teststep index="GetAutoPowerOffTime">
-  <Parameter name="APIName" value="API0040_ACQSDK_GetAutoPowerOffTime"></Parameter>
-  <Parameter name="Return" value="0"></Parameter>
- </Teststep>
-</Testcase>
-

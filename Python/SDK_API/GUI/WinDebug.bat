@@ -1,1 +1,0 @@
-"C:\Program Files (x86)\Debugging Tools for Windows (x86)\adplus.vbs" -crash -pn python.exe -o "D:\WinDebugDump"
