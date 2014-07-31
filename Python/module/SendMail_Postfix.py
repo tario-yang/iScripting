@@ -14,7 +14,7 @@ MailPort = 25
 msg = MIMEMultipart()
 msg['Subject'] = '[Test Mail] Send Email via Postfix'
 msg['From']    = 'jun.yang@carestream.com'
-msg['To']      = COMMASPACE.join(['fangxing.hou@carestream.com'])
+msg['To']      = COMMASPACE.join(['jun.yang@carestream.com'])
 msg['Date']    = formatdate(localtime=True)
 
 # Body
