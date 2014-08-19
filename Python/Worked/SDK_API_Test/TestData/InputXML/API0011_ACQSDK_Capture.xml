@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase type="API">
+
+ <Teststep index="Start Play">
+  <Parameter name="APIName" value="API0006_ACQSDK_StartPlay"></Parameter>
+  <Parameter name="Return" value="0"></Parameter>
+ </Teststep>
+
+ <Teststep index="Capture Image">
+  <Parameter name="APIName" value="API0011_ACQSDK_Capture"></Parameter>
+  <Parameter name="Return" value="0"></Parameter>
+ </Teststep>
+
+</Testcase>

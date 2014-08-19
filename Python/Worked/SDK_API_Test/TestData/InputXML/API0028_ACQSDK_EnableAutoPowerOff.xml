@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase type="API">
+
+ <Teststep index="Auto Power Off With 1">
+  <Parameter name="APIName" value="API0028_ACQSDK_EnableAutoPowerOff"></Parameter>
+  <Parameter name="enableautopoweroff" value="1"></Parameter>
+  <Parameter name="Return" value="0"></Parameter>
+ </Teststep>
+
+ <Teststep index="Auto Power Off With 0">
+  <Parameter name="APIName" value="API0028_ACQSDK_EnableAutoPowerOff"></Parameter>
+  <Parameter name="enableautopoweroff" value="0"></Parameter>
+  <Parameter name="Return" value="0"></Parameter>
+ </Teststep>
+
+</Testcase>
+

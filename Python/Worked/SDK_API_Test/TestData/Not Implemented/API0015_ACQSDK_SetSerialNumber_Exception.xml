@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase type="API">
+
+  <Teststep index="Set Serial Number With Int">
+  <Parameter name="APIName" value="API0015_ACQSDK_SetSerialNumber"></Parameter>
+  <Parameter name="sn" value="-3"></Parameter>
+  <Parameter name="Return" value="NZ"></Parameter>
+  </Teststep>
+
+  <Teststep index="Set Serial Number With Float">
+  <Parameter name="APIName" value="API0015_ACQSDK_SetSerialNumber"></Parameter>
+  <Parameter name="sn" value="5.67"></Parameter>
+  <Parameter name="Return" value="NZ"></Parameter>
+  </Teststep>
+
+  <Teststep index="Set Serial Number With Long">
+  <Parameter name="APIName" value="API0015_ACQSDK_SetSerialNumber"></Parameter>
+  <Parameter name="sn" value="123456782345"></Parameter>
+  <Parameter name="Return" value="NZ"></Parameter>
+  </Teststep>
+
+  <Teststep index="Set Serial Number With None">
+  <Parameter name="APIName" value="API0015_ACQSDK_SetSerialNumber"></Parameter>
+  <Parameter name="sn" value=""></Parameter>
+  <Parameter name="Return" value="NZ"></Parameter>
+ </Teststep>
+
+</Testcase>
+

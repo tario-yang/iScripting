@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase type="API">
+
+ <Teststep index="Set Frequency with 50">
+  <Parameter name="APIName" value="API0027_ACQSDK_SetPowerlineFrequency"></Parameter>
+  <Parameter name="frequency" value="50"></Parameter>
+  <Parameter name="Return" value="0"></Parameter>
+ </Teststep>
+
+ <Teststep index="Set Frequency with 60">
+  <Parameter name="APIName" value="API0027_ACQSDK_SetPowerlineFrequency"></Parameter>
+  <Parameter name="frequency" value="60"></Parameter>
+  <Parameter name="Return" value="0"></Parameter>
+ </Teststep>
+
+</Testcase>
+

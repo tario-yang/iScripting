@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Testcase type="API">
+	<Teststep index="API0003_ACQSDK_OnupdateLiveMnd">
+		<Parameter name="APIName" value="API0003_ACQSDK_OnupdateLiveMnd"></Parameter>
+	</Teststep>
+	<Teststep index="API0004_ACQSDK_QueryDeviceInfo">
+		<Parameter name="APIName" value="API0004_ACQSDK_QueryDeviceInfo"></Parameter>
+	</Teststep>
+	<Teststep index="API0006_ACQSDK_StartPlay">
+		<Parameter name="APIName" value="API0006_ACQSDK_StartPlay"></Parameter>
+	</Teststep>
+	<Teststep index="API0012_ACQSDK_GetImageData">
+		<Parameter name="APIName" value="API0012_ACQSDK_GetImageData"></Parameter>
+	</Teststep>
+	<Teststep index="API0008_ACQSDK_StopPlay">
+		<Parameter name="APIName" value="API0008_ACQSDK_StopPlay"></Parameter>
+	</Teststep>
+	<Teststep index="API0006_ACQSDK_StartPlay">
+		<Parameter name="APIName" value="API0006_ACQSDK_StartPlay"></Parameter>
+	</Teststep>
+	<Teststep index="API0009_ACQSDK_StartRecord">
+		<Parameter name="APIName" value="API0009_ACQSDK_StartRecord"></Parameter>
+	</Teststep>
+	<Teststep index="API0010_ACQSDK_StopRecord">
+		<Parameter name="APIName" value="API0010_ACQSDK_StopRecord"></Parameter>
+	</Teststep>
+	<Teststep index="API0035_ACQSDK_SetRotationFlag">
+		<Parameter name="APIName" value="API0035_ACQSDK_SetRotationFlag"></Parameter>
+		<Parameter name="setrotationflag" value="90"></Parameter>
+	</Teststep>
+	<Teststep index="API0036_ACQSDK_GetRotationFlag">
+		<Parameter name="APIName" value="API0036_ACQSDK_GetRotationFlag"></Parameter>
+	</Teststep>
+	<Teststep index="API0034_ACQSDK_GetMirrorFlag">
+		<Parameter name="APIName" value="API0034_ACQSDK_GetMirrorFlag"></Parameter>
+	</Teststep>
+	<Teststep index="API0033_ACQSDK_SetMirrorFlag">
+		<Parameter name="APIName" value="API0033_ACQSDK_SetMirrorFlag"></Parameter>
+		<Parameter name="setmirrorflag" value="1"></Parameter>
+	</Teststep>
+	<Teststep index="API0031_ACQSDK_SetStandByTime">
+		<Parameter name="APIName" value="API0031_ACQSDK_SetStandByTime"></Parameter>
+		<Parameter name="setstandbytime" value="50"></Parameter>
+	</Teststep>
+	 <Teststep index="GetStandByTime">
+		<Parameter name="APIName" value="API0042_ACQSDK_GetStandByTime"></Parameter>
+	</Teststep>
+	<Teststep index="API0030_ACQSDK_EnableStandBy">
+		<Parameter name="APIName" value="API0030_ACQSDK_EnableStandBy"></Parameter>
+		<Parameter name="enablestandby" value="1"></Parameter>
+	</Teststep>
+	 <Teststep index="GetEnableStandBy">
+		<Parameter name="APIName" value="API0041_ACQSDK_GetEnableStandBy"></Parameter>
+	</Teststep>
+	<Teststep index="API0029_ACQSDK_SetAutoPowerOffTime">
+		<Parameter name="APIName" value="API0029_ACQSDK_SetAutoPowerOffTime"></Parameter>
+		<Parameter name="setautopowerofftime" value="50"></Parameter>
+	</Teststep>
+	 <Teststep index="GetAutoPowerOffTime">
+		<Parameter name="APIName" value="API0040_ACQSDK_GetAutoPowerOffTime"></Parameter>
+	</Teststep>
+	<Teststep index="API0028_ACQSDK_EnableAutoPowerOff">
+		<Parameter name="APIName" value="API0028_ACQSDK_EnableAutoPowerOff"></Parameter>
+		<Parameter name="enableautopoweroff" value="1"></Parameter>
+	</Teststep>
+	 <Teststep index="GetEnableAutoPowerOff">
+		<Parameter name="APIName" value="API0038_ACQSDK_GetEnableAutoPowerOff"></Parameter>
+	</Teststep>
+	<Teststep index="API0027_ACQSDK_SetPowerlineFrequency">
+		<Parameter name="APIName" value="API0027_ACQSDK_SetPowerlineFrequency"></Parameter>
+		<Parameter name="frequency" value="60"></Parameter>
+	</Teststep>
+	<Teststep index="API0026_ACQSDK_GetPowerlineFrequency">
+		<Parameter name="APIName" value="API0026_ACQSDK_GetPowerlineFrequency"></Parameter>
+	</Teststep>
+	<Teststep index="API0025_ACQSDK_SetContrast">
+		<Parameter name="APIName" value="API0025_ACQSDK_SetContrast"></Parameter>
+		<Parameter name="contrast" value="2"></Parameter>
+	</Teststep>
+	<Teststep index="API0024_ACQSDK_GetContrast">
+		<Parameter name="APIName" value="API0024_ACQSDK_GetContrast"></Parameter>
+	</Teststep>
+	<Teststep index="API0023_ACQSDK_SetBrightness">
+		<Parameter name="APIName" value="API0023_ACQSDK_SetBrightness"></Parameter>
+		<Parameter name="brightness" value="2"></Parameter>
+	</Teststep>
+	<Teststep index="API0022_ACQSDK_GetBrightness">
+		<Parameter name="APIName" value="API0022_ACQSDK_GetBrightness"></Parameter>
+	</Teststep>
+	<Teststep index="API0021_ACQSDK_EnableAutoPowerOn">
+		<Parameter name="APIName" value="API0021_ACQSDK_EnableAutoPowerOn"></Parameter>
+		<Parameter name="enableautopoweron" value="1"></Parameter>
+	</Teststep>
+	 <Teststep index="GetEnableAutoPowerOn">
+		<Parameter name="APIName" value="API0039_ACQSDK_GetEnableAutoPowerOn"></Parameter>
+	</Teststep>
+	<Teststep index="API0018_ACQSDK_AbortUpgrade">
+		<Parameter name="APIName" value="API0018_ACQSDK_AbortUpgrade"></Parameter>
+	</Teststep>
+	<Teststep index="API0002_ACQSDK_Uninit">
+		<Parameter name="APIName" value="API0002_ACQSDK_Uninit"></Parameter>
+	</Teststep>
+	<Teststep index="GetSDKVersion">
+		<Parameter name="APIName" value="API0037_ACQSDK_GetSDKVersion"></Parameter>
+	</Teststep>
+</Testcase>

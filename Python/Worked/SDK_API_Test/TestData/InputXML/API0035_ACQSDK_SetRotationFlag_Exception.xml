@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Testcase type="API">
+
+ <Teststep index="Set Rotation Flag With -1">
+  <Parameter name="APIName" value="API0035_ACQSDK_SetRotationFlag"></Parameter>
+  <Parameter name="setrotationflag" value="-1"></Parameter>
+  <Parameter name="Return" value="983045"></Parameter>
+ </Teststep>
+
+ <Teststep index="Set Rotation Flag With 4">
+  <Parameter name="APIName" value="API0035_ACQSDK_SetRotationFlag"></Parameter>
+  <Parameter name="setrotationflag" value="4"></Parameter>
+  <Parameter name="Return" value="983045"></Parameter>
+ </Teststep>
+
+</Testcase>
+
