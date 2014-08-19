@@ -448,15 +448,10 @@ def ACQSDK_StopRecord():
     CheckResult(ret)
 def ACQSDK_SendCaptureCmd():
     if Initiated == True:
-        class SWCapture(threading.Thread):
-            def __init__(self):
-                threading.Thread.__init__(self)
-            def run(self):
-                self.ret = SDKAPI.ACQSDK_SendCaptureCmd(objACQSDK_CSDevice)
-                CheckResult(self.ret)
-        instance = SWCapture()
-        instance.setDaemon(False)
-        instance.start()
+        def run():
+            ret = SDKAPI.ACQSDK_SendCaptureCmd(objACQSDK_CSDevice)
+            CheckResult(ret)
+        threading.Thread(target = run).start()
     else:
         ret = SDKAPI.ACQSDK_SendCaptureCmd(objACQSDK_CSDevice)
         CheckResult(ret)
@@ -524,8 +519,10 @@ def ACQSDK_GetHostVersion():
     ret = SDKAPI.ACQSDK_GetHostVersion(objACQSDK_CSDevice)
     CheckResult(ret)
 def ACQSDK_GetFwStatus():
-    ret = SDKAPI.ACQSDK_GetFwStatus(objACQSDK_CSDevice)
-    CheckResult(ret)
+    def run():
+        ret = SDKAPI.ACQSDK_GetFwStatus(objACQSDK_CSDevice)
+        CheckResult(ret)
+    threading.Thread(target = run).start()
 
 #    Configuration
 #    >> Brightness
