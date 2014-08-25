@@ -7,8 +7,8 @@
 
 #ce ================================================================================================
 
-Local $SmallWidth  = 1920
-Local $SmallHeight = 1080
+Local $SmallWidth  = 1366
+Local $SmallHeight = 768
 Local $BigWidth    = 1920
 Local $BigHeight   = 1080
 
@@ -119,34 +119,40 @@ Func PushWindow2FourCorner()
 	Local $Y = 0
 	Local $W = $ret[0]/2
 	Local $H = $ret[1]/2
-	Local $pos = WinGetPos("[ACTIVE]")
-	If $pos[0] >= 0 And $pos[0] < $ret[0]/2 And $pos[1] >= 0 And $pos[1] < $ret[1]/2 Then
+	If $ret[3] < $ret[0]/2 And $ret[4] < $ret[1]/2 Then
 		$X = 0
 		$Y = 0
-	ElseIf $pos[0] >= $ret[0]/2 And $pos[1] >= 0 And $pos[1] < $ret[1]/2 Then
-		$X = $ret[0]/2
+	ElseIf $ret[3] >= $ret[0]/2 And $ret[4] < $ret[1]/2 Then
+		$X = $W
 		$Y = 0
-	ElseIf $pos[0] >= 0 And $pos[0] < $ret[0]/2 And $pos[1] >= $ret[1]/2 Then
+	ElseIf $ret[3] < $ret[0]/2 And $ret[4] >= $ret[1]/2 Then
 		$X = 0
-		$Y = $ret[1]/2
-	ElseIf $pos[0] >= $ret[0]/2 And $pos[1] >= $ret[1]/2 Then
-		$X = $ret[0]/2
-		$Y = $ret[1]/2
+		$Y = $H
+	ElseIf $ret[3] >= $ret[0]/2 And $ret[4] >= $ret[1]/2 Then
+		$X = $W
+		$Y = $H
+	EndIf
+	If $ret[2] == 1 Then
+		$X = $X+$SmallWidth
 	EndIf
 	WinMove("[ACTIVE]", "", $X, $Y, $W, $H, 2)
 EndFunc
 
 Func ScreenSizeDetect()
 	Local $ret = WinGetPos("[ACTIVE]")
-	Local $SIZE[3]
+	Local $SIZE[5]
 	If $ret[0] < $SmallWidth Then
 		$SIZE[0] = $SmallWidth
 		$SIZE[1] = $SmallHeight
 		$SIZE[2] = 0
+		$SIZE[3] = $ret[0]
+		$SIZE[4] = $ret[1]
 	ElseIf $ret[0] >= $SmallWidth Then
 		$SIZE[0] = $BigWidth
 		$SIZE[1] = $BigHeight
 		$SIZE[2] = 1
+		$SIZE[3] = $ret[0] - $SmallWidth
+		$SIZE[4] = $ret[1]
 	EndIf
 	Return $SIZE
 EndFunc
