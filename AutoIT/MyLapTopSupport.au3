@@ -7,8 +7,8 @@
 
 #ce ================================================================================================
 
-Local $SmallWidth  = 1366
-Local $SmallHeight = 768
+Local $SmallWidth  = @DesktopWidth
+Local $SmallHeight = @DesktopHeight
 Local $BigWidth    = 1920
 Local $BigHeight   = 1080
 
