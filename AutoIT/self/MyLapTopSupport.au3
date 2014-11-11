@@ -2,7 +2,7 @@
 
  脚本作者: James Jun Yang, 19011956
  电子邮件: jun.yang@carestream.com
- 脚本版本: 1.0
+ 脚本版本: 2.0
  脚本功能: Supoort functions on Laptop
 
 #ce ================================================================================================
@@ -22,6 +22,8 @@ HotKeySet("#s", "dTopMostWindow")
 HotKeySet("!1", "ResizeWindowHalfLeft")
 HotKeySet("!{F1}", "ResizeWindowHalfLeftForceSmall")
 HotKeySet("!{F2}", "ResizeWindowHalfLeftForceBig")
+HotKeySet("+{F1}", "ResizeWindowHalfRightForceSmall")
+HotKeySet("+{F2}", "ResizeWindowHalfRightForceBig")
 HotKeySet("!2", "ResizeWindowHalfRight")
 HotKeySet("!3", "HMaximizeWindow")
 HotKeySet("!4", "PushWindow2FourCorner")
@@ -65,8 +67,8 @@ Func ResizeWindowHalfLeft()
 		$X = 0
 		$Y = 0
 	ElseIf $ret[2] == 1 Then
-		$X = $SmallWidth+1
-		$Y = 0
+		$X = 0
+		$Y = $BigHeight*-1
 	EndIf
 	$W = $ret[0]/2
 	$H = $ret[1]
@@ -82,8 +84,24 @@ Func ResizeWindowHalfLeftForceSmall()
 EndFunc
 
 Func ResizeWindowHalfLeftForceBig()
-	Local $X = $SmallWidth+1
+	Local $X = 0
+	Local $Y = $BigHeight*-1
+	Local $W = $BigWidth/2
+	Local $H = $BigHeight
+	WinMove("[ACTIVE]", "", $X, $Y, $W, $H, 2)
+EndFunc
+
+Func ResizeWindowHalfRightForceSmall()
+	Local $X = $SmallWidth/2
 	Local $Y = 0
+	Local $W = $SmallWidth/2
+	Local $H = $SmallHeight
+	WinMove("[ACTIVE]", "", $X, $Y, $W, $H, 2)
+EndFunc
+
+Func ResizeWindowHalfRightForceBig()
+	Local $X = $BigWidth/2
+	Local $Y = $BigHeight*-1
 	Local $W = $BigWidth/2
 	Local $H = $BigHeight
 	WinMove("[ACTIVE]", "", $X, $Y, $W, $H, 2)
@@ -99,8 +117,8 @@ Func ResizeWindowHalfRight()
 		$X = $ret[0]/2
 		$Y = 0
 	ElseIf $ret[2] == 1 Then
-		$X = $SmallWidth+1+$ret[0]/2
-		$Y = 0
+		$X = $BigWidth/2
+		$Y = $BigHeight*-1
 	EndIf
 	$W = $ret[0]/2
 	$H = $ret[1]
@@ -110,7 +128,11 @@ EndFunc
 Func HMaximizeWindow()
 	Local $ret = ScreenSizeDetect()
 	Local $pos = WinGetPos("[ACTIVE]")
-	WinMove("[ACTIVE]", "", $pos[0], 0, $pos[2], $ret[1], 2)
+	If $ret[2] == 0 Then
+		WinMove("[ACTIVE]", "", $pos[0], 0, $pos[2], $ret[1], 2)
+	ElseIf $ret[2] == 1 Then
+		WinMove("[ACTIVE]", "", $pos[0], $BigHeight*-1, $pos[2], $ret[1], 2)
+	EndIf
 EndFunc
 
 Func PushWindow2FourCorner()
@@ -119,21 +141,34 @@ Func PushWindow2FourCorner()
 	Local $Y = 0
 	Local $W = $ret[0]/2
 	Local $H = $ret[1]/2
-	If $ret[3] < $ret[0]/2 And $ret[4] < $ret[1]/2 Then
-		$X = 0
-		$Y = 0
-	ElseIf $ret[3] >= $ret[0]/2 And $ret[4] < $ret[1]/2 Then
-		$X = $W
-		$Y = 0
-	ElseIf $ret[3] < $ret[0]/2 And $ret[4] >= $ret[1]/2 Then
-		$X = 0
-		$Y = $H
-	ElseIf $ret[3] >= $ret[0]/2 And $ret[4] >= $ret[1]/2 Then
-		$X = $W
-		$Y = $H
-	EndIf
-	If $ret[2] == 1 Then
-		$X = $X+$SmallWidth
+	If $ret[2] == 0 Then
+		If $ret[3] < $ret[0]/2 And $ret[4] < $ret[1]/2 Then
+			$X = 0
+			$Y = 0
+		ElseIf $ret[3] >= $ret[0]/2 And $ret[4] < $ret[1]/2 Then
+			$X = $W
+			$Y = 0
+		ElseIf $ret[3] < $ret[0]/2 And $ret[4] >= $ret[1]/2 Then
+			$X = 0
+			$Y = $H
+		ElseIf $ret[3] >= $ret[0]/2 And $ret[4] >= $ret[1]/2 Then
+			$X = $W
+			$Y = $H
+		EndIf
+	ElseIf $ret[2] == 1 Then
+		If $ret[3] < $ret[0]/2 And $ret[4] < Abs($ret[1]/2) Then
+			$X = 0
+			$Y = $H*-1
+		ElseIf $ret[3] >= $ret[0]/2 And $ret[4] < Abs($ret[1]/2) Then
+			$X = $W
+			$Y = $H*-1
+		ElseIf $ret[3] < $ret[0]/2 And $ret[4] >= Abs($ret[1]/2) Then
+			$X = 0
+			$Y = $H*-1*2
+		ElseIf $ret[3] >= $ret[0]/2 And $ret[4] >= Abs($ret[1]/2) Then
+			$X = $W
+			$Y = $H*-1*2
+		EndIf
 	EndIf
 	WinMove("[ACTIVE]", "", $X, $Y, $W, $H, 2)
 EndFunc
@@ -141,18 +176,18 @@ EndFunc
 Func ScreenSizeDetect()
 	Local $ret = WinGetPos("[ACTIVE]")
 	Local $SIZE[5]
-	If $ret[0] < $SmallWidth Then
+	If $ret[1]>=0 Then
 		$SIZE[0] = $SmallWidth
 		$SIZE[1] = $SmallHeight
 		$SIZE[2] = 0
 		$SIZE[3] = $ret[0]
 		$SIZE[4] = $ret[1]
-	ElseIf $ret[0] >= $SmallWidth Then
+	ElseIf $ret[1]<0 Then
 		$SIZE[0] = $BigWidth
 		$SIZE[1] = $BigHeight
 		$SIZE[2] = 1
-		$SIZE[3] = $ret[0] - $SmallWidth
-		$SIZE[4] = $ret[1]
+		$SIZE[3] = $ret[0]
+		$SIZE[4] = $ret[1]*-1
 	EndIf
 	Return $SIZE
 EndFunc
