@@ -114,6 +114,13 @@ def GenerateControlPanel():
         TestProcess.add_command(label = 'Mirror      -> Once', command = MirrorPerTime)
         TestProcess.add_command(label = 'Mirror      -> Process', command = MirrorProcess)
 
+        #        Automation
+        Automation = Menu(wControlPanel)
+        MenuBar.add_cascade(label = 'Automation', menu = Automation)
+        Automation.add_command(label = 'Start -> Automation', command = AutomationStart)
+        Automation.add_command(label = 'Stop  -> Automation', command = AutomationStop)
+
+
     #        Help
     HelpMenu = Menu(MenuBar, tearoff = 0)
     MenuBar.add_cascade(label = 'Help', menu = HelpMenu)
@@ -148,11 +155,9 @@ def GenerateControlPanel():
     Button(BasicFrame, text = 'Start Record', width = ButtonWidth, command = ACQSDK_StartRecord).grid(row = BasicFrameRow+5, column = 1)
     Button(BasicFrame, text = 'Stop Record', width = ButtonWidth, command = ACQSDK_StopRecord).grid(row = BasicFrameRow+5, column = 2)
 
-    #    Firmware Upgrade
-    GenerateFirmwareUpgrade(wControlPanel, 20)
-
     #    Frames for testing
     if DebugMode == 1:
+        GenerateFirmwareUpgrade(wControlPanel, 20)
         GenerateQueryInfoFrame(wControlPanel, 40) # Query Information
         GenerateMirrorRotationFrame(wControlPanel, 60) # Mirror and Rotation
         GenerateHPConfigurationFrame4CS1200(wControlPanel, 80) # For CS1200
@@ -796,6 +801,18 @@ def MessageQueue():
     wControlPanel.after(20, MessageQueue)
 # End
 # ========== Test Process ==========
+
+
+
+# ========== Automation ==========
+# Begin
+def AutomationStart():
+    import xlwt
+    import xlrd
+    SupportFile = r'Automation\AutomationTest.xls'
+def AutomationStop():  pass
+# End
+# ========== Automation ==========
 
 
 
