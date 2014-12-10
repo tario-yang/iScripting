@@ -24,6 +24,3 @@ class COMPort:
             pass
         finally:
             return COMList
-
-class Version:
-    pass
