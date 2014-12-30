@@ -1,5 +1,3 @@
-from win32api import *
-# Try and use XP features, so we get alpha-blending etc.
 try:
     from winxpgui import *
 except ImportError:

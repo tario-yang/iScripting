@@ -18,10 +18,11 @@
 
 def GenerateRndList():
 	"Call ListFactory and check whether the list is empty. If it is, repeat ListFactory."
-	while 1:
+	while True:
 		list = ListFactory()
 		if len(list) > 0:
-			return list
+			break
+	return list
 
 def ListFactory():
 	"Generate list"
