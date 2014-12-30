@@ -19,7 +19,10 @@ def DisplayOperationMenu():
 
 def GetInputs():
 	input_data = raw_input('Input two numbers (format -> number1,number2): ')
-	return (int(input_data.split(',')[0]),int(input_data.split(',')[1]))
+	return (DataValidation(int(input_data.split(',')[0])),DataValidation(int(input_data.split(',')[1])))
+
+def DataValidation(number):
+	return number if number>1 and number<99 else None
 
 def GetOperator():
 	input_operator = raw_input('Select one of the above operates: ')
@@ -45,4 +48,8 @@ while True:
 	elif p is None:
 		break
 	else:
-		Calculator(GetInputs(), p)
+		q = GetInputs()
+		if q == (None, None):
+			print 'Incorrect inputs!\n'
+		else:
+			Calculator(q, p)
