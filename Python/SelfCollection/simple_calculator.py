@@ -49,7 +49,7 @@ while True:
 		break
 	else:
 		q = GetInputs()
-		if q == (None, None):
+		if None in q:
 			print 'Incorrect inputs!\n'
 		else:
 			Calculator(q, p)
