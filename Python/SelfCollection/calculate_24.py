@@ -20,38 +20,50 @@ def DivisionCheck(number1, number2):
 
 def Expression(number1, number2, operator):
 	if operator == '1':
-		return ['{0} {2} {1}'.format(number1, number2, operator_dict[operator]),
-			'{1} {2} {0}'.format(number1, number2, operator_dict[operator])]
+		return [['{0} {2} {1}'.format(number1, number2, operator_dict[operator]), 0],
+			['{1} {2} {0}'.format(number1, number2, operator_dict[operator])], 1]
 	elif operator == '3' and DivisionCheck(number1, number2) == 1:
-		return ['{1} {2} {0}'.format(number1, number2, operator_dict[operator])]
+		return [['{1} {2} {0}'.format(number1, number2, operator_dict[operator])], 1]
 	else:
-		return ['{0} {2} {1}'.format(number1, number2, operator_dict[operator])]
+		return [['{0} {2} {1}'.format(number1, number2, operator_dict[operator])], 0]
 
 def Judgement(operation_expression):
 	return True if eval(ur'{}'.format(operation_expression)) == 24 else False
 
+def FormatList2String(lst):
+	return ''.join([i for i in lst])
+
 def Calculate24Expression(number_list, phase):
 	global expression_list
+	global sub_expression_list
 	for item in phase:
 		for i in range(3):
 			for exp in Expression(number_list[item[0]], number_list[item[1]], str(i)):
-				tmp = exp.split(' ')
+				tmp = exp[0].split(' ')
 				if len(number_list) == 4:
-					expression_list.append(tmp)
-					ret = [eval(exp), number_list[item[2]], number_list[item[3]]]
+					expression_list = tmp
+					ret = [eval(exp[0]), number_list[item[2]], number_list[item[3]]]
 					Calculate24Expression(ret, phase_two)
 				elif len(number_list) == 3:
-					expression_list.append(tmp[1])
-					expression_list.append(tmp[2])
-					ret = [eval(exp), number_list[item[2]]]
+					sub_expression_list = []
+					sub_expression_list.append(tmp[1])
+					if exp[1] == 0:
+						sub_expression_list.append(tmp[2])
+					elif exp[1] == 1:
+						sub_expression_list.append(tmp[0])
+					ret = [eval(exp[0]), number_list[item[2]]]
 					Calculate24Expression(ret, phase_three)
 				elif len(number_list) == 2:
 					if Judgement(exp) is True:
-						expression_list.append(tmp[1])
-						expression_list.append(tmp[2])
-						print expression_list
+						sub_expression_list.append(tmp[1])
+						if exp[1] == 0:
+							sub_expression_list.append(tmp[2])
+						elif exp[1] == 1:
+							sub_expression_list.append(tmp[0])
+						print 'PASS -> {}{}'.format(FormatList2String(expression_list),
+							FormatList2String(sub_expression_list))
 					else:
-						expression_list = []
+						pass
 				else:
 					print 'Unknown Error'
 
@@ -75,11 +87,7 @@ print input_data
 # set phases of calculation
 phase_one   = [(0,1,2,3), (0,2,1,3), (0,3,1,2), (1,2,0,3), (1,3,0,2), (2,3,0,1)]
 phase_two   = [(0,1,2), (0,2,1), (1,2,0)]
-phase_three = [(0,1), (1,0)]
-
-# set result list
-global expression_list
-expression_list = []
+phase_three = [(0,1)]
 
 # Main function
 Calculate24Expression(input_data, phase_one)
