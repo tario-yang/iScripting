@@ -87,9 +87,6 @@ def EnumerateExpression(number_list):
 		R and C,D
 	'''
 
-	def FilterTypeOne(dataset, t):
-		exp = Expression(dataset[0], dataset[1], t)
-
 	strategy = [[[(0,1),2,3],
 				[(0,1),3,2],
 				[(0,2),1,3],
