@@ -54,18 +54,18 @@ def DivisionVerification(number1, number2):
 def Expression(number1, number2, operator):
 	'Return the expression(s)'
 	if operator == '1':
-		return ['{0}{2}{1}'.format(number1, number2, operator_dict[operator]),
-			'{1}{2}{0}'.format(number1, number2, operator_dict[operator])]
+		return ['({0}{2}{1})'.format(number1, number2, operator_dict[operator]),
+			'({1}{2}{0})'.format(number1, number2, operator_dict[operator])]
 	elif operator == '3':
 		ret = DivisionVerification(number1, number2)
 		if ret == 0:
-			return ['{0}{2}{1}'.format(number1, number2, operator_dict[operator])]
+			return ['({0}{2}{1})'.format(number1, number2, operator_dict[operator])]
 		if ret == 1:
-			return ['{1}{2}{0}'.format(number1, number2, operator_dict[operator])]
+			return ['({1}{2}{0})'.format(number1, number2, operator_dict[operator])]
 		if ret == 2:
 			return None
 	else:
-		return ['{0}{2}{1}'.format(number1, number2, operator_dict[operator])]
+		return ['({0}{2}{1})'.format(number1, number2, operator_dict[operator])]
 
 def Judgement(operation_expression):
 	'Verify whether the expression equals to `target`.'
@@ -86,6 +86,10 @@ def EnumerateExpression(number_list):
 		type 2:
 		R and C,D
 	'''
+
+	def FilterTypeOne(dataset, t):
+		exp = Expression(dataset[0], dataset[1], t)
+
 	strategy = [[[(0,1),2,3],
 				[(0,1),3,2],
 				[(0,2),1,3],
@@ -103,14 +107,44 @@ def EnumerateExpression(number_list):
 	# type 1
 	for item in strategy[0]:
 		ds = [number_list[item[0][0]], number_list[item[0][1]], number_list[item[1]], number_list[item[2]]]
-		print ds
 		for i in range(4):
-			exp_phase_one = Expression(ds[0], ds[1], operator_dict[str(i)])
-			if exp_phase_one is None:
+			try:
+				for sub_exp_phase_one in Expression(ds[0], ds[1], str(i)):
+					for j in range(4):
+						try:
+							for sub_exp_phase_two in Expression(sub_exp_phase_one, ds[2], str(j)):
+								for k in range(4):
+									try:
+										for sub_exp_phase_three in Expression(sub_exp_phase_two, ds[3], str(k)):
+											if Judgement(sub_exp_phase_three) is True:
+												MessageQueue.append(sub_exp_phase_three)
+									except:
+										continue
+						except:
+							continue
+			except:
 				continue
-			for sub_exp_phase_one in exp_phase_one:
-				print sub_exp_phase_one
 
+	# type 2
+	for item in strategy[1]:
+		ds = [number_list[item[0][0]], number_list[item[0][1]]], [number_list[item[1][0]], number_list[item[1][1]]]
+		for i in range(4):
+			try:
+				for sub_exp_left in Expression(ds[0][0], ds[0][1], str(i)):
+					for j in range(4):
+						try:
+							for sub_exp_right in Expression(ds[1][0], ds[1][1], str(j)):
+								for k in range(4):
+									try:
+										for sub_exp_final in Expression(sub_exp_left, sub_exp_right, str(k)):
+											if Judgement(sub_exp_final) is True:
+												MessageQueue.append(sub_exp_final)
+									except:
+										continue
+						except:
+							continue
+			except:
+				continue
 
 def Executor():
 	# prepare data
@@ -123,7 +157,7 @@ def Executor():
 	ScrolledTextClear()
 	EnumerateExpression(input_data)
 	if len(MessageQueue) > 0:
-		MessageQueue.append('{}\nDone'.format('-'*48))
+		MessageQueue.append('{}\nDone'.format('-'*32))
 	else:
 		MessageQueue.append(str(input_data))
 		MessageQueue.append('Nothing!')
@@ -147,8 +181,8 @@ root.title('Generator -> 24')
 
 # Add output box, each result will be filled in automatically
 outputbox = ST(root,
-	width=80, height=40,
-	font=('Courier New', 10),
+	width=35, height=20,
+	font=('Courier New', 13),
 	fg='yellow', bg='black')
 outputbox.pack(expand=1, fill='both')
 
@@ -158,7 +192,7 @@ inputbox.pack(side=TK.LEFT, expand=1, fill='x')
 
 # Add button, which will trigger the calculation
 trigger = TK.Button(root,
-	text='generate four numbers ({}~{}) then calculate expression(s) to get {}'.format(minimum_number, maximum_number, target),
+	text='Go!',
 	command=Executor)
 trigger.pack(side=TK.RIGHT, expand=1, fill='x')
 
