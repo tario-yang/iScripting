@@ -2,70 +2,131 @@
 
 '''
 计算24点
+	tested @ Windows 7 Pro 64-bit ENU
 '''
 
-import random
+
+try:
+	import Tkinter as TK
+except:
+	import tkinter as TK
+from ScrolledText import ScrolledText as ST
+from random import randint
 
 
-def DivisionCheck(number1, number2):
-	'''
-	0 : number1 mod number2 is zero
-	1 : number2 mod number1 is zero
-	2 : the others
-	'''
+# GUI EVENT
+def EntryUpdate(number_list):
+	'Display the number list in Entry'
+	inputbox.delete('0',TK.END)
+	inputbox.insert('0', ', '.join([str(i) for i in number_list]))
+
+def ScrolledTextClear():
+	'Clear content in ST'
+	outputbox.delete('1.0', TK.END)
+
+def ScrolledTextAppend(message):
+	'Append content in ST'
+	outputbox.insert(TK.END, message)
+
+# def SetTriggerState(status=1):
+# 	'Set button status'
+# 	trigger.config(state='disabled') if status == 0 else trigger.config(state='active')
+
+def MessageProcessor():
+	'Deal with message queue'
+	if len(MessageQueue) > 0:
+		ret = str(MessageQueue.pop(0))
+		ScrolledTextAppend('{}\n'.format(ret))
+	root.after(30, MessageProcessor)
+
+# Calculator Event
+def DivisionVerification(number1, number2):
 	try:
-		return 0 if number1%number2 == 0 else 2
+		if number1%number2 == 0:
+			return 0
 	except:
-		return 1 if number2%number1 == 0 else 2
+		try:
+			if number2%number1 == 0:
+				return 1
+		except:
+			return 2
 
 def Expression(number1, number2, operator):
+	'Return the expression(s)'
 	if operator == '1':
-		return [['{0} {2} {1}'.format(number1, number2, operator_dict[operator]), 0],
-			['{1} {2} {0}'.format(number1, number2, operator_dict[operator])], 1]
-	elif operator == '3' and DivisionCheck(number1, number2) == 1:
-		return [['{1} {2} {0}'.format(number1, number2, operator_dict[operator])], 1]
+		return ['{0}{2}{1}'.format(number1, number2, operator_dict[operator]),
+			'{1}{2}{0}'.format(number1, number2, operator_dict[operator])]
+	elif operator == '3':
+		ret = DivisionVerification(number1, number2)
+		if ret == 0:
+			return ['{0}{2}{1}'.format(number1, number2, operator_dict[operator])]
+		if ret == 1:
+			return ['{1}{2}{0}'.format(number1, number2, operator_dict[operator])]
+		if ret == 2:
+			return None
 	else:
-		return [['{0} {2} {1}'.format(number1, number2, operator_dict[operator])], 0]
+		return ['{0}{2}{1}'.format(number1, number2, operator_dict[operator])]
 
 def Judgement(operation_expression):
-	return True if eval(ur'{}'.format(operation_expression)) == 24 else False
+	'Verify whether the expression equals to `target`.'
+	try:
+		return True if eval(ur'{}'.format(operation_expression)) == target else False
+	except:
+		return False
 
-def FormatList2String(lst):
-	return ''.join([i for i in lst])
+def EnumerateExpression(number_list):
+	'''
+	[A, B, C, D]
 
-def Calculate24Expression(number_list, phase):
-	global expression_list
-	global sub_expression_list
-	for item in phase:
-		for i in range(3):
-			for exp in Expression(number_list[item[0]], number_list[item[1]], str(i)):
-				tmp = exp[0].split(' ')
-				if len(number_list) == 4:
-					expression_list = tmp
-					ret = [eval(exp[0]), number_list[item[2]], number_list[item[3]]]
-					Calculate24Expression(ret, phase_two)
-				elif len(number_list) == 3:
-					sub_expression_list = []
-					sub_expression_list.append(tmp[1])
-					if exp[1] == 0:
-						sub_expression_list.append(tmp[2])
-					elif exp[1] == 1:
-						sub_expression_list.append(tmp[0])
-					ret = [eval(exp[0]), number_list[item[2]]]
-					Calculate24Expression(ret, phase_three)
-				elif len(number_list) == 2:
-					if Judgement(exp) is True:
-						sub_expression_list.append(tmp[1])
-						if exp[1] == 0:
-							sub_expression_list.append(tmp[2])
-						elif exp[1] == 1:
-							sub_expression_list.append(tmp[0])
-						print 'PASS -> {}{}'.format(FormatList2String(expression_list),
-							FormatList2String(sub_expression_list))
-					else:
-						pass
-				else:
-					print 'Unknown Error'
+	1. Calculate A and B -> [R, C, D]
+	2. Three scenarios:
+		type 1:
+			R,C and D
+			R,D and C
+		type 2:
+		R and C,D
+	'''
+	strategy = [[[(0,1),2,3],
+				[(0,1),3,2],
+				[(0,2),1,3],
+				[(0,2),3,1],
+				[(0,3),1,2],
+				[(0,3),2,1],
+				[(1,2),0,3],
+				[(1,2),3,0],
+				[(2,3),0,1],
+				[(2,3),1,0]],
+				[[(0,1),(2,3)],
+				[(0,2),(1,3)],
+				[(0,3),(1,2)]]]
+
+	# type 1
+	for item in strategy[0]:
+		ds = [number_list[item[0][0]], number_list[item[0][1]], number_list[item[1]], number_list[item[2]]]
+		print ds
+		for i in range(4):
+			exp_phase_one = Expression(ds[0], ds[1], operator_dict[str(i)])
+			if exp_phase_one is None:
+				continue
+			for sub_exp_phase_one in exp_phase_one:
+				print sub_exp_phase_one
+
+
+def Executor():
+	# prepare data
+	input_data  = []
+	for i in range(4):
+		input_data.append(randint(minimum_number,maximum_number))
+	EntryUpdate(input_data)
+
+	# main function
+	ScrolledTextClear()
+	EnumerateExpression(input_data)
+	if len(MessageQueue) > 0:
+		MessageQueue.append('{}\nDone'.format('-'*48))
+	else:
+		MessageQueue.append(str(input_data))
+		MessageQueue.append('Nothing!')
 
 # set target
 target         = 24
@@ -75,19 +136,35 @@ operator_dict  = {
 	'0' : '+',
 	'1' : '-',
 	'2' : '*',
-	'3' : '/',
-}
+	'3' : '/',}
 
-# prepare data
-input_data  = []
-for i in range(4):
-	input_data.append(random.randint(minimum_number,maximum_number))
-print input_data
+# Generate window
+root = TK.Tk()
+root.attributes('-topmost', 1)
+root.attributes('-alpha', 0.85)
+root.geometry('+{}+{}'.format(root.winfo_screenwidth()/8, root.winfo_screenheight()/8))
+root.title('Generator -> 24')
 
-# set phases of calculation
-phase_one   = [(0,1,2,3), (0,2,1,3), (0,3,1,2), (1,2,0,3), (1,3,0,2), (2,3,0,1)]
-phase_two   = [(0,1,2), (0,2,1), (1,2,0)]
-phase_three = [(0,1)]
+# Add output box, each result will be filled in automatically
+outputbox = ST(root,
+	width=80, height=40,
+	font=('Courier New', 10),
+	fg='yellow', bg='black')
+outputbox.pack(expand=1, fill='both')
 
-# Main function
-Calculate24Expression(input_data, phase_one)
+# Add input box, its content will be filled in automatically
+inputbox = TK.Entry(root, bd=2, bg='yellow')
+inputbox.pack(side=TK.LEFT, expand=1, fill='x')
+
+# Add button, which will trigger the calculation
+trigger = TK.Button(root,
+	text='generate four numbers ({}~{}) then calculate expression(s) to get {}'.format(minimum_number, maximum_number, target),
+	command=Executor)
+trigger.pack(side=TK.RIGHT, expand=1, fill='x')
+
+# Add message queue to avoid blocking the GUI while calculating.
+MessageQueue=[]
+root.after(30, MessageProcessor)
+
+# Display window
+TK.mainloop()
