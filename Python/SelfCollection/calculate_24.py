@@ -27,6 +27,7 @@ def ScrolledTextClear():
 def ScrolledTextAppend(message):
 	'Append content in ST'
 	outputbox.insert(TK.END, message)
+	outputbox.yview(TK.END)
 
 # def SetTriggerState(status=1):
 # 	'Set button status'
