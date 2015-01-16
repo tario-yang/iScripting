@@ -3,6 +3,8 @@
 '''
 计算24点
 	tested @ Windows 7 Pro 64-bit ENU
+
+	Update: add one condition to check whether the expression has existed.
 '''
 
 
@@ -68,8 +70,21 @@ def Expression(number1, number2, operator):
 	else:
 		return ['({0}{2}{1})'.format(number1, number2, operator_dict[operator])]
 
+def FilterExpression(operation_expression):
+	return [operation_expression.count('('),
+		operation_expression.count(operator_dict['0']),
+		operation_expression.count(operator_dict['1']),
+		operation_expression.count(operator_dict['2']),
+		operation_expression.count(operator_dict['3'])]
+
 def Judgement(operation_expression):
 	'Verify whether the expression equals to `target`.'
+	global refTable
+	ret = FilterExpression(operation_expression)
+	if len(refTable) == 0:
+		refTable.append(ret)
+	elif ret in refTable:
+		return False
 	try:
 		return True if eval(ur'{}'.format(operation_expression)) == target else False
 	except:
@@ -146,6 +161,8 @@ def EnumerateExpression(number_list):
 
 def Executor():
 	# prepare data
+	global refTable
+	refTable    = []
 	input_data  = []
 	for i in range(4):
 		input_data.append(randint(minimum_number,maximum_number))
@@ -159,6 +176,7 @@ def Executor():
 	else:
 		MessageQueue.append(str(input_data))
 		MessageQueue.append('Nothing!')
+	refTable = []
 
 # set target
 target         = 24
