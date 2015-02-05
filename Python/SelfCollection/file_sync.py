@@ -8,9 +8,7 @@ import shutil
 class FileSync:
 
 	'''
-
 	Target : use this class as a simple "rsync"
-
 	'''
 
 	def __init__(self, source, destination):
