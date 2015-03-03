@@ -4,39 +4,58 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+
 import os
 
-Root = 'T:'
-target = r'ColourImages\color_calib_result.ini'
 
-RootList = os.listdir(Root)
-RootList.sort()
-RootList = filter(lambda x: os.path.isdir(r'{}\{}'.format(Root, x)), RootList)
-RootList = map(lambda x: r'{}\{}'.format(Root, x), RootList)
-print RootList
+def OutputDataToFile(filename, data):
 
-with open('output.csv', 'a+') as f:
-	f.write('SN,Value1,Value2,Value3\n')
+	with open(filename, 'a+') as f:
+		f.write('{}\n'.format(data.decode('gbk', 'ignore')))
 
-for i in RootList:
-	i_list = os.listdir(i)
-	i_list.sort()
-	i_list = filter(lambda x: os.path.isdir(r'{}\{}'.format(i, x)), i_list)
-	i_list = map(lambda x: r'{}\{}'.format(i, x), i_list)
+def GeneratePathList(root, *arg):
 
-	for j in i_list:
+	if arg is None:
+		arg = ('desktop.ini')
+
+	Result = []
+
+	rootList = os.listdir(root)
+	rootList.sort()
+	rootList = filter(lambda x: x not in arg, rootList)
+	rootList = filter(lambda x: os.path.isdir(r'{}\{}'.format(root, x)), rootList)
+	rootList = map(lambda x: r'{}\{}'.format(root, x), rootList)
+
+	for i in rootList:
+		tmp = os.listdir(i)
+		tmp.sort()
+		tmp = filter(lambda x: x not in arg, tmp)
+		tmp = filter(lambda x: os.path.isdir(r'{}\{}'.format(i, x)), tmp)
+		tmp = map(lambda x: r'{}\{}'.format(i, x), tmp)
+		Result.extend(tmp)
+
+	return Result
+
+def ToGetColorCalibData(filePathUnderSNDirectory='ColourImages\color_calib_result.ini'):
+
+	outputFileName = 'output_color_calib_value.csv'
+	if os.path.isfile(outputFileName):
+		os.remove(outputFileName)
+	OutputDataToFile(outputFileName, 'SN,Value1,Value2,Value3')
+
+	for i in GeneratePathList(ROOT):
 		tmp = []
 		try:
-			t = r'{}\{}'.format(j, target)
-			if os.path.isfile(t):
-				with open(t) as f:
-					srcData = f.readlines()[0].split(' ')
-					tmp.append(j)
-					tmp.append(int(srcData[1]))
-					tmp.append(int(srcData[5]))
-					tmp.append(int(srcData[9]))
-					with open('output.csv', 'a+') as f:
-						f.write('{}\n'.format(str(tmp).replace('[','').replace(']','')))
+			with open('{}\{}'.format(i, filePathUnderSNDirectory)) as f:
+				srcData = f.readlines()[0].split(' ')
+				tmp.append(i)
+				tmp.append(int(srcData[1]))
+				tmp.append(int(srcData[5]))
+				tmp.append(int(srcData[9]))
+				OutputDataToFile(outputFileName, str(tmp).replace('[','').replace(']',''))
 		except Exception as e:
 			print str(e)
 			continue
+
+ROOT = 'T:'
+ToGetColorCalibData()

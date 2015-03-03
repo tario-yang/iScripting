@@ -1,115 +1,126 @@
 # coding: utf-8
 
-'''
-Implement a simple rsync
-'''
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 import os
-import hashlib
+import md5
 import shutil
 
+class SyncProcessor:
 
-class FileSync:
-
-	def __init__(self, source, destination):
-
-		'''
-		Rule:
-			File -> File
-			Directory -> Directory
-		'''
-
-		self.Source = source
+	def __init__(self, source, destination, ignore=('desktop.ini', 'Thumbs.db')):
+		self.Source      = source
 		self.Destination = destination
+		self.IgnoreList  = ignore
+		retSource        = self.WhatIsTarget(self.Source)
+		retDestination   = self.WhatIsTarget(self.Destination)
 
-		retSource = self.WhatIsTarget(self.Source)
-		if (retSource in [1] and
-			self.ToSyncFile(self.Source, self.Destination) is None
-			) or (
-			retSource in [2] and
-			self.ToSyncDirectory(self.Source, self.Destination) is None):
-			print '\t*Incorrect parameter*'
-			print '\t\tJust allowed File to File or Directory to Directory.'
-			return None
+		self.Output('*** Source:      {} ***'.format(self.Source))
+		self.Output('*** Destination: {} ***'.format(self.Destination))
+
+		if retSource in [1] and retDestination in [1,2,4]:
+			self.ToSyncFile(self.Source, self.Destination)
+		elif retSource in [2] and retDestination in [2,4]:
+			self.ToSyncDirectory()
 
 	def WhatIsTarget(self, input):
 		'''
 		Return Value shall be,
-		1: File
-		2: Directory
-		4: Non-Existed
-		8: Unknown
+			1: File
+			2: Directory
+			4: Non-Existed
+			8: *ET*
 		'''
+
 		# Input shall be FILE
-		if os.path.isfile(input):
-			return 1
+		if os.path.isfile(input): return 1
 		# Input shall be DIRECTORY
-		elif os.path.isdir(input):
-			return 2
+		elif os.path.isdir(input): return 2
 		# Input is not available
-		elif os.path.exists(input) is False:
-			return 4
+		elif os.path.exists(input) is False: return 4
 		# Input is an ET
-		else:
-			return 8
+		else: return 8
 
-	def ToSyncDirectory(self, src, dest):
-		ret = self.WhatIsTarget(dest)
-		if ret in [2, 4]:
-			if ret == 2:
-				pass
-			elif ret == 4:
-		else: # illegal
-			return None
-		return False
+	def ToSyncDirectory(self):
+		pass
 
-	def ListDirectory(self, src):
-
+	def ListDirectory(self, destination):
+		ret = os.listdir(destination)
+		ret = filter(lambda i: i not in self.IgnoreList, ret)
+		return ret.sort()
 
 	def ToSyncFile(self, src, dest):
+		'''
+		Return Value shall be
+			0: Failed
+			1: Copied
+			2: Skipped
+
+		src  shall be a File;
+		dest shall be a File or Dir
+		'''
+
+		if self.WhatIsTarget(src) != 1:
+			self.Output('Error: ToSyncFile received a non-file parameter -> {}'.format(src), True)
+			return 0
+
 		ret = self.WhatIsTarget(dest)
 		if ret in [1,2,4]:
-			if ret == 1: # is a file
-				if self.FileCopy(src, dest) == 1:
-					print 'Updated, "{}"'.format(dest)
-					return True
-			elif ret == 2: # is a directlry
-				destFile = r'{0}\{1}'.format(dest, os.path.basename(src))
-				if self.FileCopy(src, destFile) == 1:
-					print 'Updated, "{}"'.format(destFile)
-					return True
-			elif ret == 4: # others, recognized as a non-existed directory
-				try:
-					os.makedirs(dest)
-				except Exception as e:
-					print '\t*Failed to create directory, "{0}"*\n\t\t{1}\n\t*Skipped, "{0}"*'.format(dest, str(e))
-					return False
-				else:
-					destFile = r'{0}\{1}'.format(dest, os.path.basename(src))
-					if self.FileCopy(src, destFile) == 1:
-						print 'Copied, "{}"'.format(destFile)
-						return True
-		else: # illegal
-			return None
-		return False # All failure of FileCopy
+			if ret == 4:
+				target = '{}\\{}'.format(dest, src)
+				if self.OperateMkdir(dest) is False:
+					return 0
+			elif ret == 2:
+				target = '{}\\{}'.format(dest, src)
+			elif ret == 1:
+				target = dest
 
-	def FileCopy(self, srcFile, destFile):
-		'''
-		0: Skipped
-		1: Copied
-		2: Failed
-		'''
-		if self.IsFileSame(srcFile, destFile):
-			print 'Skipped, "{}"'.format(srcFile)
-			return 0
-		else:
-			try:
-				shutil.copy(srcFile, destFile)
-			except Exception as e:
-				print '\n\t*Error occurs while copying file, "{0}" to "{1}"*\n\t\t"{2}"'.format(srcFile, destFile, str(e))
+			if self.IsFileSame(src, target):
+				self.Output('Skipped file -> {}'.format(src))
 				return 2
 			else:
-				return 1
+				if self.OperateCopy(src, target):
+					self.Output('Copied file -> {}'.format(src))
+					return 1
+				else:
+					return 0
+		else:
+			self.Output('Error: ToSyncFile received an illegel destination parameter -> {}'.format(dest), True)
+			return 0
+
+	def OperateMkdir(self, dest):
+		'''
+		Return Value shall be
+			False : Failed
+			True  : Operated
+		'''
+
+		try:
+			os.makedirs(dest)
+		except Exception as e:
+			self.Output('Error: OperateMkdir got exception while creating "{}"'.format(dest))
+			self.Output('Error: Error information -> {}'.format(str(e)))
+			return False
+		else:
+			return True
+
+	def OperateCopy(self, src, dest):
+		'''
+		Return Value shall be
+			False : Failed
+			True  : Operated
+		'''
+
+		try:
+			shutil.copy(src, dest)
+		except Exception as e:
+			self.Output('Error: OperateCopy got exception while copying "{0}" to "{1}"'.format(src, dest), True)
+			self.Output('Error: Error information -> {}'.format(str(e)), True)
+			return False
+		else:
+			return True
 
 	def IsFileSame(self, srcFile, destFile):
 		if self.WhatIsTarget(srcFile) + self.WhatIsTarget(destFile) == 2:
@@ -129,5 +140,8 @@ class FileSync:
 		objFile.close()
 		return HashID.hexdigest().upper()
 
-
-FileSync('D:\\ABC.db', 'D:\\ABC\\DEF\\GHIJK')
+	def Output(self, string, isError=False):
+		if isError is True:
+			print '\n\t*{}*\n'.format(string)
+		else:
+			print '{}'.format(string)
