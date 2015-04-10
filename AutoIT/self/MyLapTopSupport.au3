@@ -2,36 +2,40 @@
 
  脚本作者: James Jun Yang, 19011956
  电子邮件: jun.yang@carestream.com
- 脚本版本: 2.0
+ 脚本版本: 3.0
  脚本功能: Supoort functions on Laptop
+ 前置条件：三个显示器两上一下，一上一下左对齐
 
 #ce ================================================================================================
 
-Local $SmallWidth  = @DesktopWidth
-Local $SmallHeight = @DesktopHeight
-Local $BigWidth    = 1920
-Local $BigHeight   = 1080
+Local $LaptopWidth    = @DesktopWidth
+Local $LaptopHeight   = @DesktopHeight
+Local $TopWidth       = 1920
+Local $TopHeight      = 1080
+Local $TopRightWidth  = 1920 
+Local $TopRightHeight = 1080
 
-HotKeySet("#z", "MinimizeWindow")
-HotKeySet("#x", "MaximizeWindow")
-HotKeySet("#c", "RestoreWindow")
 
-HotKeySet("#a", "eTopMostWindow")
-HotKeySet("#s", "dTopMostWindow")
+
+HotKeySet("!z", "MinimizeWindow")
+HotKeySet("^!{F11}", "MaximizeWindow")
+HotKeySet("^!{F12}", "RestoreWindow")
+
+HotKeySet("#a", "eTopMostWindow") ;enable activated window's Topmost mode
+HotKeySet("#s", "dTopMostWindow") ;disable activated window's Topmost mode
 
 HotKeySet("!1", "ResizeWindowHalfLeft")
-HotKeySet("!{F1}", "ResizeWindowHalfLeftForceSmall")
-HotKeySet("!{F2}", "ResizeWindowHalfLeftForceBig")
-HotKeySet("+{F1}", "ResizeWindowHalfRightForceSmall")
-HotKeySet("+{F2}", "ResizeWindowHalfRightForceBig")
 HotKeySet("!2", "ResizeWindowHalfRight")
 HotKeySet("!3", "HMaximizeWindow")
-HotKeySet("!4", "PushWindow2FourCorner")
+HotKeySet("!4", "ResizeWindow2Quarter")
 
 HotKeySet("#q", "CloseWindow")
-HotKeySet("#!q", "CloseWindow")
+HotKeySet("#!q", "ForceCloseWindow")
 
-HotKeySet("!{F3}", "TaskMgr")
+HotKeySet("!{F1}", "CmdConsole")
+HotKeySet("!{F2}", "TaskMgr")
+
+
 
 While 1
 	Sleep(2000)
@@ -68,42 +72,13 @@ Func ResizeWindowHalfLeft()
 		$Y = 0
 	ElseIf $ret[2] == 1 Then
 		$X = 0
-		$Y = $BigHeight*-1
+		$Y = $TopHeight*-1
+	ElseIf $ret[2] == 2 Then
+		$X = $TopWidth+1
+		$Y = $TopHeight*-1
 	EndIf
 	$W = $ret[0]/2
 	$H = $ret[1]
-	WinMove("[ACTIVE]", "", $X, $Y, $W, $H, 2)
-EndFunc
-
-Func ResizeWindowHalfLeftForceSmall()
-	Local $X = 0
-	Local $Y = 0
-	Local $W = $SmallWidth/2
-	Local $H = $SmallHeight
-	WinMove("[ACTIVE]", "", $X, $Y, $W, $H, 2)
-EndFunc
-
-Func ResizeWindowHalfLeftForceBig()
-	Local $X = 0
-	Local $Y = $BigHeight*-1
-	Local $W = $BigWidth/2
-	Local $H = $BigHeight
-	WinMove("[ACTIVE]", "", $X, $Y, $W, $H, 2)
-EndFunc
-
-Func ResizeWindowHalfRightForceSmall()
-	Local $X = $SmallWidth/2
-	Local $Y = 0
-	Local $W = $SmallWidth/2
-	Local $H = $SmallHeight
-	WinMove("[ACTIVE]", "", $X, $Y, $W, $H, 2)
-EndFunc
-
-Func ResizeWindowHalfRightForceBig()
-	Local $X = $BigWidth/2
-	Local $Y = $BigHeight*-1
-	Local $W = $BigWidth/2
-	Local $H = $BigHeight
 	WinMove("[ACTIVE]", "", $X, $Y, $W, $H, 2)
 EndFunc
 
@@ -117,8 +92,11 @@ Func ResizeWindowHalfRight()
 		$X = $ret[0]/2
 		$Y = 0
 	ElseIf $ret[2] == 1 Then
-		$X = $BigWidth/2
-		$Y = $BigHeight*-1
+		$X = $TopWidth/2
+		$Y = $TopHeight*-1
+	ElseIf $ret[2] == 2 Then
+		$X = $TopWidth+$TopRightWidth/2
+		$Y = $TopHeight*-1
 	EndIf
 	$W = $ret[0]/2
 	$H = $ret[1]
@@ -131,11 +109,13 @@ Func HMaximizeWindow()
 	If $ret[2] == 0 Then
 		WinMove("[ACTIVE]", "", $pos[0], 0, $pos[2], $ret[1], 2)
 	ElseIf $ret[2] == 1 Then
-		WinMove("[ACTIVE]", "", $pos[0], $BigHeight*-1, $pos[2], $ret[1], 2)
+		WinMove("[ACTIVE]", "", $pos[0], $TopHeight*-1, $pos[2], $ret[1], 2)
+	ElseIf $ret[2] == 2 Then
+		WinMove("[ACTIVE]", "", $pos[0], $TopHeight*-1, $pos[2], $ret[1], 2)	
 	EndIf
 EndFunc
 
-Func PushWindow2FourCorner()
+Func ResizeWindow2Quarter()
 	Local $ret = ScreenSizeDetect()
 	Local $X = 0
 	Local $Y = 0
@@ -156,17 +136,31 @@ Func PushWindow2FourCorner()
 			$Y = $H
 		EndIf
 	ElseIf $ret[2] == 1 Then
-		If $ret[3] < $ret[0]/2 And $ret[4] < Abs($ret[1]/2) Then
+		If $ret[3] < $ret[0]/2 And Abs($ret[4]) < $ret[1]/2 Then
 			$X = 0
 			$Y = $H*-1
-		ElseIf $ret[3] >= $ret[0]/2 And $ret[4] < Abs($ret[1]/2) Then
+		ElseIf $ret[3] >= $ret[0]/2 And Abs($ret[4]) < $ret[1]/2 Then
 			$X = $W
 			$Y = $H*-1
-		ElseIf $ret[3] < $ret[0]/2 And $ret[4] >= Abs($ret[1]/2) Then
+		ElseIf $ret[3] < $ret[0]/2 And Abs($ret[4]) >= $ret[1]/2 Then
 			$X = 0
 			$Y = $H*-1*2
-		ElseIf $ret[3] >= $ret[0]/2 And $ret[4] >= Abs($ret[1]/2) Then
+		ElseIf $ret[3] >= $ret[0]/2 And Abs($ret[4]) >= $ret[1]/2 Then
 			$X = $W
+			$Y = $H*-1*2
+		EndIf
+	ElseIf $ret[2] == 2 Then
+		If $ret[3] < ($TopWidth+$ret[0]/2) And Abs($ret[4]) < $ret[1]/2 Then
+			$X = $TopWidth+1
+			$Y = $H*-1
+		ElseIf $ret[3] >= ($TopWidth+$ret[0]/2) And Abs($ret[4]) < $ret[1]/2 Then
+			$X = $TopWidth+1+$W
+			$Y = $H*-1
+		ElseIf $ret[3] < ($TopWidth+$ret[0]/2) And Abs($ret[4]) >= $ret[1]/2 Then
+			$X = $TopWidth+1
+			$Y = $H*-1*2
+		ElseIf $ret[3] >= ($TopWidth+$ret[0]/2) And Abs($ret[4]) >= $ret[1]/2 Then
+			$X = $TopWidth+1+$W
 			$Y = $H*-1*2
 		EndIf
 	EndIf
@@ -174,21 +168,30 @@ Func PushWindow2FourCorner()
 EndFunc
 
 Func ScreenSizeDetect()
-	Local $ret = WinGetPos("[ACTIVE]")
+	Local $ret = WinGetPos("[ACTIVE]")	
 	Local $SIZE[5]
-	If $ret[1]>=0 Then
-		$SIZE[0] = $SmallWidth
-		$SIZE[1] = $SmallHeight
-		$SIZE[2] = 0
-		$SIZE[3] = $ret[0]
-		$SIZE[4] = $ret[1]
-	ElseIf $ret[1]<0 Then
-		$SIZE[0] = $BigWidth
-		$SIZE[1] = $BigHeight
-		$SIZE[2] = 1
-		$SIZE[3] = $ret[0]
-		$SIZE[4] = $ret[1]*-1
+	
+	If $ret[1]>=0 Then ; y>=0
+		If $ret[0]<=$LaptopWidth Then
+			$SIZE[0] = $LaptopWidth
+			$SIZE[1] = $LaptopHeight
+			$SIZE[2] = 0
+		Else
+			MsgBox(0, "", "You find the God!")
+		EndIf
+	Else ; $ret[1]<0
+		If $ret[0]<=$TopWidth Then
+			$SIZE[0] = $TopWidth
+			$SIZE[1] = $TopHeight
+			$SIZE[2] = 1
+		ElseIf $ret[0]>$TopWidth And $ret[0]<=($TopWidth+$TopRightWidth) Then
+			$SIZE[0] = $TopRightWidth
+			$SIZE[1] = $TopRightHeight
+			$SIZE[2] = 2
+		EndIf
 	EndIf
+	$SIZE[3] = $ret[0] ;X
+	$SIZE[4] = $ret[1] ;Y
 	Return $SIZE
 EndFunc
 
@@ -203,4 +206,12 @@ EndFunc
 
 Func TaskMgr()
 	Run("taskmgr")
+EndFunc
+
+Func CmdConsole()
+	Run("cmd")
+EndFunc
+
+Func PythonWin()
+	Run("pythonwin")
 EndFunc
