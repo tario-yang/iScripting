@@ -102,26 +102,26 @@ if __name__ == '__main__':
 
     #   Check parameters
     if options.SOURCE is None:
-        parser.error('Souce image file shall be specified.')
-        sys.exit(StdErrCode['NO_KEY_PARAMETER'])
+        print 'Souce image file shall be specified.'
+        parser.error(StdErrCode['NO_KEY_PARAMETER'])
     if options.DESTINATION is None:
-        parser.error('Destination image file shall be specified.')
-        sys.exit(StdErrCode['NO_KEY_PARAMETER'])
+        print 'Destination image file shall be specified.'
+        parser.error(StdErrCode['NO_KEY_PARAMETER'])
     if not os.path.exists(options.SOURCE):
-        parser.error('Source image file does not exist!')
-        sys.exit(StdErrCode['FILE_DOES_NOT_EXIST_SOURCE'])
+        print 'Source image file does not exist!'
+        parser.error(StdErrCode['FILE_DOES_NOT_EXIST_SOURCE'])
     if not os.path.exists(options.DESTINATION):
-        parser.error('Destination image file does not exist!')
-        sys.exit(StdErrCode['FILE_DOES_NOT_EXIST_DESTINATION'])
+        print 'Destination image file does not exist!'
+        parser.error(StdErrCode['FILE_DOES_NOT_EXIST_DESTINATION'])
     if not options.ROTATION in [None, '90', '180', '270']:
-        parser.error('Rotation degree value is not an expected one!')
-        sys.exit(StdErrCode['INCORRECT_PARAMETER_VALUE_ROTATION_DEGREE'])
+        print 'Rotation degree value is not an expected one!'
+        parser.error(StdErrCode['INCORRECT_PARAMETER_VALUE_ROTATION_DEGREE'])
     if not options.MIRROR in [None, 'L', 'T']:
-        parser.error('Mirror method is not an expected one!')
-        sys.exit(StdErrCode['INCORRECT_PARAMETER_VALUE_MIRROR_METHOD'])
+        print 'Mirror method is not an expected one!'
+        parser.error(StdErrCode['INCORRECT_PARAMETER_VALUE_MIRROR_METHOD'])
     if options.ROTATION is not None and options.MIRROR is not None:
-        parser.error('Rotation and Mirror cannot be specified at the same time!')
-        sys.exit(StdErrCode['TOO_MANY_OPTIOINS_ROTATION_AND_MIRROR'])
+        print 'Rotation and Mirror cannot be specified at the same time!'
+        parser.error(StdErrCode['TOO_MANY_OPTIOINS_ROTATION_AND_MIRROR'])
 
     #   Start comparing
     ImageCompare(options)
