@@ -28,12 +28,14 @@ HotKeySet("!1", "ResizeWindowHalfLeft")
 HotKeySet("!2", "ResizeWindowHalfRight")
 HotKeySet("!3", "HMaximizeWindow")
 HotKeySet("!4", "ResizeWindow2Quarter")
+HotKeySet("!5", "ResetWndPosition")
 
 HotKeySet("#q", "CloseWindow")
 HotKeySet("#!q", "ForceCloseWindow")
 
 HotKeySet("!{F1}", "CmdConsole")
 HotKeySet("!{F2}", "TaskMgr")
+HotKeySet("!{F3}", "PythonWin")
 
 
 
@@ -167,8 +169,12 @@ Func ResizeWindow2Quarter()
 	WinMove("[ACTIVE]", "", $X, $Y, $W, $H, 2)
 EndFunc
 
+Func ResetWndPosition()
+	WinMove("[ACTIVE]", "", 0, 0, $LaptopWidth/2, $LaptopHeight, 2)
+EndFunc
+
 Func ScreenSizeDetect()
-	Local $ret = WinGetPos("[ACTIVE]")	
+	Local $ret = WinGetPos("[ACTIVE]")
 	Local $SIZE[5]
 	
 	If $ret[1]>=0 Then ; y>=0
@@ -213,5 +219,5 @@ Func CmdConsole()
 EndFunc
 
 Func PythonWin()
-	Run("pythonwin")
+	Run("C:\Python27\Lib\site-packages\pythonwin\pythonwin.exe")
 EndFunc
