@@ -2,24 +2,28 @@
 
  脚本作者: James Jun Yang, 19011956
  电子邮件: jun.yang@carestream.com
- 脚本版本: 3.0
+ 脚本版本: 3.1
  脚本功能: Supoort functions on Laptop
  前置条件：三个显示器两上一下，一上一下左对齐
 
+ History
+	3.0		support three monitor
+			support to call cmd / taskmgr / pythonwin
+	3.1		change the key mapping on window change
+			merge maximum / restore function
+			use function to get the current primary monitor's size
+
 #ce ================================================================================================
 
-Local $LaptopWidth    = @DesktopWidth
-Local $LaptopHeight   = @DesktopHeight
+#include <file.au3>
+
 Local $TopWidth       = 1920
 Local $TopHeight      = 1080
 Local $TopRightWidth  = 1920 
 Local $TopRightHeight = 1080
 
-
-
 HotKeySet("!z", "MinimizeWindow")
-HotKeySet("^!{F11}", "MaximizeWindow")
-HotKeySet("^!{F12}", "RestoreWindow")
+HotKeySet("!+z", "MaxRestoreWindow")
 
 HotKeySet("#a", "eTopMostWindow") ;enable activated window's Topmost mode
 HotKeySet("#s", "dTopMostWindow") ;disable activated window's Topmost mode
@@ -36,6 +40,7 @@ HotKeySet("#!q", "ForceCloseWindow")
 HotKeySet("!{F1}", "CmdConsole")
 HotKeySet("!{F2}", "TaskMgr")
 HotKeySet("!{F3}", "PythonWin")
+HotKeySet("!+a", "DisplayCOMPort")
 
 
 
@@ -43,16 +48,27 @@ While 1
 	Sleep(2000)
 WEnd
 
+Func LaptopWidth()
+	Return @DesktopWidth
+EndFunc
+
+Func LaptopHeight()
+	Return @DesktopHeight
+EndFunc
+
 Func MinimizeWindow()
 	WinSetState("[ACTIVE]", "", @SW_MINIMIZE)
 EndFunc
 
-Func RestoreWindow()
-	WinSetState("[ACTIVE]", "", @SW_RESTORE)
-EndFunc
-
-Func MaximizeWindow()
-	WinSetState("[ACTIVE]", "", @SW_MAXIMIZE)
+Func MaxRestoreWindow()
+	Local $ret = WinGetState("[ACTIVE]")
+	If $ret = 0 Then
+		Return
+	ElseIf BitAND($ret, 32) Then
+		WinSetState("[ACTIVE]", "", @SW_RESTORE)
+	Else
+		WinSetState("[ACTIVE]", "", @SW_MAXIMIZE)
+	EndIf
 EndFunc
 
 Func eTopMostWindow()
@@ -170,7 +186,7 @@ Func ResizeWindow2Quarter()
 EndFunc
 
 Func ResetWndPosition()
-	WinMove("[ACTIVE]", "", 0, 0, $LaptopWidth/2, $LaptopHeight, 2)
+	WinMove("[ACTIVE]", "", 0, 0, LaptopWidth()/2, LaptopHeight(), 2)
 EndFunc
 
 Func ScreenSizeDetect()
@@ -178,9 +194,9 @@ Func ScreenSizeDetect()
 	Local $SIZE[5]
 	
 	If $ret[1]>=0 Then ; y>=0
-		If $ret[0]<=$LaptopWidth Then
-			$SIZE[0] = $LaptopWidth
-			$SIZE[1] = $LaptopHeight
+		If $ret[0]<=LaptopWidth() Then
+			$SIZE[0] = LaptopWidth()
+			$SIZE[1] = LaptopHeight()
 			$SIZE[2] = 0
 		Else
 			MsgBox(0, "", "You find the God!")
@@ -220,4 +236,16 @@ EndFunc
 
 Func PythonWin()
 	Run("C:\Python27\Lib\site-packages\pythonwin\pythonwin.exe")
+EndFunc
+
+Func DisplayCOMPort()
+	Local $ROOT = "HKEY_LOCAL_MACHINE\HARDWARE\DEVICEMAP\SERIALCOMM"
+	Local $ret = ""
+	For $i = 1 To 10
+		Local $key = RegEnumVal($ROOT, $i)
+		Local $tmp = RegRead($ROOT, $key) & @TAB & $key
+		If @error Then ExitLoop
+		$ret = $ret & $tmp & @CRLF
+	Next
+	MsgBox(64, "COM Port", $ret)
 EndFunc
