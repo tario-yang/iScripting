@@ -38,7 +38,7 @@ HotKeySet("#q", "CloseWindow")
 HotKeySet("#!q", "ForceCloseWindow")
 
 HotKeySet("!{F1}", "CmdConsole")
-HotKeySet("!{F2}", "TaskMgr")
+HotKeySet("!{F2}", "GitExt")
 HotKeySet("!{F3}", "PythonWin")
 HotKeySet("!+a", "DisplayCOMPort")
 
@@ -226,8 +226,8 @@ Func ForceCloseWindow()
 	ProcessClose($ret)
 EndFunc
 
-Func TaskMgr()
-	Run("taskmgr")
+Func GitExt()
+	Run("C:\Program Files (x86)\GitExtensions\GitExtensions.exe")
 EndFunc
 
 Func CmdConsole()
