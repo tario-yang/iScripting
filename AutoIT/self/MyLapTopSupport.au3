@@ -19,7 +19,7 @@
 
 Local $TopWidth       = 1920
 Local $TopHeight      = 1080
-Local $TopRightWidth  = 1920 
+Local $TopRightWidth  = 1920
 Local $TopRightHeight = 1080
 
 HotKeySet("!z", "MinimizeWindow")
@@ -37,8 +37,8 @@ HotKeySet("!5", "ResetWndPosition")
 HotKeySet("#q", "CloseWindow")
 HotKeySet("#!q", "ForceCloseWindow")
 
-HotKeySet("!{F1}", "CmdConsole")
-HotKeySet("!{F2}", "GitExt")
+HotKeySet("!{F1}", "GitExt")
+HotKeySet("!{F2}", "CmdConsole")
 HotKeySet("!{F3}", "PythonWin")
 HotKeySet("!+a", "DisplayCOMPort")
 
@@ -129,7 +129,7 @@ Func HMaximizeWindow()
 	ElseIf $ret[2] == 1 Then
 		WinMove("[ACTIVE]", "", $pos[0], $TopHeight*-1, $pos[2], $ret[1], 2)
 	ElseIf $ret[2] == 2 Then
-		WinMove("[ACTIVE]", "", $pos[0], $TopHeight*-1, $pos[2], $ret[1], 2)	
+		WinMove("[ACTIVE]", "", $pos[0], $TopHeight*-1, $pos[2], $ret[1], 2)
 	EndIf
 EndFunc
 
@@ -192,7 +192,7 @@ EndFunc
 Func ScreenSizeDetect()
 	Local $ret = WinGetPos("[ACTIVE]")
 	Local $SIZE[5]
-	
+
 	If $ret[1]>=0 Then ; y>=0
 		If $ret[0]<=LaptopWidth() Then
 			$SIZE[0] = LaptopWidth()
