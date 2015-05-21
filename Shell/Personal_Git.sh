@@ -1,7 +1,9 @@
 clear
-alias l='ls -lh --color'
-alias la='ls -alh --color'
-alias REPO='. ~/.bashrc'
+alias l='ls -lh --color=always'
+alias la='ls -alh --color=always'
+alias REPO='CheckLocalGitRepository'
+alias GR='FetchGitRevision'
+alias GIT='cd /d/iGit'
 
 # Preparation Check for GIT
 function UpdateLocalRepository()
@@ -20,7 +22,7 @@ function CheckLocalGitRepository()
 	echo -e '\e[1;31m'   $(git --version)'\e[m'
 	echo -e '\e[1;31m******************************\e[m'
 	echo;
-	GITDIR=/d/iWS
+	[[ -z $1 ]] && GITDIR=/d/iGIT/repos || GITDIR=${1}
 	RECORD='.tmp_GitRepoList'
 	cat /dev/null 1>${RECORD}
 	i=0
@@ -33,7 +35,8 @@ function CheckLocalGitRepository()
 	echo;echo -n -e '\e[32mPlease select one repository: \e[m'
 	read RL
 	[[ -z $RL ]] && RL=$(grep 'HW_Document' ${RECORD} | cut -d ":" -f 1)
-	[[ -z $RL ]] && exit 1
+	[[ -z $RL ]] && RL=$(head -n 1 ${RECORD} | cut -d ":" -f 1)
+	[[ -z $RL ]] && return
 	RL=${RL}":"
 	GIT_HOME=$(grep ^${RL} ${RECORD} | cut -d " " -f 2)
 	echo;echo -e '\e[36m'"Selected ${GIT_HOME}"'\e[m'
@@ -46,4 +49,18 @@ function CheckLocalGitRepository()
 	echo
 }
 
-CheckLocalGitRepository
+function FetchGitRevision
+{
+	# This fuction will use following two tools to generate a map of git commit
+	# * git-big-picture
+	#   https://github.com/esc/git-big-picture.git
+	#   -> Used to generate gv file which will be used by graph visualization
+	# * Graphviz - Graph Visualization Software
+	#   http://www.graphviz.org/
+	#   -> Tool used to generate picture via gv file
+	GitBigPicture="/d/iGit/outside/Git-Big-Picture/git-big-picture"
+	git remote -v &>/dev/null
+	[[ $? -ne 0 ]] && return
+	[[ -z $1 ]] && OPT="-b -t -r -m -i" || OPT=$1
+	${GitBigPicture} -f png -v mspaint.exe ${OPT} &
+}
