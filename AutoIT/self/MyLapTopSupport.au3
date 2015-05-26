@@ -38,7 +38,7 @@ HotKeySet("#q", "CloseWindow")
 HotKeySet("#!q", "ForceCloseWindow")
 
 HotKeySet("!{F1}", "GitExt")
-HotKeySet("!{F2}", "CmdConsole")
+HotKeySet("!{F2}", "GroovyConsole")
 HotKeySet("!{F3}", "PythonWin")
 HotKeySet("!+a", "DisplayCOMPort")
 
@@ -230,8 +230,8 @@ Func GitExt()
 	Run("C:\Program Files (x86)\GitExtensions\GitExtensions.exe")
 EndFunc
 
-Func CmdConsole()
-	Run("cmd")
+Func GroovyConsole()
+	Run("C:\Program Files (x86)\Groovy\Groovy-2.4.3\bin\groovyConsole.exe")
 EndFunc
 
 Func PythonWin()
