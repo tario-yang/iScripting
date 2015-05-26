@@ -1,6 +1,23 @@
 // this script is used in Jenkins to display a version list sorted
 
-def oem = "wave_pict"
+if(binding.variables.get('OEM') == null){
+    return []
+}
+else{
+    oem = binding.variables.get('OEM')
+}
+
+def token
+if (oem == 'carestream') {
+    token = '_'
+}
+if (oem == 'dental_mind') {
+    token = '_'
+}
+if (oem == 'wave_pict') {
+    token = ' '
+}
+
 def droplist = []
 def rpath = '\\\\shastorage01\\Share\\Intraoral_Camera_SW_FW_build\\Software_build\\Common'
 def mylist=new File(rpath).listFiles()
@@ -12,27 +29,27 @@ def versionvalue = { value ->
 mylist.each {
     if(it.isDirectory()){
         def dname = it.getName()
-        if(oem=='carestream' && dname =~ /ICAP_.*/){
-        droplist.add(dname)
-        }
-        if(oem=='dental_mind' && dname =~ /Dentalmind_.*/){
+        if(oem == 'carestream' && dname =~ /ICAP_.*/){
             droplist.add(dname)
         }
-        if(oem=='wave_pict' && dname =~ /WavePICT .*/){
+        if(oem == 'dental_mind' && dname =~ /Dentalmind_.*/){
+            droplist.add(dname)
+        }
+        if(oem == 'wave_pict' && dname =~ /WavePICT .*/){
             droplist.add(dname)
         }
     }
 }
 
 for (i in 0..droplist.size()-1) {
-    def (name, version) = droplist[i].split(' ')
+    def (name, version) = droplist[i].split(token)
     droplist[i] = versionvalue(version) + '#' + droplist[i]
 }
 
 droplist.sort()
 
 for (i in 0..droplist.size()-1) {
-    def (value, it) = droplist[i].split(' ')
+    def (value, it) = droplist[i].split('#')
     droplist[i] = it
 }
 
