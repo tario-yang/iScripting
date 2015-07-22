@@ -1,0 +1,8 @@
+This script is to generate a path list and generate ptc related data according to it.
+The data source is the latest log file under \log directory.
+When executing, each log file will be handled by a thread. Therefore, to reduce the messy content, it has to generate different file for different thread.
+
+Usage:
+1. Execute the script
+2. Use `cat` command to combine all the txt file
+3. Use `sort` command to get and then deal with the content from pipe and append to ${ScriptName}.csv

@@ -18,9 +18,9 @@ except:
     EXPORT_FILE = "full_file_path_export.list"
 
 if len(sys.argv[3:]) == 0:
-    FILE_EXTS = ['.cxx', '.cpp', '.c', '.cc', '.h'] 
+    FILE_EXTS = ['.cxx', '.cpp', '.c', '.cc', '.h']
 
-print FILE_EXTS
+print 'File extention set to search is, ', str(FILE_EXTS)
 
 # initiate export file
 if os.path.exists(EXPORT_FILE):
