@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>301</width>
+    <height>751</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>301</width>
+    <height>751</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>301</width>
+    <height>751</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Courier New</family>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>5</y>
+     <width>271</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Courier New</family>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="title">
+    <string>Products</string>
+   </property>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>20</y>
+      <width>241</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Courier New</family>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <layout class="QGridLayout" name="gridLayoutProduct">
+     <item row="0" column="0">
+      <widget class="QRadioButton" name="radioButtonCS3500">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>CS 3500 ACQ</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QRadioButton" name="radioButtonUVC1X00">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>UVC 1X00 ACQ</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>120</y>
+     <width>271</width>
+     <height>571</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Courier New</family>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="tabPosition">
+    <enum>QTabWidget::East</enum>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="tabDir">
+    <attribute name="title">
+     <string>Directory</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBoxProgramData">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>10</y>
+       <width>211</width>
+       <height>371</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>ProgramData</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+     </property>
+     <widget class="QWidget" name="gridLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>25</y>
+        <width>181</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayoutProgramData">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButton_TW">
+         <property name="text">
+          <string>TW -&gt; Home</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pushButton_ProductHome">
+         <property name="text">
+          <string>Product -&gt; Home</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="pushButton_Log">
+         <property name="text">
+          <string>Log</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QGroupBox" name="gbDirCS3500">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>130</y>
+        <width>181</width>
+        <height>146</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>CS 3500</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="gridLayoutWidget_4">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>161</width>
+         <height>116</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayoutCS3500">
+        <property name="margin">
+         <number>1</number>
+        </property>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pushButton_CS3500_Debug_Images">
+          <property name="text">
+           <string>Debug Images</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pushButton_CS3500_Models">
+          <property name="text">
+           <string>Models</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="pushButton_CS3500_Data">
+          <property name="text">
+           <string>Data</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="pushButton_CS3500_Diagnose">
+          <property name="text">
+           <string>Diagnose</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="gbDirUVC1X00">
+      <property name="geometry">
+       <rect>
+        <x>14</x>
+        <y>280</y>
+        <width>181</width>
+        <height>86</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>UVC 1X00</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="gridLayoutWidget_5">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>161</width>
+         <height>56</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayoutUVC1X00">
+        <property name="margin">
+         <number>1</number>
+        </property>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pushButton_UVC1X00_Data">
+          <property name="text">
+           <string>Data</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="pushButton_UVC1X00_Tmp">
+          <property name="text">
+           <string>Tmp</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBoxDirInstallation">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>395</y>
+       <width>211</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Installation</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+     </property>
+     <widget class="QWidget" name="gridLayoutWidget_6">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>25</y>
+        <width>181</width>
+        <height>112</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayoutInstallation">
+       <item row="3" column="0">
+        <widget class="QPushButton" name="pushButton_WinVirtualStore">
+         <property name="text">
+          <string>Virtual Store</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButton_Installation_Home">
+         <property name="text">
+          <string>Installation Home</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="pushButton_FirmwarePackage">
+         <property name="text">
+          <string>Firmware Package</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pushButton_Installation_SDK">
+         <property name="text">
+          <string>Installation SDK</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabScript">
+    <attribute name="title">
+     <string>Script</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBoxScriptLogger">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>10</y>
+       <width>211</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Logger</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="gridLayoutWidget_7">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>25</y>
+        <width>191</width>
+        <height>116</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayoutScriptLogger">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButton_OpenLogFile">
+         <property name="text">
+          <string>Open Log File</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="pushButton_TrackLogFile">
+         <property name="text">
+          <string>Track Log File</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pushButton_OpenRecentLogSession">
+         <property name="text">
+          <string>Open Recent Log Session</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="pushButton_GenerateDummyLogFiles">
+         <property name="text">
+          <string>Generate Dummy Log Files</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBoxScriptCS3500">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>165</y>
+       <width>211</width>
+       <height>86</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>CS 3500</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="gridLayoutWidget_8">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>25</y>
+        <width>191</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayoutScriptCS3500">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButton_DisplayMeshNumber">
+         <property name="text">
+          <string>Display Mesh Number</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_KeepMonitoring">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>55</y>
+        <width>126</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>10</width>
+        <height>10</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Keep Monitoring</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBoxStatus">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>725</y>
+     <width>271</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+   <widget class="QLabel" name="labelStatus">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>5</y>
+      <width>271</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>StatusBar</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton_SDKLauncher">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>75</y>
+     <width>126</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Courier New</family>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>SDK Launcher</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_Version">
+   <property name="geometry">
+    <rect>
+     <x>155</x>
+     <y>75</y>
+     <width>126</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Display related softwares' version</string>
+   </property>
+   <property name="whatsThis">
+    <string>Display related softwares' version</string>
+   </property>
+   <property name="text">
+    <string>Version</string>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
