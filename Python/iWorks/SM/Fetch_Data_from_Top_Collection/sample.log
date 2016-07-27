@@ -1,0 +1,244 @@
+20160721_081958+0000_791668150
+
+top - 08:20:01 up 1 day, 28 min,  0 users,  load average: 0.01, 0.02, 0.05
+Tasks:   6 total,   1 running,   5 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  6.7 us,  0.3 sy,  0.0 ni, 92.8 id,  0.1 wa,  0.0 hi,  0.1 si,  0.0 st
+KiB Mem:  32947152 total, 32565484 used,   381668 free,   212852 buffers
+KiB Swap: 32949308 total,   351324 used, 32597984 free.  7290072 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+    1 root      10 -10    8312   4244   3772 S   0.0  0.0   0:00.06 exe
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.41 java
+   12 vcap      10 -10   11484   9020   6688 S   0.0  0.0   0:05.64 diego-sshd
+   40 vcap      10 -10 3938232 2.646g  29752 S   0.0  8.4  13:00.92 java
+ 9400 vcap      10 -10   62544   3884   3384 S   0.0  0.0   0:00.00 bash
+12013 vcap      10 -10   64064   2688   2416 R   0.0  0.0   0:00.00 top
+
+top - 08:20:04 up 1 day, 28 min,  0 users,  load average: 0.01, 0.02, 0.05
+Tasks:   6 total,   1 running,   5 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  1.5 us,  0.3 sy,  0.0 ni, 98.1 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem:  32947152 total, 32580164 used,   366988 free,   212860 buffers
+KiB Swap: 32949308 total,   351324 used, 32597984 free.  7290080 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+    1 root      10 -10    8312   4244   3772 S   0.0  0.0   0:00.06 exe
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.41 java
+   12 vcap      10 -10   11484   9020   6688 S   0.0  0.0   0:05.64 diego-sshd
+   40 vcap      10 -10 3938232 2.646g  29752 S   0.0  8.4  13:00.92 java
+ 9400 vcap      10 -10   62544   3884   3384 S   0.0  0.0   0:00.00 bash
+12013 vcap      10 -10   64072   2764   2480 R   0.0  0.0   0:00.00 top
+
+top - 08:20:07 up 1 day, 28 min,  0 users,  load average: 0.01, 0.02, 0.05
+Tasks:   6 total,   1 running,   5 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  2.5 us,  0.7 sy,  0.0 ni, 96.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.1 st
+KiB Mem:  32947152 total, 32586560 used,   360592 free,   212860 buffers
+KiB Swap: 32949308 total,   351320 used, 32597988 free.  7290096 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+   40 vcap      10 -10 3938232 2.646g  29752 S   7.7  8.4  13:01.15 java
+    1 root      10 -10    8312   4244   3772 S   0.0  0.0   0:00.06 exe
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.41 java
+   12 vcap      10 -10   11484   9020   6688 S   0.0  0.0   0:05.64 diego-sshd
+ 9400 vcap      10 -10   62544   3884   3384 S   0.0  0.0   0:00.00 bash
+12013 vcap      10 -10   64072   2764   2480 R   0.0  0.0   0:00.00 top
+top - 08:20:08 up 1 day, 28 min,  0 users,  load average: 0.01, 0.02, 0.05
+Tasks:   2 total,   0 running,   2 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  6.7 us,  0.3 sy,  0.0 ni, 92.8 id,  0.1 wa,  0.0 hi,  0.1 si,  0.0 st
+KiB Mem:  32947152 total, 32584132 used,   363020 free,   212864 buffers
+KiB Swap: 32949308 total,   351320 used, 32597988 free.  7290132 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+   40 vcap      10 -10 3938232 2.646g  29752 S   6.6  8.4  13:01.87 java
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.41 java
+
+top - 08:20:11 up 1 day, 28 min,  0 users,  load average: 0.01, 0.02, 0.05
+Tasks:   2 total,   0 running,   2 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem:  32947152 total, 32584132 used,   363020 free,   212864 buffers
+KiB Swap: 32949308 total,   351320 used, 32597988 free.  7290132 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+   40 vcap      10 -10 3938232 2.646g  29752 S   0.0  8.4  13:01.87 java
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.41 java
+
+top - 08:20:14 up 1 day, 28 min,  0 users,  load average: 0.00, 0.01, 0.05
+Tasks:   2 total,   0 running,   2 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  1.0 us,  0.4 sy,  0.0 ni, 98.5 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem:  32947152 total, 32581648 used,   365504 free,   212868 buffers
+KiB Swap: 32949308 total,   351320 used, 32597988 free.  7290252 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+   40 vcap      10 -10 3938232 2.646g  29752 S   0.7  8.4  13:01.89 java
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.41 java
+40:
+
+Native Memory Tracking:
+
+Total: reserved=1551059KB, committed=1150383KB
+-                 Java Heap (reserved=655360KB, committed=655360KB)
+                            (mmap: reserved=655360KB, committed=655360KB)
+
+-                     Class (reserved=466450KB, committed=184722KB)
+                            (classes #27145)
+                            (malloc=7698KB #95767)
+                            (mmap: reserved=458752KB, committed=177024KB)
+
+-                    Thread (reserved=50487KB, committed=50487KB)
+                            (thread #80)
+                            (stack: reserved=49468KB, committed=49468KB)
+                            (malloc=255KB #408)
+                            (arena=764KB #158)
+
+-                      Code (reserved=275676KB, committed=156728KB)
+                            (malloc=26076KB #24663)
+                            (mmap: reserved=249600KB, committed=130652KB)
+
+-                        GC (reserved=19950KB, committed=19950KB)
+                            (malloc=17810KB #2103)
+                            (mmap: reserved=2140KB, committed=2140KB)
+
+-                  Compiler (reserved=332KB, committed=332KB)
+                            (malloc=202KB #455)
+                            (arena=131KB #3)
+
+-                  Internal (reserved=8647KB, committed=8647KB)
+                            (malloc=8615KB #44357)
+                            (mmap: reserved=32KB, committed=32KB)
+
+-                    Symbol (reserved=26308KB, committed=26308KB)
+                            (malloc=23135KB #263246)
+                            (arena=3173KB #1)
+
+-    Native Memory Tracking (reserved=6763KB, committed=6763KB)
+                            (malloc=20KB #242)
+                            (tracking overhead=6743KB)
+
+-               Arena Chunk (reserved=1383KB, committed=1383KB)
+                            (malloc=1383KB)
+
+-                   Unknown (reserved=39704KB, committed=39704KB)
+                            (mmap: reserved=39704KB, committed=39704KB)
+
+
+20160721_082018+0000_021161868
+
+top - 08:20:19 up 1 day, 28 min,  0 users,  load average: 0.00, 0.01, 0.05
+Tasks:   6 total,   1 running,   5 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  6.7 us,  0.3 sy,  0.0 ni, 92.8 id,  0.1 wa,  0.0 hi,  0.1 si,  0.0 st
+KiB Mem:  32947152 total, 32563076 used,   384076 free,   212872 buffers
+KiB Swap: 32949308 total,   351320 used, 32597988 free.  7290320 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+    1 root      10 -10    8312   4244   3772 S   0.0  0.0   0:00.06 exe
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.42 java
+   12 vcap      10 -10   11484   9040   6688 S   0.0  0.0   0:05.66 diego-sshd
+   40 vcap      10 -10 3938232 2.646g  29752 S   0.0  8.4  13:02.41 java
+ 9400 vcap      10 -10   62544   3884   3384 S   0.0  0.0   0:00.00 bash
+12041 vcap      10 -10   64064   2712   2444 R   0.0  0.0   0:00.00 top
+
+top - 08:20:22 up 1 day, 28 min,  0 users,  load average: 0.00, 0.01, 0.05
+Tasks:   6 total,   1 running,   5 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.2 us,  0.1 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem:  32947152 total, 32563572 used,   383580 free,   212876 buffers
+KiB Swap: 32949308 total,   351320 used, 32597988 free.  7290328 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+   40 vcap      10 -10 3938232 2.646g  29752 S   1.7  8.4  13:02.46 java
+    1 root      10 -10    8312   4244   3772 S   0.0  0.0   0:00.06 exe
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.42 java
+   12 vcap      10 -10   11484   9040   6688 S   0.0  0.0   0:05.66 diego-sshd
+ 9400 vcap      10 -10   62544   3884   3384 S   0.0  0.0   0:00.00 bash
+12041 vcap      10 -10   64072   2788   2508 R   0.0  0.0   0:00.00 top
+
+top - 08:20:25 up 1 day, 28 min,  0 users,  load average: 0.00, 0.01, 0.05
+Tasks:   6 total,   1 running,   5 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  2.1 us,  0.5 sy,  0.0 ni, 97.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem:  32947152 total, 32562336 used,   384816 free,   212876 buffers
+KiB Swap: 32949308 total,   351320 used, 32597988 free.  7290340 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+   40 vcap      10 -10 3938232 2.646g  29752 S   2.3  8.4  13:02.53 java
+    1 root      10 -10    8312   4244   3772 S   0.0  0.0   0:00.06 exe
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.42 java
+   12 vcap      10 -10   11484   9040   6688 S   0.0  0.0   0:05.66 diego-sshd
+ 9400 vcap      10 -10   62544   3884   3384 S   0.0  0.0   0:00.00 bash
+12041 vcap      10 -10   64072   2788   2508 R   0.0  0.0   0:00.00 top
+top - 08:20:26 up 1 day, 28 min,  0 users,  load average: 0.00, 0.01, 0.05
+Tasks:   2 total,   0 running,   2 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  6.7 us,  0.3 sy,  0.0 ni, 92.8 id,  0.1 wa,  0.0 hi,  0.1 si,  0.0 st
+KiB Mem:  32947152 total, 32563080 used,   384072 free,   212876 buffers
+KiB Swap: 32949308 total,   351320 used, 32597988 free.  7290340 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+   40 vcap      10 -10 3938232 2.646g  29752 S   0.0  8.4  13:02.54 java
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.42 java
+
+top - 08:20:29 up 1 day, 29 min,  0 users,  load average: 0.00, 0.01, 0.05
+Tasks:   2 total,   0 running,   2 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  8.2 us,  0.6 sy,  0.0 ni, 91.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem:  32947152 total, 32568888 used,   378264 free,   212876 buffers
+KiB Swap: 32949308 total,   351320 used, 32597988 free.  7290372 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+   40 vcap      10 -10 3938232 2.652g  29752 S  52.3  8.4  13:04.11 java
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.42 java
+
+top - 08:20:32 up 1 day, 29 min,  0 users,  load average: 0.08, 0.03, 0.05
+Tasks:   2 total,   0 running,   2 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  2.6 us,  0.5 sy,  0.0 ni, 96.8 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem:  32947152 total, 32576764 used,   370388 free,   212876 buffers
+KiB Swap: 32949308 total,   351320 used, 32597988 free.  7290420 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+   40 vcap      10 -10 3938232 2.654g  29752 S  21.0  8.4  13:04.74 java
+   10 vcap      10 -10 9826.8m  56968  15964 S   0.0  0.2   0:07.42 java
+40:
+
+Native Memory Tracking:
+
+Total: reserved=1550062KB, committed=1149386KB
+-                 Java Heap (reserved=655360KB, committed=655360KB)
+                            (mmap: reserved=655360KB, committed=655360KB)
+
+-                     Class (reserved=466456KB, committed=184728KB)
+                            (classes #27152)
+                            (malloc=7704KB #95923)
+                            (mmap: reserved=458752KB, committed=177024KB)
+
+-                    Thread (reserved=50487KB, committed=50487KB)
+                            (thread #80)
+                            (stack: reserved=49468KB, committed=49468KB)
+                            (malloc=255KB #408)
+                            (arena=764KB #158)
+
+-                      Code (reserved=275827KB, committed=156879KB)
+                            (malloc=26227KB #24726)
+                            (mmap: reserved=249600KB, committed=130652KB)
+
+-                        GC (reserved=19950KB, committed=19950KB)
+                            (malloc=17810KB #2103)
+                            (mmap: reserved=2140KB, committed=2140KB)
+
+-                  Compiler (reserved=332KB, committed=332KB)
+                            (malloc=202KB #452)
+                            (arena=131KB #3)
+
+-                  Internal (reserved=8673KB, committed=8673KB)
+                            (malloc=8641KB #44380)
+                            (mmap: reserved=32KB, committed=32KB)
+
+-                    Symbol (reserved=26308KB, committed=26308KB)
+                            (malloc=23135KB #263246)
+                            (arena=3173KB #1)
+
+-    Native Memory Tracking (reserved=6767KB, committed=6767KB)
+                            (malloc=20KB #242)
+                            (tracking overhead=6746KB)
+
+-               Arena Chunk (reserved=199KB, committed=199KB)
+                            (malloc=199KB)
+
+-                   Unknown (reserved=39704KB, committed=39704KB)
+                            (mmap: reserved=39704KB, committed=39704KB)
+
+
