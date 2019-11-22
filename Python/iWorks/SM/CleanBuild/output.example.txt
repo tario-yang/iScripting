@@ -1,0 +1,1554 @@
+ubuntu@ip-172-31-3-29:~/james$ python2 cleanMavenRepo.py
+
+Total directories which needs to be dealed with >>> 65
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.deferredoperation.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.deferredoperation/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.seed.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.seed/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.webapp.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.webapp/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.pipes.spring.bpmcomponents.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0002', '19.1.0.0004', '19.1.0.0019'].
+Total number >>> 3  (ignored since number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.bootstrap.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.bootstrap/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.sfdc.
+(ignored since total number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.fulltext.search.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.fulltext.search/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.bpm.engine.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.bpm.engine/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.data.encryption.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.data.encryption/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.api.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.api/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.integration.
+Current list is,
+['18.3.0.0116', '18.3.0.0126'].
+Total number >>> 2  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.integration/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.execution.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.execution/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.cms.less.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.cms.less/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.smql.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.smql/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.auth.config.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.auth.config/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.pubnub.service.
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.pubnub.service/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.operation.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.operation/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.jobs_scheduler.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.jobs_scheduler/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.operation.nosql.
+(ignored since total number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.serialization.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.serialization/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cluster_core.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0002', '19.1.0.0004'].
+Total number >>> 2  (ignored since number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.pipes.spring.runtime.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0002', '19.1.0.0004', '19.1.0.0019'].
+Total number >>> 3  (ignored since number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.operation.crud.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.operation.crud/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.smtp.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0002', '19.1.0.0004', '19.1.0.0019'].
+Total number >>> 3  (ignored since number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.platform.services.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.platform.services/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/bootstrap_data.
+(ignored since total number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.packagemanager.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.packagemanager/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.pipes.spring.rmcomponents.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0002', '19.1.0.0004', '19.1.0.0019'].
+Total number >>> 3  (ignored since number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.pipes.spring.runtime.security.
+(ignored since total number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.utils.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.utils/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.operation.dms.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.operation.dms/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.pipes.spring.bpm.endpoint.registry.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0002', '19.1.0.0004', '19.1.0.0019'].
+Total number >>> 3  (ignored since number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.data.converter.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.data.converter/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.polyglot.groovy.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.polyglot.groovy/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/pipes-app.
+(ignored since total number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.search.es.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.search.es/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.charts.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.charts/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.applicationlog.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.applicationlog/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.cloudfoundry.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.cloudfoundry/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.seed.generation.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.seed.generation/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.polyglot.ruby.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.polyglot.ruby/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.translation.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.translation/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.access_control.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.access_control/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.data.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.data/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/data-app.
+(ignored since total number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.spreadsheets.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.spreadsheets/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/core.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/core/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.integration_test_suite.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.integration_test_suite/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.pipes.spring.runtime.extensions.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0002', '19.1.0.0004', '19.1.0.0019'].
+Total number >>> 3  (ignored since number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.jobs.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.jobs/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.testobject.
+(ignored since total number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/jobs-app.
+(ignored since total number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.emp.service.
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.emp.service/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.auth.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.auth/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.tenant.management.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0155', '19.1.0.0161', '19.1.0.0163', '19.1.0.0165', '19.1.0.0167', '19.1.0.0169'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/central-app.
+(ignored since total number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/base-app.
+(ignored since total number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.cache.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.cache/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/create.
+Current list is,
+['18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 3  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 3  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/create/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.reports.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0014', '18.3.0.0020', '18.3.0.0026', '18.3.0.0030', '18.3.0.0033', '18.3.0.0039'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.test_utils.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.test_utils/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.data.transform.
+Current list is,
+['18.2.0.0042', '18.2.0.0044'].
+Total number >>> 2  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.data.transform/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.auth.api.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.auth.api/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.operation.sql.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.operation.sql/20.1.0.2  - existed -  [PASS]
+
+current working directory is /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.operation.cms.
+Current list is,
+['18.2.0.0015', '18.2.0.0020', '18.2.0.0029', '18.2.0.0035', '18.2.0.0042', '18.2.0.0044'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['18.3.0.0084', '18.3.0.0092', '18.3.0.0096', '18.3.0.0112', '18.3.0.0116', '18.3.0.0126'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.1.0.0355', '19.1.0.0357', '19.1.0.0359', '19.1.0.0361', '19.1.0.0363', '19.1.0.0365'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.2.0.0237', '19.2.0.0238', '19.2.0.0240', '19.2.0.0242', '19.2.0.0244', '19.2.0.0246'].
+Total number >>> 6  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['19.3.0.0105', '19.3.0.0107', '19.3.0.0109', '19.3.0.0111', '19.3.0.0113', '19.3.0.0115', '19.3.0.0120'].
+Total number >>> 7  (ignored since number is NOT greater than 10.)
+
+Current list is,
+['20.1.0.0002', '20.1.0.0004', '20.1.0.0006', '20.1.0.0010', '20.1.0.0012', '20.1.0.0014', '20.1.0.0016', '20.1.0.0018', '20.1.0.0020', '20.1.0.0022', '20.1.0.0024'].
+Total number >>> 11
+Deletion list is,
+['20.1.0.2']
+Number >>> 1
+
+Will delete the followings,
+>>>>>> /media/Castor/nexus/nexus/sonatype-work/nexus/storage/servicemax-external/com/intalio/cloud/core/cloud.core.operation.cms/20.1.0.2  - existed -  [PASS]
+
+ubuntu@ip-172-31-3-29:~/james$
