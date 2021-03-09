@@ -1,10 +1,12 @@
 # coding: utf-8
 import scrapy
+from logger import logger
 
 class NintendoEShopAllGames(scrapy.Spider):
-    name = 'NintendoEShopAllGames'
-    allowed_domains = ['nintendo.com.hk']
-    start_urls = ['https://store.nintendo.com.hk/games/all-released-games']
+    name='AllGames'
+    allowed_domains=['nintendo.com.hk']
+    start_urls = [
+        'https://store.nintendo.com.hk/games/all-released-games?product_list_order=price_desc']
 
     def start_requests(self):
         for url in self.start_urls:
@@ -17,15 +19,18 @@ class NintendoEShopAllGames(scrapy.Spider):
         def formatReleasedData(data):
             return '20{0}/{1}/{2}'.format(data[0],data[1],data[2])
 
-        self.resultSet = []
+        logger.info('Start to fetch data from {0}...'.format(self.start_urls[0]))
 
+        resultSet={}
+        count=1
         for game in response.css('.category-product-item'):
-            self.resultSet.append({
+            resultSet[str(count)]={
                 'image': game.css('.category-product-item-img img').attrib['data-src'],
                 'name': cleanFormat(game.css('.category-product-item-title a::text').get()),
-                'price': game.css('.category-product-item-price .price::text').get(),
+                'price': game.css('.category-product-item-price .price::text').get().replace('HKD ', ''),
                 'release': formatReleasedData(game.css('.category-product-item-released').re('[0-9]{1,}')),
                 'details': game.css('.category-product-item-img a').attrib['href']
-            })
+            }
+            count+=1
 
-        return self.resultSet
+        yield resultSet

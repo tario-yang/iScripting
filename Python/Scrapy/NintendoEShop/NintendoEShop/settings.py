@@ -13,9 +13,10 @@ SPIDER_MODULES = ['NintendoEShop.spiders']
 NEWSPIDER_MODULE = 'NintendoEShop.spiders'
 
 LOG_LEVEL = 'WARNING'
+LOG_FILE = 'spider.log'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'NintendoEShop (+http://www.yourdomain.com)'
+USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.192 Safari/537.36'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -64,9 +65,9 @@ COOKIES_ENABLED = False
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'NintendoEShop.pipelines.NintendoeshopPipelineTimeStamp': 300,
-   'NintendoEShop.pipelines.NintendoeshopPipeline': 310,
-   'NintendoEShop.pipelines.NintendoeshopPipelineSave2File': 320
+#   'NintendoEShop.pipelines.NintendoeshopPipelineDisplayData': 300,
+   'NintendoEShop.pipelines.NintendoeshopPipelineSave2File': 310,
+   'NintendoEShop.pipelines.NintendoeshopPipelineShowChart': 320
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
