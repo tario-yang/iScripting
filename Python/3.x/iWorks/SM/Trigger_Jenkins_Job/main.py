@@ -52,10 +52,10 @@ def trigger_integration_automation(branch_type, browser):
 
 
 jenkins_url = 'jenkins.servicemax.com'
-jenkins_folder_name = 'job/ServiceBoard/job'
+jenkins_folder_name = 'job/ServiceBoard/view/automation/job'
 jenkins_token = 'james.yang%40servicemax.com:113b53640d12c0c69c0d9f4ec004289850'
-current_version = '22.1.0'
-current_released_version = '21.2.0'
+current_version = '23.2.0'
+current_released_version = '23.1.0'
 
 
 class AutomationPanel(wx.Frame):
@@ -75,7 +75,7 @@ class AutomationPanel(wx.Frame):
         row_number_of_standalone = 1
 
         def create_mark():
-            return wx.StaticText(panel, label='••>')
+            return wx.StaticText(panel, label=' ••> ')
 
         def set_grid_bag_sizer_for_marks(row_number, col):
             gbs.Add(create_mark(), pos=(row_number, col), flag=wx.ALIGN_CENTER_VERTICAL, border=2)
